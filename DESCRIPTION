@@ -19,4 +19,7 @@ Config/testthat/edition: 3
 Imports: 
     dplyr,
     tidyr,
-    lavaan
+    lavaan,
+    tibble
+Depends: 
+    R (>= 2.10)
