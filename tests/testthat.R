@@ -1,4 +1,4 @@
 library(testthat)
-library(aurin-innovation)
+library(aurininnovation)
 
-test_check("aurin-innovation")
+test_check("aurininnovation")
