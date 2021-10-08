@@ -24,9 +24,25 @@
 #' location_quotient(sa2_indp2, options = list("min_value" = 100))
 #' }
 location_quotient <- function(data, options = list("min_value" = 150,
-                                                 "x" = "sa2_name_2016",
-                                                 "y" = "industry_2",
-                                                 "value" = "employment")) {
+                                                   "total",
+                                                   "x",
+                                                   "y",
+                                                   "value")) {
+  if (is.null(options$min_value)) {
+    options$min_value <- 150
+  }
+
+  if (is.null(options$x)) {
+    options$x <- "sa2_name"
+  }
+
+  if (is.null(options$y)) {
+    options$y <- "industry_2"
+  }
+
+  if (is.null(options$value)) {
+    options$value <- "employment"
+  }
 
   if (!all(options$x %in% colnames(data),
            options$y %in% colnames(data),
@@ -37,11 +53,11 @@ location_quotient <- function(data, options = list("min_value" = 150,
   if ("min_value" %in% names(options)) {
 
     data <- data %>%
-      dplyr::filter(.data$region_employment >= options$min_value)
+      dplyr::filter(.data[[options$total]] >= options$min_value)
 
   }
 
-  if (any(data$region_employment == 0) & options$min_value == 0) {
+  if (any(data[[options$total]] == 0) & options$min_value == 0) {
     warning("Some of the values you specified are zero for a geographic unit. Output is unreliable")
   }
 
@@ -53,12 +69,15 @@ location_quotient <- function(data, options = list("min_value" = 150,
   col_names <- colnames(data_array)
 
 
-  lq <- t(t(data_array/colSums(data_array)) / (rowSums(data_array)/sum(data_array)))
+  lq <- t(t(data_array/rowSums(data_array)) / (colSums(data_array)/sum(data_array)))
+
+  debug_x <- data_array/rowSums(data_array)
+  debug_y <- (colSums(data_array)/sum(data_array))
 
   lq <- lq %>%
     tibble::as_tibble() %>%
-    dplyr::mutate(sa2_name_2016 = row_names) %>%
-    tidyr::pivot_longer(cols = -.data$sa2_name_2016,
+    dplyr::mutate(sa2_name = row_names) %>%
+    tidyr::pivot_longer(cols = -.data$sa2_name,
                         names_to = "industry",
                         values_to = "rca")
 
