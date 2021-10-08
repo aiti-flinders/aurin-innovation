@@ -16,6 +16,7 @@ emp_ind_sa2 <- function(path, skip, n_max, year) {
     filter(!str_detect(sa2_name, "Migratory - Offshore - Shipping"),
            !str_detect(sa2_name, "POW No Fixed Address"),
            !str_detect(sa2_name, "POW not applicable"),
+           !str_detect(sa2_name, "POW not stated"),
            sa2_name != "Total",
            !industry_2 %in% c("Inadequately described",
                               "Not stated",
