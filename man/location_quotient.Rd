@@ -6,8 +6,7 @@
 \usage{
 location_quotient(
   data,
-  options = list(min_value = 150, x = "sa2_name_2016", y = "industry_2", value =
-    "employment")
+  options = list(min_value = 150, "total", "x", "y", "value")
 )
 }
 \arguments{
