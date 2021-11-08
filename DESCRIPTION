@@ -25,8 +25,9 @@ Imports:
     lavaan,
     gdalUtils,
     jsonlite,
-    aurintools (>= 0.0.1.9000)
+    aurintools (>= 0.0.1.9000),
+    reticulate
 Depends: 
     R (>= 2.10)
-Remotes:  
+Remotes: 
     aiti-flinders/aurintools
