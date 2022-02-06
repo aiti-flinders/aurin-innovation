@@ -38,8 +38,9 @@ industrial_growth_opportunities <- state_ec %>%
                                    "year")) %>%
   filter(comparative_advantage >= 1) %>%
   add_product_names(digits = "4") %>%
-  arrange(sa2_name, sa2_code_2016)
+  arrange(sa2_name, sa2_code_2016) %>%
+  select(sa2_name, sa2_code_2016, location_code, anzsic_subdivision, hs_product_name_short_en, export_value, pci, cog, rca)
 
 
 
-usethis::use_data(industrial_growth_opportunities, overwrite = TRUE)
+usethis::use_data(industrial_growth_opportunities, overwrite = TRUE, compress = "xz")
