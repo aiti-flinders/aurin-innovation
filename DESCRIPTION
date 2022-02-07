@@ -1,6 +1,6 @@
 Package: aurininnovation
 Title: Create Regional Innovation Project Datasets  
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Hamish",
            family = "Gamble",
