@@ -21,7 +21,7 @@ iga <- function(year) {
 
   ica_with_state <- industry_comparative_advantage %>%
     left_join(read_absmap(area = "sa2", year = {{year}}, remove_year_suffix = TRUE)) %>%
-    mutate(year = as.numeric({{year}})) %>%
+    filter(year == {{year}}) %>%
     select(sa2_name, sa2_code, industry, comparative_advantage, year, state_name)
 
   state_ec <- get_data(states, years = {{year}}) %>%
@@ -41,9 +41,19 @@ iga <- function(year) {
                                      "anzsic_subdivision" = "industry",
                                      "year")) %>%
     filter(comparative_advantage >= 1) %>%
+    distinct() %>%
     add_product_names(digits = "4") %>%
     arrange(sa2_name, sa2_code) %>%
-    select(year, sa2_name, sa2_code, location_code, anzsic_subdivision, hs_product_name_short_en, export_value, pci, cog, rca)
+    select(State = location_code,
+           `State Export Value` = export_value,
+           `State Export Comparative Advantage` = rca,
+           Year = year,
+           `Product Opportunity` = hs_product_name_short_en,
+           `Product Complexity` = pci,
+           `Product Industry` = anzsic_subdivision,
+           `Region Industry Comparative Advantage` = comparative_advantage,
+           `Statistical Area 2 Name` = sa2_name,
+           `Statistical Area 2 Code` = sa2_code)
 
   return(industrial_growth_opportunities)
 
