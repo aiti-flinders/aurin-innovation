@@ -44,16 +44,17 @@ iga <- function(year) {
     distinct() %>%
     add_product_names(digits = "4") %>%
     arrange(sa2_name, sa2_code) %>%
-    select(State = location_code,
-           `State Export Value` = export_value,
-           `State Export Comparative Advantage` = rca,
-           Year = year,
-           `Product Opportunity` = hs_product_name_short_en,
-           `Product Complexity` = pci,
-           `Product Industry` = anzsic_subdivision,
-           `Region Industry Comparative Advantage` = comparative_advantage,
-           `Statistical Area 2 Name` = sa2_name,
-           `Statistical Area 2 Code` = sa2_code)
+    select(Year = year,
+           "Statistical Area 2 Code" = sa2_code,
+           "Statistical Area 2 Name" = sa2_name,
+           "Product Opportunity" = hs_product_name_short_en,
+           "Product Code" = hs_product_code,
+           "Product Development Benefit" = cog,
+           "Product Industry" = anzsic_subdivision,
+           "Region Industry Comparative Advantage" = comparative_advantage,
+           State = location_code,
+           "State Export Value" = export_value,
+           "State Export Comparative Advantage" = rca)
 
   return(industrial_growth_opportunities)
 
