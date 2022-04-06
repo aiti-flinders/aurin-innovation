@@ -1,17 +1,21 @@
 #' Location Quotient
 #'
 #' @description Calculate location quotient from any data which contains a column
-#' specifying a geographic variable, a second variable (???) and a value
-#' (this is not written well).
+#' specifying a geographic variable, a second variable such as industry of employment, and a value. The data provided
+#' is converted into a matrix with dimensions x_var * y_var. The variable specified as value_var fills the matrix.
 #'
+#'
+#' Examples include:
+#' Revealed Comparative Advantage from country-product-export data.
+#' Industrial Comparative Advantage from region-industry-employment data.
+#'
+#' @param min_value numeric. the smallest total value allowable in a geographic region.
+#' @param total_var character. the name of the variable which must be greater than the `min_value`. This variable
+#' must be present in the data passed to the function.
+#' @param x_var character. the name of the variable to be treated as rows.
+#' @param y_var character. the name of the variable to be treated as columns.
+#' @param value_var character. the name of the variable to be treated as the value.
 #' @param data a dataframe
-#' @param options a list of options.
-#' Available options include "min_value", "x", "y", and "value".
-#' "min_value" specifies the smallest total value allowable in a geographic
-#' region.
-#' "x" specifies the name of the x variable in the dataframe
-#' "y" specifies the name of the y variable in the dataframe
-#' "value" specifies the name of the value variable in the dataframe
 #'
 #' @return tibble
 #' @export location_quotient
@@ -23,46 +27,42 @@
 #' @examples \dontrun{
 #' location_quotient(sa2_indp2, options = list("min_value" = 100))
 #' }
-location_quotient <- function(data, options = list("min_value" = 150,
-                                                   "total",
-                                                   "x",
-                                                   "y",
-                                                   "value")) {
-  if (is.null(options$min_value)) {
-    options$min_value <- 150
+location_quotient <- function(data, min_value = 0, total_var = NULL, x_var = NULL, y_var = NULL, value_var = NULL) {
+
+
+  if (is.null(x_var)) {
+    x_var <- "sa2_name"
   }
 
-  if (is.null(options$x)) {
-    options$x <- "sa2_name"
+  if (is.null(y_var)) {
+    y_var <- "industry_2"
   }
 
-  if (is.null(options$y)) {
-    options$y <- "industry_2"
+  if (is.null(value_var)) {
+    value_var <- "employment"
   }
 
-  if (is.null(options$value)) {
-    options$value <- "employment"
-  }
-
-  if (!all(options$x %in% colnames(data),
-           options$y %in% colnames(data),
-           options$value %in% colnames(data))) {
+  if (!all(x_var %in% colnames(data),
+           y_var %in% colnames(data),
+           value_var %in% colnames(data))) {
     stop("A nice stop message about conforming names in supplied data")
   }
 
-  if ("min_value" %in% names(options)) {
+  if (!is.null(min_value) & !is.null(total_var)) {
 
     data <- data %>%
-      dplyr::filter(.data[[options$total]] >= options$min_value)
+      dplyr::filter(.data[[total_var]] >= min_value)
 
   }
 
-  if (any(data[[options$total]] == 0) & options$min_value == 0) {
-    warning("Some of the values you specified are zero for a geographic unit. Output is unreliable")
-  }
+
+#
+#   if (any(data[[options$total]] == 0) & options$min_value == 0) {
+#     warning("Some of the values you specified are zero for a geographic unit. Output is unreliable")
+#   }
 
 
-  data_array <- reshape2::acast(data, list(options$x,options$y), value.var = options$value)
+  data_array <- reshape2::acast(data, list(x_var, y_var), value.var = value_var)
 
   #Strip the column containing the sa2_names ...
   row_names <- rownames(data_array)
@@ -79,7 +79,7 @@ location_quotient <- function(data, options = list("min_value" = 150,
     dplyr::mutate(sa2_name = row_names) %>%
     tidyr::pivot_longer(cols = -.data$sa2_name,
                         names_to = "industry",
-                        values_to = "rca")
+                        values_to = "lq")
 
 
   return(lq)
