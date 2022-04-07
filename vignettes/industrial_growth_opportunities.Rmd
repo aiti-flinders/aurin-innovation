@@ -41,9 +41,9 @@ The benefit to a region's economic complexity from the development of a new prod
 
 ### State economic complexity
 
-The smallest geographic region in which consistent and accurate export data is measured and made available are the Australian States and Territories. The Queensland Government Statistician's Office provides a time series of state exports disaggregated by the 8-digit Australian Harmonised Export Commodity Classification (AHECC). The AHECC is a modified version of the Harmonised System, designed to capture and include products of specific importance to Australian industry. As such, it can be readily converted to the Harmonised System for inclusion in the country-product export data provided by the Atlas of Economic Complexity [-@hausmann2014atlas]. At the 6-digit level, the AHECC and HS are identical. Each year of state export data is converted from 6-digit AHECC to 6-digit HS using the United Nations Trade Statistics Correspondence Tables (https://unstats.un.org/unsd/trade/classifications/correspondence-tables.asp). Correspondences are available:
+The smallest geographic region in which consistent and accurate export data is measured and made available are the Australian States and Territories. The Queensland Government Statistician's Office provides a time series of state exports disaggregated by the 8-digit Australian Harmonised Export Commodity Classification (AHECC). The AHECC is a modified version of the Harmonised System, designed to capture and include products of specific importance to Australian industry. As such, it can be readily converted to the Harmonised System for inclusion in the country-product export data provided by the Atlas of Economic Complexity [-@hausmann2014atlas]. At the 6-digit level, the AHECC and HS are identical. Each year of state export data is converted from 6-digit AHECC to 6-digit HS using the United Nations Trade Statistics Correspondence Tables [@un]. 
 
-```{r correspondence, echo = FALSE}
+```{r correspondence, include = FALSE}
 
 tab <- data.frame(
   from = c("HS 2017",
@@ -71,7 +71,7 @@ state_economic_complexity
 Employment by industry data is used to determine industrial comparative advantage in a region. The simple measure of employment by industry is an inadequate measure of industrial strengths because it is not able to determine where one region outperforms another. For example, employment in the manufacturing, and retail trade industries tends to be high in all precincts. To alleviate this, the industrial comparative advantage is used, which identifies in which industries a precinct employs a higher share than the Australian average. That is: 
 
 $$ICA_{ri} = \frac{E_{ri}}{\sum_{r}E_{ri}}/\frac{\sum_{i}E_{ri}}{\sum_{ri}E_{ri}}$$
-Where $ICA_{ri}$ is the industrial comparative advantage for region $r$ in industry $i$ and $E_{ri}$ is the level of employment in region $r$ in industry $i$. Employment by industry data is sourced from the ABS Census TableBuilder, Counting Employed Persons, Place of Work (POW). 
+Where $ICA_{ri}$ is the industrial comparative advantage for region $r$ in industry $i$ and $E_{ri}$ is the level of employment in region $r$ in industry $i$. Employment by industry data is sourced from the ABS Census TableBuilder, Counting Employed Persons, Place of Work (POW) [@abs16empind]. 
 
 This data is included with the `aurininnovation` package `sa2_indp2_2011` and `sa2_indp2_2016`. Two values of employment are pre-supplied. One which is the raw data from the ABS, and another which has been adjusted to remove "not further defined" industry subdivisions. The industrial comparative advantage 
 
@@ -116,7 +116,7 @@ ica(years = 2016, total_var = "industry_employment", min_value = 2000)
 
 # Reproduction of Industrial Growth Opportunities Dataset
 
-The industrial growth opportunities dataset combines regional data on industrial strengths, as calculated by the industrial comparative advantage, and product opportunity data at the state level, as calculated by the state economic complexity model. This allows for productive capabilities present at the state level to be matched to industrial capabilities present at the regional level. Products in the `state_economic_complexity` dataset are matched to the industry which produces them, based on the ABS International Merchandise Trade Appendix 6.1 AHECC Historical Correspondence.  This industry is then matched with the industry strenghts identified in the industrial comparative advantage data. 
+The industrial growth opportunities dataset combines regional data on industrial strengths, as calculated by the industrial comparative advantage, and product opportunity data at the state level, as calculated by the state economic complexity model. This allows for productive capabilities present at the state level to be matched to industrial capabilities present at the regional level. Products in the `state_economic_complexity` dataset are matched to the industry which produces them, based on the ABS International Merchandise Trade Appendix 6.1 AHECC Historical Correspondence [@abs18tradeappendix].  This industry is then matched with the industry strengths identified in the industrial comparative advantage data. 
 
 Industrial growth opportunities for a region are those which: 
 1. Are produced by an industry which the region has an industrial comparative advantage.
@@ -142,11 +142,18 @@ igo(year = 2016, region = c("Adelaide", "Melbourne"))
 
 ``` {r igo-product}
 
-igo(year = 2016, product = "Iron and Steel")
+igo(year = 2016, product = "Aluminum Bars")
 
 ```
-Similar to the industrial comparative advantage calculation, the default conditions can be overridden. For example, 
 
-Deliver to AURIN and for the use of AURINs users, a documented economic complexity model able to transparently expose the methodology and enable reproduction of the computation for the measures described in the project proposal; that identifies the manufacturing products that would generate the largest benefit for each state/territory, and which products would be the easiest to bring to market
+Similar to the industrial comparative advantage calculation, the default conditions can be overridden. 
 
-#Bibliography
+``` {r igo-options}
+
+igo(year = 2016, .export_value_limit = 1000, .cog_limit = 0.5, .rca_limit = 0.5, .ica_limit = 1.5)
+
+```
+
+
+
+# Bibliography
