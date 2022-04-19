@@ -46,18 +46,18 @@ kibs <- function() {
     "Data Processing and Web Hosting Services",
     "Electronic Information Storage Services",
     "Other Information Services",
-    strayr::anzsic2006 %>% filter(anzsic_division   == "Financial and Insurance Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_subdivision == "Rental and Hiring Services (except Real Estate)") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Scientific Research Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Architectural, Engineering and Technical Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Legal and Accounting Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Advertising Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Market Research and Statistical Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Management and Related Consulting Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Other Professional, Scientific and Technical Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_subdivision == "Computer System Design and Related Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Employment Services") %>% pull(anzsic_class) %>% unique(),
-    strayr::anzsic2006 %>% filter(anzsic_group == "Other Administrative Services") %>% pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_division   == "Financial and Insurance Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_subdivision == "Rental and Hiring Services (except Real Estate)") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Scientific Research Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Architectural, Engineering and Technical Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Legal and Accounting Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Advertising Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Market Research and Statistical Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Management and Related Consulting Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Other Professional, Scientific and Technical Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_subdivision == "Computer System Design and Related Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Employment Services") %>% dplyr::pull(anzsic_class) %>% unique(),
+    strayr::anzsic2006 %>% dplyr::filter(anzsic_group == "Other Administrative Services") %>% dplyr::pull(anzsic_class) %>% unique(),
     "Building and Other Industrial Cleaning Services",
     "Building Pest Control Services",
     "Packaging Services",
@@ -82,24 +82,29 @@ sa2_to_sa3 <- function(sa2_data, two) {
 
 }
 
-adjust_nfd <- function(data) {
+adjust_nfd <- function(data, nfd_col, nfd_level, anz = c("anzsic", "anzsco")) {
 
-  anz <- dplyr::distinct(strayr::anzsic2006, anzsic_division, anzsic_subdivision)
+  if (anz == "anzsic") {
+    anz <- dplyr::distinct(strayr::anzsic2006, anzsic_division, .data[[nfd_level]])
+    fill_var <- "anzsic_division"
+  } else {
+    anz <- dplyr::distinct(strayr::anzsco2021, anzsco_major, .data[[nfd_level]])
+    fill_var <- "anzsco_major"
+  }
 
   data %>%
-    dplyr::left_join(anz,
-                     by = c("industry_2" = "anzsic_subdivision")) %>%
-    tidyr::fill(anzsic_division, .direction = "up") %>%
-    dplyr::group_by(sa2_name, anzsic_division) %>%
+    dplyr::left_join(anz, by = setNames(nfd_level, nfd_col)) %>%
+    tidyr::fill(.data[[fill_var]], .direction = "up") %>%
+    dplyr::group_by(sa2_name, .data[[fill_var]]) %>%
     dplyr::mutate(employment_share = employment / sum(employment),
-                  nfd = ifelse(stringr::str_detect(industry_2, "nfd"), employment, NA)) %>%
+                  nfd = ifelse(stringr::str_detect(.data[[nfd_col]], "nfd"), employment, NA)) %>%
     tidyr::fill(nfd, .direction = "down") %>%
     dplyr::mutate(employment_adj = round(employment + (employment_share * nfd), digits = 0),
                   employment_adj = ifelse(is.nan(employment_adj), 0, employment_adj)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(employment_adj = ifelse(stringr::str_detect(industry_2, "nfd"), 0, employment_adj)) %>%
+    dplyr::mutate(employment_adj = ifelse(stringr::str_detect(.data[[nfd_col]], "nfd"), 0, employment_adj)) %>%
     dplyr::select(sa2_name,
-                  industry_2,
+                  {{nfd_col}},
                   employment,
                   employment_adj)
 }
