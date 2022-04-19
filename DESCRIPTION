@@ -30,10 +30,11 @@ Imports:
     aurintools (>= 0.0.1.9000),
     reticulate,
     sf,
-    strayr
+    strayr (>= 0.1.6)
 Depends: 
     R (>= 2.10)
-Remotes: 
-    aiti-flinders/aurintools
+Remotes:  
+    aiti-flinders/aurintools,
+    runapp-aus/strayr
 VignetteBuilder: knitr
 URL: https://aiti-flinders.github.io/aurin-innovation/
