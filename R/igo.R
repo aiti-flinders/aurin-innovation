@@ -23,8 +23,10 @@
 #' @importFrom rlang .data
 igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .cog_limit = 0, .rca_limit = 1, .ica_limit = 1, ...) {
 
-  map_data <- strayr::read_absmap(area = "sa2", year = {{year}}, remove_year_suffix = TRUE) %>%
+  map_data <- suppressMessages(
+    strayr::read_absmap(area = "sa2", year = {{year}}, remove_year_suffix = TRUE) %>%
     sf::st_drop_geometry()
+  )
 
   ica_with_state <- ica(years = year, ...) %>%
     dplyr::left_join(map_data, by = "sa2_name") %>%
