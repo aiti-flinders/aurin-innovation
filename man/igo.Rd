@@ -39,7 +39,7 @@ all products which are made in industries in which the region does not have a hi
 \item{...}{(optional). Additional arguments passed to \code{ica()}}
 }
 \value{
-tibble
+
 }
 \description{
 Industrial Growth Opportunities
