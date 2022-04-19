@@ -34,3 +34,4 @@ Depends:
 Remotes: 
     aiti-flinders/aurintools
 VignetteBuilder: knitr
+URL: https://aiti-flinders.github.io/aurin-innovation/
