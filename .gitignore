@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 industrial_growth_opportunities.csv
+inst/doc
+docs
+/doc/
+/Meta/
