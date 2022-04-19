@@ -28,7 +28,9 @@ Imports:
     gdalUtils,
     jsonlite,
     aurintools (>= 0.0.1.9000),
-    reticulate
+    reticulate,
+    sf,
+    strayr
 Depends: 
     R (>= 2.10)
 Remotes: 
