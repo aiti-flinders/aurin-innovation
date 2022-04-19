@@ -21,6 +21,35 @@ ica <- function(years = "all", ...) {
     pow <- sa2_indp2_2016
   }
 
+  ellipse_arg <- list(...)
+
+  if ("employment_adj" %in% ellipse_arg$value_var) {
+
+    pow <- pow %>%
+      adjust_nfd(nfd_col = "industry",
+                 nfd_level = "anzsic_subdivision",
+                 anz = "anzsic")
+  }
+
+  if ("industry_employment" %in% ellipse_arg$total_var) {
+
+    pow <- pow %>%
+      dplyr::group_by(industry) %>%
+      dplyr::mutate(industry_employment = sum(employment)) %>%
+      dplyr::ungroup()
+  }
+
+  if ("sa2_employment" %in% ellipse_arg$total_var) {
+
+    pow <- pow %>%
+      dplyr::group_by(sa2_name) %>%
+      dplyr::mutate(sa2_employment = sum(employment)) %>%
+      dplyr::ungroup()
+  }
+
+
+
+
   location_quotient(pow, ...) %>%
     dplyr::mutate(year = {{years}}) %>%
     dplyr::rename(ica = lq)
