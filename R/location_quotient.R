@@ -35,12 +35,13 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, x_var = NUL
   }
 
   if (is.null(y_var)) {
-    y_var <- "industry_2"
+    y_var <- "industry"
   }
 
   if (is.null(value_var)) {
     value_var <- "employment"
   }
+
 
   if (!all(x_var %in% colnames(data),
            y_var %in% colnames(data),
