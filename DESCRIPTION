@@ -27,7 +27,6 @@ Imports:
     lavaan,
     gdalUtils,
     jsonlite,
-    aurintools (>= 0.0.1.9000),
     reticulate,
     sf,
     strayr (>= 0.1.6)
