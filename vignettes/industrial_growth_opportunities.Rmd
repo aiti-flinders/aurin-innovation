@@ -1,5 +1,5 @@
 ---
-title: "Industrial growth opportunities"
+title: "Industrial Growth Opportunities"
 output: rmarkdown::html_vignette
 bibliography: references.bib
 description: >
@@ -7,41 +7,65 @@ description: >
   The documentation will cover how the data set is created, 
   and the usage guide will detail where and how this data can be used. 
 vignette: >
-  %\VignetteIndexEntry{Industrial growth opportunities}
+  %\VignetteIndexEntry{Industrial Growth Opportunities}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(aurininnovation)
+library(DT)
+library(dplyr)
 ```
 
-The industrial growth opportunities dataset provides a breakdown of product development opportunities for Statistical Areas (Level 2) across Australia, for census years (2011, 2016, 2021). It is derived from the industrial comparative advantage dataset, also included in this package, and a State based model of economic complexity, developed by the Australian Industrial Transformation Institute at Flinders University, in collaboration with the Government of South Australia. 
+The industrial growth opportunities dataset provides a breakdown of product development opportunities for Statistical Areas (Level 2) across Australia, for census years (2011, 2016, 2021). It is derived from the industrial comparative advantage dataset, also included in this package, and a State based model of economic complexity, developed by the Australian Industrial Transformation Institute at Flinders University, in collaboration with the Government of South Australia. These datasets, and their creation, are described below. 
 
-Industrial growth opportunities captures at a product level what industrial development would:
+Industrial growth opportunities capture at a product level what industrial development would be:
 
-* Be the most beneficial for a region, and
-* Be the most suitable for a region, based on their industrial strengths. 
+* most beneficial for a region, and
+* most suitable for a region, based on its industrial strengths.
 
-## Economic complexity
 
-Economic complexity modelling pioneered by @hh-pnas has been identified as a tool to measure the industrial and productive knowledge present in a region based on the products that it exports with comparative advantage [@hausmann2007you; @hausmann2014atlas; @hidalgo2007product]. The country-product export data set which economic complexity is based on spans the period 1995-2020, over 1000 products (disaggregated by the 1992 version of the Harmonised System (HS0)), and over 200 countries. 
 
-Economic complexity matters because it is highly predictive of both current and future economic growth.  It reveals three key indicators for a region's economic development:
+## Economic Complexity
+
+Economic complexity modelling pioneered by @hh-pnas is a tool which measures the industrial and productive knowledge present in a region based on the products that it exports with comparative advantage [@hausmann2007you; @hausmann2014atlas; @hidalgo2007product]. Economic complexity is calculated using country-product export data, spanning the period 1995-2020, for more than 1,200 products (disaggregated by the 1992 version of the Harmonised System, called HS0), and more than 200 countries. 
+
+Economic complexity is highly predictive of both current and future economic growth.  It reveals three key indicators for a region's economic development:
 
 1. The productive capabilities present in a region, 
 2. The similarity between these capabilities and those required to develop new products, and
 3. The benefit to a region's complexity from the development of a new product. 
 
-Preliminary analysis of regional export data reveals which products $p$ are exported with *comparative advantage* by which region $c$. Comparative advantage is measured through the Balassa Index and is defined by the share of exports of a product in a given region relative to the share of exports of that product in global trade. A region is said to have comparative advantage in a product if $RCA_{cp} >=1$. The complete dataset for economic complexity captures over 1000 products, for more than 200 countries. 
+The products included in the economic complexity data can be searched below. 
+
+``` {r ec-products, echo = FALSE}
+
+state_economic_complexity %>%
+  aurininnovation:::add_product_names(digits = 4) %>%
+  distinct(hs_product_code, hs_product_name_short_en) %>%
+  datatable(rownames = FALSE,
+            caption = "Table 1: Product names according to the 1992 Harmonised System",
+            colnames = c("Product Code (HS0)", "Product Name"),
+            options = list(
+              lengthMenu = list(10)
+            ))
+
+```
+
+
+Preliminary analysis of regional export data reveals which products ($p$) are exported with *comparative advantage* by which region ($c$). Regional Comparative Advantage (RCA) is measured through the Balassa Index and is defined by the share of exports of a product in a region relative to the share of exports of that product in global trade. 
 
 $$RCA_{cp} = \frac{X_{cp}}{\sum_{c}X_{cp}}/\frac{\sum_{p}X_{cp}}{\sum_{cp}X_{cp}}$$ 
-The benefit to a region's economic complexity from the development of a new product is quantified by the complexity outlook gain (COG). The COG measures the benefit obtained from increasing the number of opportunities for future diversification through the creation of new paths from existing products to more complex products. [Add Product Space?]
 
-### State economic complexity
+A region is said to have comparative advantage in a product if $RCA_{cp} >=1$.  
 
-The smallest geographic region in which consistent and accurate export data is measured and made available are the Australian States and Territories. The Queensland Government Statistician's Office provides a time series of state exports disaggregated by the 8-digit Australian Harmonised Export Commodity Classification (AHECC). The AHECC is a modified version of the Harmonised System, designed to capture and include products of specific importance to Australian industry. As such, it can be readily converted to the Harmonised System for inclusion in the country-product export data provided by the Atlas of Economic Complexity [-@hausmann2014atlas]. At the 6-digit level, the AHECC and HS are identical. Each year of state export data is converted from 6-digit AHECC to 6-digit HS using the United Nations Trade Statistics Correspondence Tables [@un]. 
+The benefit to a region's economic complexity from the development of a new product is quantified by the complexity outlook gain (COG). This quantifies how the development of a new product increases the number of opportunities for future diversification through the creation of new paths from existing products to more complex products. 
+
+### Subnational Economic Complexity
+
+For Australia, the smallest geographic region in which consistent and accurate export data is measured and made available is the state level. The Queensland Government Statistician's Office provides a time series of state exports disaggregated by the 8-digit Australian Harmonised Export Commodity Classification (AHECC). The AHECC is a modified version of the Harmonised System, designed to capture and include products of specific importance to Australian industry. As such, it can be readily converted to the Harmonised System for inclusion in the country-product export data provided by the Atlas of Economic Complexity [-@hausmann2014atlas]. At the 6-digit level (the most disaggregated level available for international trade), the AHECC and HS are identical. Each year of state export data is converted from 6-digit AHECC to 6-digit HS using the United Nations Trade Statistics Correspondence Tables [@un]. 
 
 ```{r correspondence, include = FALSE}
 
@@ -59,23 +83,23 @@ knitr::kable(tab, col.names = c("From", "To"))
 
 ```
 
-More recent state export data uses a combination of different versions of the Harmonised System. The conversion algorithm first uses the oldest available correspondence (HS 1992 to HS 1992). Where conversion between the AHECC and HS is unsuccessful (ie, where the state export data uses a HS code more recent than those in the correspondence), all matches are kept, and the next version of the correspondence is used to find matches for the unsuccessful product codes. This is repeated until all AHECC codes are matched to HS 1992 codes.  See the help file for `ahecc_to_hs` for more information. The state based economic complexity data from 2011 onwards is included in this package.
+More recent state export data uses a combination of different versions of the Harmonised System. The conversion algorithm first uses the oldest available version of the Harmonised System (HS0), to match the 6-digit AHECC. Where conversion between the AHECC and HS is unsuccessful (i.e., where the state export data uses a HS code more recent than those in the correspondence), all matches are kept, and the next version of the correspondence is used to find matches for the unsuccessful product codes. This is repeated until all AHECC codes are matched to HS 1992 codes. The state level economic complexity data from 2011 onwards is included in this package.
 
 ```{r state-ec, echo = TRUE}
-state_economic_complexity
+datatable(state_economic_complexity)
 ```
 
 
 ## Industrial Comparative Advantage
 
-Employment by industry data is used to determine industrial comparative advantage in a region. The simple measure of employment by industry is an inadequate measure of industrial strengths because it is not able to determine where one region outperforms another. For example, employment in the manufacturing, and retail trade industries tends to be high in all precincts. To alleviate this, the industrial comparative advantage is used, which identifies in which industries a precinct employs a higher share than the Australian average. That is: 
+Employment by industry data is used to determine industrial comparative advantage in a region, which are defined as Statistical Area Level 2 (SA2). The simple measure of employment by industry is an inadequate measure of industrial strengths because it is not able to determine where one region outperforms another. For example, Preschool and School Education is the largest employing  industry in more than 25% of all regions.  To alleviate this, the industrial comparative advantage is estimated to identify in which industries a region employs a higher share than the Australian average. That is: 
 
 $$ICA_{ri} = \frac{E_{ri}}{\sum_{r}E_{ri}}/\frac{\sum_{i}E_{ri}}{\sum_{ri}E_{ri}}$$
-Where $ICA_{ri}$ is the industrial comparative advantage for region $r$ in industry $i$ and $E_{ri}$ is the level of employment in region $r$ in industry $i$. Employment by industry data is sourced from the ABS Census TableBuilder, Counting Employed Persons, Place of Work (POW) [@abs16empind]. 
+where $ICA_{ri}$ is the industrial comparative advantage for region $r$ in industry $i$ and $E_{ri}$ is the level of employment in region $r$ in industry $i$. Employment by industry data is sourced from the ABS Census TableBuilder, Counting Employed Persons, Place of Work (POW) [@abs16empind]. 
 
-This data is included with the `aurininnovation` package `sa2_indp2_2011` and `sa2_indp2_2016`. Two values of employment are pre-supplied. One which is the raw data from the ABS, and another which has been adjusted to remove "not further defined" industry subdivisions. The industrial comparative advantage 
+This data is included with the `aurininnovation` package `sa2_indp2_2011` and `sa2_indp2_2016`. 
 
-## Calcualting Industrial Comparative Advantage
+## Calculating Industrial Comparative Advantage
 
 Industrial comparative advantage can be calculated using the in built `ica()` function. This function requires a dataset with at least three columns containing the following data:
 
@@ -89,13 +113,13 @@ The included `sa2_indp2_2011` and `sa2_indp2_2016` meet this specification.
 sa2_indp2_2016
 ```
 
-The industrial comparative advantage for 2016 can be calculated simply. By default, `ica()` removes regions with total employment less than 150, to account for perturbations applied by the ABS to small cell values in the TableBuilder. 
+The industrial comparative advantage can be calculated through the `ica()` function. By default, `ica()` calculates the industrial comparative advantage for all years - currently 2011 and 2016. Individual years can be calcualted by specifying the year. It also removes regions with total employment less than 150, to account for perturbations applied by the ABS to small cell values in the TableBuilder. 
 
 ``` {r ica-2016, echo = TRUE}
 ica(years = 2016)
 ```
 
-This produces the dataset as provided to AURIN. However, further control over calculation of the location quotient is available. For example, to calculate the industrial comparative advantage using employment by industry adjusted to remove "not further defined" industries, specify value variable as employment_adj. 
+This produces the dataset as provided to AURIN. Further control over calculation of the industrial comparative advantage is available. For example, to calculate the industrial comparative advantage using employment by industry adjusted to remove "not further defined" industries, specify value variable as employment_adj. 
 
 ``` {r ica-2016-adj, echo = TRUE}
 ica(years = 2016, value_var = "employment_adj")
@@ -116,13 +140,13 @@ ica(years = 2016, total_var = "industry_employment", min_value = 2000)
 
 # Reproduction of Industrial Growth Opportunities Dataset
 
-The industrial growth opportunities dataset combines regional data on industrial strengths, as calculated by the industrial comparative advantage, and product opportunity data at the state level, as calculated by the state economic complexity model. This allows for productive capabilities present at the state level to be matched to industrial capabilities present at the regional level. Products in the `state_economic_complexity` dataset are matched to the industry which produces them, based on the ABS International Merchandise Trade Appendix 6.1 AHECC Historical Correspondence [@abs18tradeappendix].  This industry is then matched with the industry strengths identified in the industrial comparative advantage data. 
+The industrial growth opportunities dataset combines regional data on industrial strengths, as calculated by the Industrial Comparative Advantage index (at SA2 level), and product opportunity data at the state level, as calculated by the state economic complexity model. This allows for productive capabilities present at the state level to be matched to industrial capabilities present at the regional level. Products in the `state_economic_complexity` dataset are matched to the industry which produces them, based on the ABS International Merchandise Trade Appendix 6.1 AHECC Historical Correspondence [@abs18tradeappendix].  This industry is then matched with the industry strengths identified in the Industrial Comparative Advantage data. 
 
-Industrial growth opportunities for a region are those which: 
-1. Are produced by an industry which the region has an industrial comparative advantage.
-2. Are not exported from the State the region is located with revealed comparative advantage.
-3. Is exported in some capacity by the State the region is located.
-4. Would increase the economic complexity of the State the region is located. 
+Industrial growth opportunities for a region are products which meet all of the following criteria: 
+1. Are produced by an industry in which the region has an industrial comparative advantage.
+2. Are not exported from the State in which the region is located with revealed comparative advantage.
+3. Is exported in some capacity by the State in which the region is located.
+4. Would increase the economic complexity of the State in which the region is located. 
 
 The full industrial growth opportunities dataset can be generated using the conditions outlined above through the `igo()` function. 
 
@@ -142,7 +166,7 @@ igo(year = 2016, region = c("Adelaide", "Melbourne"))
 
 ``` {r igo-product}
 
-igo(year = 2016, product = "Aluminum Bars")
+igo(year = 2016, product = "Artificial graphite")
 
 ```
 
