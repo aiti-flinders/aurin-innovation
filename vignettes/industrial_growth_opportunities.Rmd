@@ -86,7 +86,7 @@ knitr::kable(tab, col.names = c("From", "To"))
 More recent state export data uses a combination of different versions of the Harmonised System. The conversion algorithm first uses the oldest available version of the Harmonised System (HS0), to match the 6-digit AHECC. Where conversion between the AHECC and HS is unsuccessful (i.e., where the state export data uses a HS code more recent than those in the correspondence), all matches are kept, and the next version of the correspondence is used to find matches for the unsuccessful product codes. This is repeated until all AHECC codes are matched to HS 1992 codes. The state level economic complexity data from 2011 onwards is included in this package.
 
 ```{r state-ec, echo = TRUE}
-datatable(state_economic_complexity)
+state_economic_complexity
 ```
 
 
