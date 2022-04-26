@@ -25,7 +25,6 @@ Imports:
     reshape2,
     rlang,
     lavaan,
-    gdalUtils,
     jsonlite,
     reticulate,
     sf,
