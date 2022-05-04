@@ -1,7 +1,21 @@
 create_skill <- function(year, geography, adjust = TRUE) {
 
+  if (year == 2016) {
+
+    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
+      sf::st_drop_geometry()
+
+    data <- sa2_occp4_2016
+
+  } else if (year == 2011)  {
+    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
+      sf::st_drop_geometry()
+
+    data <- sa2_occp4_2011
+  }
+
   if (adjust) {
-    data <- sa2_occp4_2016 %>%
+    data <- data %>%
       adjust_nfd(nfd_col = "anzsco_name",
                  nfd_level = "anzsco_unit",
                  anz = "anzsco")
@@ -9,26 +23,20 @@ create_skill <- function(year, geography, adjust = TRUE) {
     emp <- "employment_adj"
   } else {
 
-    data <- sa2_occp4_2016
+    data <- data
     emp <- "employment"
   }
 
-  if (year == 2016) {
-
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
-      sf::st_drop_geometry()
-
-  } else {
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
-      sf::st_drop_geometry()
-  }
+  occp_skill <- strayr::asc_core_competencies %>%
+    dplyr::group_by(anzsco_name) %>%
+    dplyr::summarise(score = mean(score))
 
   skill_level <- data %>%
-    dplyr::left_join(strayr::asc_core_competencies, by = "anzsco_name") %>%
+    dplyr::left_join(occp_skill) %>%
     dplyr::left_join(geog) %>%
     dplyr::group_by(.data[[geography]]) %>%
     dplyr::mutate(employment_share = .data[[emp]] / sum(.data[[emp]])) %>%
-    dplyr::summarise(skill = sum(employment_share * score, na.rm = T))
+    dplyr::summarise(skill = weighted.mean(x = score, w = employment_share, na.rm = T))
 
   return(skill_level)
 
