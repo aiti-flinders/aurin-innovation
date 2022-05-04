@@ -28,27 +28,31 @@ create_trademarks <- function(year, geography = NULL) {
       dplyr::rename(application_year = filing_year)
   }
 
-  if (year < 2016) {
+  if (year == 2011) {
     geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
       sf::st_drop_geometry()
   }
-  else {
+  else if (year == 2016) {
     geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
       sf::st_drop_geometry()
+  } else {
+
+    stop("Year must be 2011 or 2016.")
+
   }
 
   trademarks %>%
-    dplyr::mutate(type = "trademarks",
-                  year = {{year}}) %>%
     dplyr::left_join(trademarks_info) %>%
     dplyr::filter(application_year == {{year}},
-                  australian == TRUE,
-                  !stringr::str_detect(status_code_desc, "Refused|Rejected")) %>%
+                  !is.na(sa2_name)) %>%
     dplyr::left_join(geog) %>%
-    dplyr::group_by(.data[[geography]], type, year) %>%
-    dplyr::tally() %>%
+    dplyr::group_by(.data[[geography]], application_year) %>%
+    dplyr::summarise(trademarks = dplyr::n()) %>%
     dplyr::ungroup() %>%
-    tidyr::pivot_wider(names_from = type,
-                       values_from = n) %>%
-    dplyr::filter(!is.na(.data[[geography]]))
+    dplyr::rename(year = application_year)
+    # tidyr::pivot_wider(names_from = trademark_type,
+    #                    values_from = trademarks) %>%
+    # tidyr::replace_na(list(Fancy = 0, Figurative = 0, Word = 0, Shape = 0, Colour = 0, Movement = 0)) %>%
+    # dplyr::rename(year = application_year) %>%
+    # dplyr::filter(!is.na(.data[[geography]]))
 }
