@@ -4,13 +4,13 @@
 \alias{ica}
 \title{Industrial Comparative Advantage}
 \usage{
-ica(years = "all", ...)
+ica(years = "all", geography = "sa2_name", ...)
 }
 \arguments{
 \item{years}{Which year to calculate the industrial comparative advantage. The default, "all", will calculate the
 industrial comparative advantage for all available years. Available years are 2011 and 2016.}
 
-\item{...}{Additional options passed to the calculation of the location quotient. See ?location_quotient for more information.}
+\item{...}{Additional options passed to the calculation of the location quotient. See \code{location_quotient} for more information.}
 }
 \value{
 
