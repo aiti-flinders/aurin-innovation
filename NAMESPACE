@@ -3,6 +3,7 @@
 export(ica)
 export(igo)
 export(location_quotient)
+export(regional_innovation)
 importFrom(dplyr,"%>%")
 importFrom(rlang,.data)
 importFrom(sf,st_drop_geometry)
