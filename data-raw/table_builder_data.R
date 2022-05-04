@@ -86,7 +86,7 @@ sa2_indp4_2016 <- sa2_pow_ind4("data-raw/sa2_pow_indp4_2016.csv",
 
 sa2_indp4_2011 <- sa2_pow_ind4("data-raw/sa2_pow_indp4_2011.csv",
                                skip = 9,
-                               n_max = 1574532,
+                               n_max = 1611435,
                                year = 2011)
 
 usethis::use_data(sa2_indp4_2016, compress = "xz", overwrite = TRUE)
