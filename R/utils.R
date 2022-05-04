@@ -5,6 +5,9 @@ check_sa2 <- function(.data, geography, other) {
                   !stringr::str_detect(.data[[geography]], "POW No Fixed Address"),
                   !stringr::str_detect(.data[[geography]], "POW not applicable"),
                   !stringr::str_detect(.data[[geography]], "POW not stated"),
+                  !stringr::str_detect(.data[[geography]], "No usual address"),
+                  !stringr::str_detect(.data[[geography]], "POW State/Territory undefined"),
+                  !stringr::str_detect(.data[[geography]], "POW Capital city undefined"),
                   .data[[geography]] != "Total",
                   !.data[[other]] %in% c("Inadequately described",
                                 "Not stated",
@@ -85,7 +88,8 @@ sa2_to_sa3 <- function(sa2_data, two) {
 adjust_nfd <- function(data, nfd_col, nfd_level, anz = c("anzsic", "anzsco")) {
 
   if (anz == "anzsic") {
-    anz <- dplyr::distinct(strayr::anzsic2006, anzsic_division, .data[[nfd_level]])
+    anz <- dplyr::distinct(strayr::anzsic2006, anzsic_division, .data[[nfd_level]]) %>%
+      dplyr::mutate(dplyr::across(.data[[nfd_level]], ~ stringr::str_remove_all(.x, "\\.")))
     fill_var <- "anzsic_division"
   } else {
     anz <- dplyr::distinct(strayr::anzsco2021, anzsco_major, .data[[nfd_level]])
@@ -94,7 +98,7 @@ adjust_nfd <- function(data, nfd_col, nfd_level, anz = c("anzsic", "anzsco")) {
 
   data %>%
     dplyr::left_join(anz, by = setNames(nfd_level, nfd_col)) %>%
-    tidyr::fill(.data[[fill_var]], .direction = "up") %>%
+    tidyr::fill(.data[[fill_var]], .direction = "updown") %>%
     dplyr::group_by(sa2_name, .data[[fill_var]]) %>%
     dplyr::mutate(employment_share = employment / sum(employment),
                   nfd = ifelse(stringr::str_detect(.data[[nfd_col]], "nfd"), employment, NA)) %>%
