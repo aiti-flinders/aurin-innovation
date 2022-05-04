@@ -52,10 +52,11 @@ ica <- function(years = "all", geography = "sa2_name", ...) {
     value_var <- "employment"
     ellipse_arg$value_var = "employment"
   }
+
   pow <- pow %>%
     dplyr::left_join(strayr::read_absmap("sa22016", remove_year_suffix = TRUE)) %>%
     dplyr::group_by(.data[[geography]], industry) %>%
-    dplyr::summarise(dplyr::across(.data[[ellipse_arg$value_var]], sum)) %>%
+    dplyr::mutate(dplyr::across(.data[[ellipse_arg$value_var]], sum)) %>%
     dplyr::ungroup()
 
 
