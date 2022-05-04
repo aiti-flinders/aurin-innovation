@@ -37,8 +37,10 @@ education_location <- left_join(sa2, unis_in_sa2) %>%
   left_join(tafes_in_sa2) %>%
   st_drop_geometry() %>%
   as_tibble() %>%
-  select(sa2_name, sa3_name, unis, tafes) %>%
-  replace_na(list(unis = 0, tafes = 0))
+  select(sa2_name, unis, tafes) %>%
+  replace_na(list(unis = 0, tafes = 0, infrastructure = 0)) %>%
+  mutate(infrastructure = unis + tafes) %>%
+  check_sa2(geography = "sa2_name", other = "unis")
 
 
 usethis::use_data(education_location, compress = "xz", overwrite = TRUE)
