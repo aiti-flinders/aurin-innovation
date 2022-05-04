@@ -42,8 +42,7 @@ create_plants <- function(year, geography = NULL) {
                   year = {{year}}) %>%
     dplyr::left_join(plants_info) %>%
     dplyr::filter(application_year == {{year}},
-                  australian == TRUE,
-                  !appl_status_code %in% c("REFUSED", "REJECTED")) %>%
+                  !is.na(sa2_name)) %>%
     dplyr::left_join(geog) %>%
     dplyr::group_by(.data[[geography]], type, year) %>%
     dplyr::tally() %>%
