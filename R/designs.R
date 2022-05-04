@@ -42,8 +42,7 @@ create_designs <- function(year, geography = NULL) {
                   year = {{year}}) %>%
     dplyr::left_join(designs_info) %>%
     dplyr::filter(application_year == {{year}},
-                  australian == TRUE,
-                  !status_code %in% c("Currently not in force", "Unpublished")) %>%
+                  !is.na(sa2_name)) %>%
     dplyr::left_join(geog) %>%
     dplyr::group_by(.data[[geography]], type, year) %>%
     dplyr::tally() %>%
