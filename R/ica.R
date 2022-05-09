@@ -15,10 +15,12 @@ ica <- function(years = "all", geography = "sa2_name", ...) {
   if (years == 2011) {
 
     pow <- sa2_indp2_2011
+    geog <- sa2_2011
 
   } else if (years == 2016) {
 
     pow <- sa2_indp2_2016
+    geog <- sa2_2016
   }
 
   ellipse_arg <- list(...)
@@ -54,7 +56,7 @@ ica <- function(years = "all", geography = "sa2_name", ...) {
   }
 
   pow <- pow %>%
-    dplyr::left_join(strayr::read_absmap("sa22016", remove_year_suffix = TRUE)) %>%
+    dplyr::left_join(geog) %>%
     dplyr::group_by(.data[[geography]], industry) %>%
     dplyr::mutate(dplyr::across(.data[[ellipse_arg$value_var]], sum)) %>%
     dplyr::ungroup()

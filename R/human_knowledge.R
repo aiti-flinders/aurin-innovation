@@ -2,15 +2,13 @@ create_graduates <- function(year = 2016, geography = "sa3_name") {
 
   if (year == 2016) {
 
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
-      sf::st_drop_geometry()
+    geog <- sa2_2016
 
     data <- sa2_qallp1_2016
 
   } else {
 
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
-      sf::st_drop_geometry()
+    geog <- sa2_2011
 
     data <- sa2_qallp1_2011
   }
@@ -39,16 +37,13 @@ create_stem <- function(year, geography) {
 
   if (year == 2016) {
 
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
-      sf::st_drop_geometry()
+    geog <- sa2_2016
 
     data <- sa2_qalfp2_2016
 
   } else {
 
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
-      sf::st_drop_geometry()
-
+    geog <- sa2_2011
     data <- sa2_qalfp2_2011
   }
 

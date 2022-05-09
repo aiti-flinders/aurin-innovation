@@ -29,11 +29,11 @@ create_trademarks <- function(year, geography = NULL) {
   }
 
   if (year == 2011) {
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
+    geog <- sa2_2011 %>%
       sf::st_drop_geometry()
   }
   else if (year == 2016) {
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
+    geog <- sa2_2016 %>%
       sf::st_drop_geometry()
   } else {
 

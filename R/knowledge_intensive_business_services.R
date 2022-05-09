@@ -3,14 +3,14 @@ create_kibs <- function(year = NULL, geography = NULL, adjust = TRUE) {
 
   if (year == 2016) {
 
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
+    geog <- sa2_2016 %>%
       sf::st_drop_geometry()
 
     data <- sa2_indp4_2016
 
 
   } else if (year == 2011) {
-      geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
+      geog <- sa2_2011 %>%
         sf::st_drop_geometry()
 
       data <- sa2_indp4_2011

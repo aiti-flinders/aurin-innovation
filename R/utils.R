@@ -73,17 +73,6 @@ kibs <- function() {
 
 }
 
-sa2_to_sa3 <- function(sa2_data, two) {
-
-  sa2 <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
-    sf::st_drop_geometry(x = .)
-
-  sa2_data %>%
-    dplyr::right_join(sa2, by = c("sa2_name")) %>%
-    dplyr::group_by(sa3_name, {{two}}) %>%
-    dplyr::summarise(across(where(is.double), ~sum(.x)), .groups = "drop")
-
-}
 
 adjust_nfd <- function(data, nfd_col, nfd_level, anz = c("anzsic", "anzsco")) {
 

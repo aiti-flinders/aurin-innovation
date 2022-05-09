@@ -7,9 +7,9 @@ library(dplyr)
 parse_cabee <- function(path, sheet, max_read) {
 
   read_xls(path, sheet, skip = 7, col_names = c("industry_code",
-                                                "industry_label",
+                                                "industry",
                                                 "sa2_code",
-                                                "sa2_label",
+                                                "sa2_name",
                                                 "non_employing",
                                                 "employing_1_4",
                                                 "employing_5_19",
@@ -23,20 +23,15 @@ parse_cabee <- function(path, sheet, max_read) {
 cabee <- map_dfr(.x = c("June 2015", "June 2016"), .f = ~parse_cabee("data-raw/816508.xls", sheet = .x))
 
 business_entries <- cabee %>%
-  select(industry_label, sa2_label, total, year) %>%
-  filter(!is.na(sa2_label),
-         !str_detect(industry_label, "Total"),
-         !str_detect(industry_label, "Currently Unknown")) %>%
-  pivot_wider(names_from = industry_label, values_from = total) %>%
-  filter(year == "June 2016") %>%
-  mutate(total_businesses = rowSums(across(where(is.double)))) %>%
-  pivot_longer(cols = 3:(length(.) - 1)) %>%
-  group_by(sa2_label) %>%
-  mutate(value = value/sum(value)) %>%
-  ungroup() %>%
-  pivot_wider(names_from = name, values_from = value) %>%
-  ungroup() %>%
-  rename(sa2_name = sa2_label) %>%
-  select(-year)
+  select(industry, sa2_name, total, year) %>%
+  filter(!is.na(sa2_name),
+         !str_detect(industry, "Total"),
+         !str_detect(industry, "Currently Unknown")) %>%
+  left_join(sa2_2016) %>%
+  group_by(sa2_name, year) %>%
+  summarise(across(total, sum), .groups = "drop") %>%
+  pivot_wider(names_from = year, values_from = total) %>%
+  rename(businesses_2015 = `June 2015`,
+         businesses_2016 = `June 2016`)
 
 usethis::use_data(business_entries, overwrite = TRUE)

@@ -21,19 +21,18 @@ unis <- read_aurin("data-raw/unis.geoJSON") %>%
 tafes <- read_aurin("data-raw/tafes.geoJSON") %>%
   st_transform(4326)
 
-sa2 <- read_absmap("sa22016", remove_year_suffix = TRUE)
 
-unis_in_sa2 <- st_join(unis, sa2) %>%
+unis_in_sa2 <- st_join(unis, sa2_2016) %>%
   group_by(sa2_name) %>%
   tally(name = "unis") %>%
   st_drop_geometry()
 
-tafes_in_sa2 <- st_join(tafes, sa2) %>%
+tafes_in_sa2 <- st_join(tafes, sa2_2016) %>%
   group_by(sa2_name) %>%
   tally(name = "tafes") %>%
   st_drop_geometry()
 
-education_location <- left_join(sa2, unis_in_sa2) %>%
+education_location <- left_join(sa2_2016, unis_in_sa2) %>%
   left_join(tafes_in_sa2) %>%
   st_drop_geometry() %>%
   as_tibble() %>%

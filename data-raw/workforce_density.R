@@ -1,5 +1,5 @@
 ## code to prepare `workforce_density` dataset goes here
-sa2_size_2016 <- read_absmap("sa22016", remove_year_suffix = TRUE) %>%
+sa2_size_2016 <- sa2_2016 %>%
   select(sa2_name, areasqkm) %>%
   sf::st_drop_geometry(x = .) %>%
   as_tibble()

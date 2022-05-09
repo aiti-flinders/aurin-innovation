@@ -28,12 +28,12 @@ create_plants <- function(year, geography = NULL) {
       dplyr::rename(application_year = appl_received_year)
   }
 
-  if (year < 2016) {
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE) %>%
+  if (year == 2016) {
+    geog <- sa2_2016 %>%
       sf::st_drop_geometry()
   }
   else {
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE) %>%
+    geog <- sa2_2011  %>%
       sf::st_drop_geometry()
   }
 

@@ -2,12 +2,12 @@ create_infrastructure <- function(year, geography = "sa3_name") {
 
   if (year == 2011) {
 
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE)
+    geog <- sa2_2011
     data <- education_location
 
   } else if (year == 2016) {
 
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE)
+    geog <- sa2_2016
     data <- education_location
   }
 
