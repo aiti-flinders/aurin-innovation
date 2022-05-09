@@ -16,18 +16,14 @@ check_sa2 <- function(.data, geography, other) {
 }
 
 
-read_abs_table_builder <- function(path, skip, n_max, year = NULL) {
-
-  readr::read_csv(file = path,
-                  skip = {{skip}},
-                  n_max = {{n_max}}) %>%
-    select(2:4) %>%
-    mutate(year = {{year}})
-
-
+sa2_16_to_sa2_11 <- function(data, var) {
+  data %>%
+    dplyr::left_join(sa2_2016_to_sa2_2011, by = c("sa2_name" = "sa2_name_2016")) %>%
+    dplyr::group_by(sa2_name_2011, year) %>%
+    dplyr::summarise(across(var, ~ round(sum(ratio * .x)))) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(sa2_name = sa2_name_2011)
 }
-
-
 
 kibs <- function() {
   k <- c(
