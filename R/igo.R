@@ -24,11 +24,13 @@
 igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .cog_limit = 0, .rca_limit = 1, .ica_limit = 1, ...) {
 
   if (year == 2011) {
+
     map_data <- sa2_2011 %>%
       sf::st_drop_geometry()
+
   } else {
     map_data <- sa2_2016 %>%
-      sf::st_drop_geometry
+      sf::st_drop_geometry()
   }
 
   ica_with_state <- ica(years = year, ...) %>%
