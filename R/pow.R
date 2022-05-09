@@ -3,12 +3,12 @@ pow <- function(year, geography) {
   if (year == 2016) {
 
     data <- sa2_indp2_2016
-    geog <- strayr::read_absmap("sa22016", remove_year_suffix = TRUE)
+    geog <- sa2_2016
 
   } else if (year == 2011) {
 
     data <- sa2_indp2_2011
-    geog <- strayr::read_absmap("sa22011", remove_year_suffix = TRUE)
+    geog <- sa2_2011
 
   }
 
