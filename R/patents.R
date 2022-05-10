@@ -57,7 +57,7 @@ create_patents <- function(year, geography = "sa2") {
   }
 
   p %>%
-    dplyr::left_join(geog) %>%
+    dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], year) %>%
     dplyr::summarise(patents = sum(patents),
                      backwards_citations = mean(backwards_citations)) %>%

@@ -30,9 +30,11 @@ create_designs <- function(year, geography = "sa2") {
   }
 
   if (year == 2011) {
-    geog <- sa2_2011
+    geog <- sa2_2011 %>%
+      sf::st_drop_geometry()
   } else {
-    geog <- sa2_2016
+    geog <- sa2_2016 %>%
+      sf::st_drop_geometry()
   }
 
 
@@ -52,7 +54,7 @@ create_designs <- function(year, geography = "sa2") {
   }
 
   d %>%
-    dplyr::left_join(geog) %>%
+    dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], year) %>%
     dplyr::summarise(designs = sum(designs)) %>%
     dplyr::ungroup()

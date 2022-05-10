@@ -57,7 +57,9 @@ create_skill <- function(year, geography = "sa2", adjust = FALSE) {
     dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]]) %>%
     dplyr::mutate(employment_share = .data[[emp]] / sum(.data[[emp]])) %>%
-    dplyr::summarise(skill = weighted.mean(x = score, w = employment_share, na.rm = T))
+    dplyr::summarise(skill = weighted.mean(x = score, w = employment_share, na.rm = T)) %>%
+    dplyr::mutate(year = {{year}})
+
 
   return(skill_level)
 

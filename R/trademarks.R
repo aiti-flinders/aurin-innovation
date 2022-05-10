@@ -33,9 +33,11 @@ create_trademarks <- function(year, geography = "sa2") {
   }
 
   if (year == 2011) {
-    geog <- sa2_2011
+    geog <- sa2_2011 %>%
+      sf::st_drop_geometry()
   } else {
-    geog <- sa2_2016
+    geog <- sa2_2016 %>%
+      sf::st_drop_geometry()
   }
 
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
@@ -56,7 +58,7 @@ create_trademarks <- function(year, geography = "sa2") {
   }
 
   tms %>%
-    dplyr::left_join(geog) %>%
+    dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], year) %>%
     dplyr::summarise(trademarks = sum(trademarks)) %>%
     dplyr::ungroup()

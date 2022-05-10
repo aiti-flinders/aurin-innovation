@@ -1,18 +1,18 @@
 create_knowledge_capability <- function(year, geography) {
 
-  knowledge_capability <- dplyr::left_join(
-    x = purrr::map_dfr(.x = year, .f = ~create_patents(.x, {{geography}})),
-    y = purrr::map_dfr(.x = year, .f = ~create_designs(.x, {{geography}}))
-  ) %>%
-    dplyr::left_join(
-      y = purrr::map_dfr(.x = year, .f = ~create_trademarks(.x, {{geography}})),
-      by = c({{geography}}, "year")
-      ) %>%
-    dplyr::left_join(
-      y = purrr::map_dfr(.x = year, .f = ~create_plants(.x, {{geography}})),
-      by = c({{geography}}, "year")
-    )
+  join_by <- c(paste0(tolower(geography), "_name"), "year")
 
-  return(knowledge_capability)
+  knowledge_capability <- dplyr::full_join(create_patents(year, geography),
+                                           create_designs(year, geography), by = join_by) %>%
+    dplyr::full_join(create_trademarks(year, geography), by = join_by) %>%
+    dplyr::full_join(create_plants(year, geography), by = join_by)
+
+  knowledge_capability %>%
+    tidyr::replace_na(list(patents = 0,
+                           backwards_citations = 0,
+                           designs = 0,
+                           trademarks = 0,
+                           plants = 0))
+
 
 }
