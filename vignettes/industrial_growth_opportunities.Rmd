@@ -15,6 +15,7 @@ vignette: >
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(aurininnovation)
+library(sf)
 library(DT)
 library(dplyr)
 ```
@@ -116,25 +117,25 @@ sa2_indp2_2016
 The industrial comparative advantage can be calculated through the `ica()` function. By default, `ica()` calculates the industrial comparative advantage for all years - currently 2011 and 2016. Individual years can be calcualted by specifying the year. It also removes regions with total employment less than 150, to account for perturbations applied by the ABS to small cell values in the TableBuilder. 
 
 ``` {r ica-2016, echo = TRUE}
-ica(years = 2016)
+ica(year = 2016)
 ```
 
-This produces the dataset as provided to AURIN. Further control over calculation of the industrial comparative advantage is available. For example, to calculate the industrial comparative advantage using employment by industry adjusted to remove "not further defined" industries, specify value variable as employment_adj. 
+This produces the dataset as provided to AURIN. Further control over calculation of the industrial comparative advantage is available. For example, to calculate the industrial comparative advantage using employment by industry adjusted to remove "not further defined" industries, specify `adjust = TRUE`. 
 
 ``` {r ica-2016-adj, echo = TRUE}
-ica(years = 2016, value_var = "employment_adj")
+ica(year = 2016, adjust = TRUE)
 ```
 
 The minimum value for a region's total employment can be controlled by specifying min_value. 
 
 ``` {r ica-2016-min, echo = TRUE}
-ica(years = 2016, min_value = 1000)
+ica(year = 2016, min_value = 1000)
 ```
 
 Additionally, the data can be filtered based on the size of total industry employment by specifying both min_value and total_var. Industries with less than 2000 employees can be removed as follows:
 
 ``` {r ica-2016-min-industry, echo = TRUE}
-ica(years = 2016, total_var = "industry_employment", min_value = 2000)
+ica(year = 2016, total_var = "industry_employment", min_value = 2000)
 ```
 
 

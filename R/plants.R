@@ -36,7 +36,7 @@ create_plants <- function(year, geography = "sa2") {
     geog <- sa2_2016
   }
 
-  stopifnot(tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
+  stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 

@@ -8,33 +8,34 @@ location_quotient(
   data,
   min_value = 0,
   total_var = NULL,
-  x_var = NULL,
+  geography = NULL,
   y_var = NULL,
   value_var = NULL
 )
 }
 \arguments{
-\item{data}{a dataframe}
+\item{data}{a data frame}
 
 \item{min_value}{numeric. the smallest total value allowable in a geographic region.}
 
 \item{total_var}{character. the name of the variable which must be greater than the \code{min_value}. This variable
 must be present in the data passed to the function.}
 
-\item{x_var}{character. the name of the variable to be treated as rows.}
-
 \item{y_var}{character. the name of the variable to be treated as columns.}
 
 \item{value_var}{character. the name of the variable to be treated as the value.}
+
+\item{x_var}{character. the name of the variable to be treated as rows.}
 }
 \value{
-tibble
+
 }
 \description{
 Calculate location quotient from any data which contains a column
 specifying a geographic variable, a second variable such as industry of employment, and a value. The data provided
 is converted into a matrix with dimensions x_var * y_var. The variable specified as value_var fills the matrix.
-
+}
+\details{
 Examples include:
 Revealed Comparative Advantage from country-product-export data.
 Industrial Comparative Advantage from region-industry-employment data.

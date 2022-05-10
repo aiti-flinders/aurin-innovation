@@ -35,7 +35,8 @@
 #' igo(2016, region = "Adelaide")
 #'
 #' # Specifying a product may help to identify a region best suited to develop a new industry
-#' igo(2016, product = "Artificial graphite")
+#' igo(2016, product = "Arti
+#' ficial graphite")
 #'
 #' # Override defaults.
 #' # Increasing the export value limit (from 0) focuses the opportunities
@@ -66,7 +67,7 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
       sf::st_drop_geometry()
   }
 
-  ica_with_state <- ica(years = year, ...) %>%
+  ica_with_state <- ica(year = year, ...) %>%
     dplyr::left_join(map_data, by = "sa2_name") %>%
     dplyr::select(sa2_name, sa2_code, industry, ica, year, state_name)
 

@@ -4,17 +4,46 @@
 \alias{ica}
 \title{Industrial Comparative Advantage}
 \usage{
-ica(years = "all", geography = "sa2_name", ...)
+ica(year, geography = "sa2", adjust = FALSE, ...)
 }
 \arguments{
-\item{years}{Which year to calculate the industrial comparative advantage. The default, "all", will calculate the
-industrial comparative advantage for all available years. Available years are 2011 and 2016.}
+\item{year}{(numeric). The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).}
+
+\item{geography}{(string). The geography level to calculate the industrial comparative advantage. Defaults to SA2.}
+
+\item{adjust}{(logical). TRUE to remove industries classified as "not further defined"}
 
 \item{...}{Additional options passed to the calculation of the location quotient. See \code{location_quotient} for more information.}
 }
 \value{
-
+a data frame of industrial comparative advantages.
 }
 \description{
-Industrial Comparative Advantage
+\code{ica()} creates a data frame of the industrial comparative advantages of Australian regions for 2011 and 2016.
+}
+\details{
+The industrial comparative advantage data is derived from employment by industry data from the Australian Bureau of Statistics (ABS)
+Census based on the place that people work, rather than their place of residence. Industry of employment is measured at the
+2006 ANZSIC Subdivision. Employment by industry alone is not an adequate measure of industrial strength, because it is not clear where one region outperforms another, as
+total employment differs across regions. For example, Preschool and School education is the largest employing industry in more
+than 25\\% of all regions. To accommodate this, the industrial comparative advantage uses a location quotient measure to identify
+in which industries a region employs a higher share than the Australian average.
+
+Census data is randomised in cases where a small number of people work in a specific industry in a region.
+This is done to avoid the release of confidential data. As such, regions in which fewer than 150 people work, are excluded by default.
+
+See \code{vignette("industrial_growth_opportunities")} for more details.
+}
+\examples{
+ica(year = 2016, geography = "sa3")
+
+# Remove industries classified as "not further defined"
+ica(year = 2016, adjust = TRUE)
+
+# Increase the minimum regional employment
+ica(year = 2016, min_value = 1000)
+
+# Remove industries which do not meet a minimum employment threshold
+ica(year = 2016, total_var = "industry_employment", min_value = 2000)
+
 }

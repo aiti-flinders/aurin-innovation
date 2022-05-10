@@ -62,9 +62,10 @@ igo(2016)
 igo(2016, region = "Adelaide")
 
 # Specifying a product may help to identify a region best suited to develop a new industry
-igo(2016, product = "Artificial graphite")
+igo(2016, product = "Arti
+ficial graphite")
 
-# Override defaults.
+Override defaults.
 # Increasing the export value limit (from 0) focuses the opportunities
 # on those with a stronger existing industrial base.
 

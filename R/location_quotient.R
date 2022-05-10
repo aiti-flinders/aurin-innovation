@@ -1,6 +1,6 @@
 #' Location Quotient
 #'
-#' @description Calculate location quotient from any data which contains a column
+#' Calculate location quotient from any data which contains a column
 #' specifying a geographic variable, a second variable such as industry of employment, and a value. The data provided
 #' is converted into a matrix with dimensions x_var * y_var. The variable specified as value_var fills the matrix.
 #'
@@ -15,9 +15,9 @@
 #' @param x_var character. the name of the variable to be treated as rows.
 #' @param y_var character. the name of the variable to be treated as columns.
 #' @param value_var character. the name of the variable to be treated as the value.
-#' @param data a dataframe
+#' @param data a data frame
 #'
-#' @return tibble
+#' @return
 #' @export location_quotient
 #'
 #' @importFrom rlang .data
@@ -27,11 +27,11 @@
 #' @examples \dontrun{
 #' location_quotient(sa2_indp2, options = list("min_value" = 100))
 #' }
-location_quotient <- function(data, min_value = 0, total_var = NULL, x_var = NULL, y_var = NULL, value_var = NULL) {
+location_quotient <- function(data, min_value = 0, total_var = NULL, geography = NULL, y_var = NULL, value_var = NULL) {
 
 
-  if (is.null(x_var)) {
-    x_var <- "sa2_name"
+  if (is.null(geography)) {
+    geography <- "sa2_name"
   }
 
   if (is.null(y_var)) {
@@ -43,7 +43,7 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, x_var = NUL
   }
 
 
-  if (!all(x_var %in% colnames(data),
+  if (!all(geography %in% colnames(data),
            y_var %in% colnames(data),
            value_var %in% colnames(data))) {
     stop("A nice stop message about conforming names in supplied data")
@@ -63,7 +63,7 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, x_var = NUL
 #   }
 
 
-  data_array <- reshape2::acast(data, list(x_var, y_var), value.var = value_var)
+  data_array <- reshape2::acast(data, list(geography, y_var), value.var = value_var)
 
   #Strip the column containing the sa2_names ...
   row_names <- rownames(data_array)
@@ -77,8 +77,8 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, x_var = NUL
 
   lq <- lq %>%
     tibble::as_tibble() %>%
-    dplyr::mutate(sa2_name = row_names) %>%
-    tidyr::pivot_longer(cols = -.data$sa2_name,
+    dplyr::mutate("{geography}" := row_names) %>%
+    tidyr::pivot_longer(cols = -.data[[geography]],
                         names_to = "industry",
                         values_to = "lq")
 
