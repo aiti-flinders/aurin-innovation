@@ -20,10 +20,10 @@
 #' @param .cog_limit (optional) numeric. The minimum benefit that a product will generate for a region. The default (0) excludes all
 #' products with negative benefits.
 #' @param .rca_limit (optional) numeric. The maximum value for the level of revealed comparative advantage in the production of an
-#' opportunity in a state. The default (1) excludes all products which are already produced with comaprative advantage.
+#' opportunity in a state. The default (1) excludes all products which are already produced with comparative advantage.
 #' @param .ica_limit (optional) numeric. The minimum value for the level of industrial comparative advantage. The default (1) excludes
 #' all products which are made in industries in which the region does not have a higher proportion of employment than Australia.
-#' @param ... (optional). Additional arguments passed to `ica()`
+#' @param ... (optional). Additional arguments passed to `ica()`.
 #'
 #' @return a data frame of industrial growth opportunities.
 #' @export igo
@@ -35,8 +35,7 @@
 #' igo(2016, region = "Adelaide")
 #'
 #' # Specifying a product may help to identify a region best suited to develop a new industry
-#' igo(2016, product = "Arti
-#' ficial graphite")
+#' igo(2016, product = "Artificial graphite")
 #'
 #' # Override defaults.
 #' # Increasing the export value limit (from 0) focuses the opportunities
@@ -56,6 +55,10 @@
 #'
 #' @importFrom rlang .data
 igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .cog_limit = 0, .rca_limit = 1, .ica_limit = 1, ...) {
+
+  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+
+  geography <- paste0(tolower(geography), "_name")
 
   if (year == 2011) {
 

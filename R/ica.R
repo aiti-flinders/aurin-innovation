@@ -16,9 +16,9 @@
 #'  See `vignette("industrial_growth_opportunities")` for more details.
 #'
 #'
-#' @param year (numeric). The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).
-#' @param geography (string). The geography level to calculate the industrial comparative advantage. Defaults to SA2.
-#' @param adjust (logical). TRUE to remove industries classified as "not further defined"
+#' @param year numeric. The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).
+#' @param geography string. The geography level to calculate the industrial comparative advantage. Defaults to SA2.
+#' @param adjust logical. TRUE to remove industries classified as "not further defined"
 #' @param ... Additional options passed to the calculation of the location quotient. See `location_quotient` for more information.
 #'
 #' @return a data frame of industrial comparative advantages.

@@ -14,34 +14,30 @@ location_quotient(
 )
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{a data frame or data frame like object.}
 
-\item{min_value}{numeric. the smallest total value allowable in a geographic region.}
+\item{min_value}{(numeric). The minimum value of \code{total_var} for inclusion in the location quotient calculation.}
 
-\item{total_var}{character. the name of the variable which must be greater than the \code{min_value}. This variable
-must be present in the data passed to the function.}
+\item{total_var}{(string). The name of the variable whose values must be greater than the \code{min_value}.}
 
-\item{y_var}{character. the name of the variable to be treated as columns.}
+\item{geography}{(string). The region to calculate the location quotient.}
 
-\item{value_var}{character. the name of the variable to be treated as the value.}
+\item{y_var}{(string). The name of the non geography variable in the data. Defaults to 'industry'.}
 
-\item{x_var}{character. the name of the variable to be treated as rows.}
+\item{value_var}{(string).  The name of the variable which contains the values for the geography and \code{y_var} pairs. Defaults to employment.}
 }
 \value{
 
 }
 \description{
-Calculate location quotient from any data which contains a column
-specifying a geographic variable, a second variable such as industry of employment, and a value. The data provided
-is converted into a matrix with dimensions x_var * y_var. The variable specified as value_var fills the matrix.
+\verb{location quotient()} calculates the location quotient for any data for geography based data, such as
+revealed comparative advantage (RCA) from country-product-export data, or industrial comparative advantage (ICA) from
+region-industry-employment data.
 }
 \details{
-Examples include:
-Revealed Comparative Advantage from country-product-export data.
-Industrial Comparative Advantage from region-industry-employment data.
+By default, assumes the input data contains region-industry-employment data.
 }
 \examples{
-\dontrun{
-location_quotient(sa2_indp2, options = list("min_value" = 100))
-}
+location_quotient(sa2_indp_2011)
+
 }

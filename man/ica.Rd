@@ -7,11 +7,11 @@
 ica(year, geography = "sa2", adjust = FALSE, ...)
 }
 \arguments{
-\item{year}{(numeric). The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).}
+\item{year}{numeric. The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).}
 
-\item{geography}{(string). The geography level to calculate the industrial comparative advantage. Defaults to SA2.}
+\item{geography}{string. The geography level to calculate the industrial comparative advantage. Defaults to SA2.}
 
-\item{adjust}{(logical). TRUE to remove industries classified as "not further defined"}
+\item{adjust}{logical. TRUE to remove industries classified as "not further defined"}
 
 \item{...}{Additional options passed to the calculation of the location quotient. See \code{location_quotient} for more information.}
 }

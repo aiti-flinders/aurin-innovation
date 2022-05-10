@@ -31,12 +31,12 @@ a growth opportunity for a region. The default (0) excludes products which were 
 products with negative benefits.}
 
 \item{.rca_limit}{(optional) numeric. The maximum value for the level of revealed comparative advantage in the production of an
-opportunity in a state. The default (1) excludes all products which are already produced with comaprative advantage.}
+opportunity in a state. The default (1) excludes all products which are already produced with comparative advantage.}
 
 \item{.ica_limit}{(optional) numeric. The minimum value for the level of industrial comparative advantage. The default (1) excludes
 all products which are made in industries in which the region does not have a higher proportion of employment than Australia.}
 
-\item{...}{(optional). Additional arguments passed to \code{ica()}}
+\item{...}{(optional). Additional arguments passed to \code{ica()}.}
 }
 \value{
 a data frame of industrial growth opportunities.
@@ -62,10 +62,9 @@ igo(2016)
 igo(2016, region = "Adelaide")
 
 # Specifying a product may help to identify a region best suited to develop a new industry
-igo(2016, product = "Arti
-ficial graphite")
+igo(2016, product = "Artificial graphite")
 
-Override defaults.
+# Override defaults.
 # Increasing the export value limit (from 0) focuses the opportunities
 # on those with a stronger existing industrial base.
 

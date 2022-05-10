@@ -1,32 +1,28 @@
 #' Location Quotient
 #'
-#' Calculate location quotient from any data which contains a column
-#' specifying a geographic variable, a second variable such as industry of employment, and a value. The data provided
-#' is converted into a matrix with dimensions x_var * y_var. The variable specified as value_var fills the matrix.
+#' `location quotient()` calculates the location quotient for any data for geography based data, such as
+#' revealed comparative advantage (RCA) from country-product-export data, or industrial comparative advantage (ICA) from
+#' region-industry-employment data.
+#'
+#' By default, assumes the input data contains region-industry-employment data.
 #'
 #'
-#' Examples include:
-#' Revealed Comparative Advantage from country-product-export data.
-#' Industrial Comparative Advantage from region-industry-employment data.
-#'
-#' @param min_value numeric. the smallest total value allowable in a geographic region.
-#' @param total_var character. the name of the variable which must be greater than the `min_value`. This variable
-#' must be present in the data passed to the function.
-#' @param x_var character. the name of the variable to be treated as rows.
-#' @param y_var character. the name of the variable to be treated as columns.
-#' @param value_var character. the name of the variable to be treated as the value.
-#' @param data a data frame
+#' @param data a data frame or data frame like object.
+#' @param min_value (numeric). The minimum value of `total_var` for inclusion in the location quotient calculation.
+#' @param total_var (string). The name of the variable whose values must be greater than the `min_value`.
+#' @param y_var (string). The name of the non geography variable in the data. Defaults to 'industry'.
+#' @param value_var (string).  The name of the variable which contains the values for the geography and `y_var` pairs. Defaults to employment.
+#' @param geography (string). The region to calculate the location quotient.
 #'
 #' @return
-#' @export location_quotient
 #'
 #' @importFrom rlang .data
 #' @importFrom dplyr %>%
 #'
 #'
-#' @examples \dontrun{
-#' location_quotient(sa2_indp2, options = list("min_value" = 100))
-#' }
+#' @examples
+#' location_quotient(sa2_indp_2011)
+#'
 location_quotient <- function(data, min_value = 0, total_var = NULL, geography = NULL, y_var = NULL, value_var = NULL) {
 
 
