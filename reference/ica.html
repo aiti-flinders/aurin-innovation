@@ -54,11 +54,11 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>year</dt>
-<dd><p>(numeric). The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).</p></dd>
+<dd><p>numeric. The year to calculate the industrial comparative advantage. Must be a Census year (2011, 2016, 2021).</p></dd>
 <dt>geography</dt>
-<dd><p>(string). The geography level to calculate the industrial comparative advantage. Defaults to SA2.</p></dd>
+<dd><p>string. The geography level to calculate the industrial comparative advantage. Defaults to SA2.</p></dd>
 <dt>adjust</dt>
-<dd><p>(logical). TRUE to remove industries classified as "not further defined"</p></dd>
+<dd><p>logical. TRUE to remove industries classified as "not further defined"</p></dd>
 <dt>...</dt>
 <dd><p>Additional options passed to the calculation of the location quotient. See <code>location_quotient</code> for more information.</p></dd>
 </dl></div>
@@ -82,71 +82,23 @@ This is done to avoid the release of confidential data. As such, regions in whic
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">ica</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2016</span>, geography <span class="op">=</span> <span class="st">"sa3"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 35,700 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    sa3_name      industry                                              ica  year</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Adelaide City Accommodation                                      1.64    <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Adelaide City Accommodation and Food Services, nfd               1.09    <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Adelaide City Administrative Services                            1.20    <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Adelaide City Administrative and Support Services, nfd           3.08    <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Adelaide City Adult, Community and Other Education               0.651   <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Adelaide City Agriculture                                        0.043<span style="text-decoration: underline;">7</span>  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Adelaide City Agriculture, Forestry and Fishing Support Services 0.088<span style="text-decoration: underline;">7</span>  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Adelaide City Agriculture, Forestry and Fishing, nfd             0.427   <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Adelaide City Air and Space Transport                            0.314   <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Adelaide City Aquaculture                                        0.069<span style="text-decoration: underline;">6</span>  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 35,690 more rows</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> All columns in a tibble must be vectors.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `geometry` is a `sfc_MULTIPOLYGON/sfc` object.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Remove industries classified as "not further defined"</span></span>
 <span class="r-in"><span class="fu">ica</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2016</span>, adjust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 195,134 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    sa2_name         industry                                           ica  year</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ACT - South West Accommodation                                     3.41  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ACT - South West Administrative Services                           0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ACT - South West Adult, Community and Other Education              6.00  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ACT - South West Agriculture                                       3.41  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT - South West Agriculture, Forestry and Fishing Support Servi…  0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ACT - South West Air and Space Transport                           1.41  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ACT - South West Aquaculture                                       0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ACT - South West Auxiliary Finance and Insurance Services          0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ACT - South West Basic Chemical and Chemical Product Manufacturi…  0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ACT - South West Basic Material Wholesaling                        0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 195,124 more rows</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> All columns in a tibble must be vectors.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `geometry` is a `sfc_MULTIPOLYGON/sfc` object.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Increase the minimum regional employment</span></span>
 <span class="r-in"><span class="fu">ica</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2016</span>, min_value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 238,245 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    sa2_name         industry                                           ica  year</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ACT - South West Accommodation                                     3.42  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ACT - South West Accommodation and Food Services, nfd              0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ACT - South West Administrative Services                           0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ACT - South West Administrative and Support Services, nfd          0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT - South West Adult, Community and Other Education              6.17  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ACT - South West Agriculture                                       3.45  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ACT - South West Agriculture, Forestry and Fishing Support Servi…  0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ACT - South West Agriculture, Forestry and Fishing, nfd            0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ACT - South West Air and Space Transport                           1.44  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ACT - South West Aquaculture                                       0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 238,235 more rows</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> All columns in a tibble must be vectors.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `geometry` is a `sfc_MULTIPOLYGON/sfc` object.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Remove industries which do not meet a minimum employment threshold</span></span>
 <span class="r-in"><span class="fu">ica</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2016</span>, total_var <span class="op">=</span> <span class="st">"industry_employment"</span>, min_value <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 238,245 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    sa2_name         industry                                           ica  year</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ACT - South West Accommodation                                     3.42  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ACT - South West Accommodation and Food Services, nfd              0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ACT - South West Administrative Services                           0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ACT - South West Administrative and Support Services, nfd          0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ACT - South West Adult, Community and Other Education              6.17  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ACT - South West Agriculture                                       3.45  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ACT - South West Agriculture, Forestry and Fishing Support Servi…  0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ACT - South West Agriculture, Forestry and Fishing, nfd            0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ACT - South West Air and Space Transport                           1.44  <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ACT - South West Aquaculture                                       0     <span style="text-decoration: underline;">2</span>016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 238,235 more rows</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> All columns in a tibble must be vectors.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `geometry` is a `sfc_MULTIPOLYGON/sfc` object.</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

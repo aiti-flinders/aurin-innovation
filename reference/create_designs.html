@@ -75,20 +75,8 @@ Intellectual Property Government Open Data, and includes:</p><ul><li><p>IPGOD 30
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">create_designs</span><span class="op">(</span><span class="fl">2016</span>, <span class="st">"SA2"</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "sa2_name"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 657 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    sa2_name                   year designs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Abbotsford                 <span style="text-decoration: underline;">2</span>016       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Adelaide                   <span style="text-decoration: underline;">2</span>016      19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Adelaide Hills             <span style="text-decoration: underline;">2</span>016       3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Agnes Water - Miriam Vale  <span style="text-decoration: underline;">2</span>016       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Albany                     <span style="text-decoration: underline;">2</span>016       4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Albany Creek               <span style="text-decoration: underline;">2</span>016       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Albert Park                <span style="text-decoration: underline;">2</span>016       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Albion                     <span style="text-decoration: underline;">2</span>016       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Albury - East              <span style="text-decoration: underline;">2</span>016       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Albury - South             <span style="text-decoration: underline;">2</span>016       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 647 more rows</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> All columns in a tibble must be vectors.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `geometry` is a `sfc_MULTIPOLYGON/sfc` object.</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
