@@ -16,18 +16,19 @@ A data frame of patents by geography for a given year.
 }
 \description{
 \code{create_patents()} creates a data frame with the number of patents filed in a geographic area for a given year, and
-the average number of backwards citations that a patent application included. Only patents applied for in Australia are
-included. This data is derived from the Intellectual Property Government Open Data, and includes:
+the average number of backwards citations that a patent application included.
 }
 \details{
-IPGOD 101 Patents Summary
-IPGOD 102 Patents Applicant Information
-IPGOD 110 Patents Citation Information
-
-More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
+Only patents applied for in Australia are included. This data is derived from the
+Intellectual Property Government Open Data, and includes:
+\itemize{
+\item{IPGOD 101 Patents Summary}
+\item{IPGOD 102 Patents Applicant Information}
+\item{IPGOD 110 Patents Citation Information}
+}
+More information about the IPGOD data is available through the
+\href{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}{IPGOD Data Dictionary.}
 }
 \examples{
-\dontrun{
 create_patents(2016, "SA2")
-}
 }

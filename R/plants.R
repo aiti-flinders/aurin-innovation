@@ -1,13 +1,17 @@
 #' Create Plant Breeder Rights IP data.
 #'
 #' `create_plants()` creates a data frame with the number of plant breeder rights applied for in a
-#' geographic area for a given year. Only Plant Breeder Rights lodged in Australia are included. This data
+#' geographic area for a given year.
+#'
+#' Only Plant Breeder Rights lodged in Australia are included. This data
 #' is derived from the Intellectual Property Government Open Data, and includes:
+#' \itemize{
+#' \item{IPGOD 401 Plant Breeder's Rights Summary}
+#' \item{IPGOD 402 Plant Breeder's Rights Applicant Information}
+#' }
 #'
-#' IPGOD 401 Plant Breeder's Rights Summary and
-#' IPGOD 402 Plant Breeder's Rights Applicant Information
-#'
-#' More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
+#' More information about the IPGOD data is available through the
+#' \href{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}{IPGOD Data Dictionary.}
 #'
 #' @param year numeric. The year the plant breeder right application was submitted.
 #' @param geography string. The geographic region of interest. Defaults to SA2
@@ -15,9 +19,9 @@
 #' @return A data frame of plant breeder rights by geography for a given year.
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' create_plants(2016, "SA2")
-#' }
+
 create_plants <- function(year, geography = "sa2") {
 
   if (!year %in% c(2011, 2016, 2021)) {

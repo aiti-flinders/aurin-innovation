@@ -1,12 +1,16 @@
 #' Create Designs IP data.
 #'
-#' `create_designs()` creates a data frame with the number of designs filed in a geographic are for a given year. Only designs applied
-#' for in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
+#' `create_designs()` creates a data frame with the number of designs filed in a geographic are for a given year.
 #'
-#' IPGOD 301 Designs Summary
-#' IPGOD 302 Designs Applicant Information
+#' Only designs applied for in Australia are included. This data is derived from the
+#' Intellectual Property Government Open Data, and includes:
+#' \itemize{
+#' \item{IPGOD 301 Designs Summary}
+#' \item{IPGOD 302 Designs Applicant Information}
+#' }
 #'
-#' More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
+#' More information about the IPGOD data is available through the
+#' \href{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}{IPGOD Data Dictionary.}
 #'
 #' @param year numeric. The year the designs were filed.
 #' @param geography string. The geographic region of interest. Defaults to SA2
@@ -14,9 +18,9 @@
 #' @return A data frame of designs by geography for a given year.
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' create_designs(2016, "SA2")
-#' }
+#'
 create_designs <- function(year, geography = "sa2") {
 
   if (!year %in% c(2011, 2016, 2021)) {

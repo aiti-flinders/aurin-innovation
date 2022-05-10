@@ -21,7 +21,7 @@ igo(
 \item{region}{character. Show only industrial growth opportunities for a given region. The default (NULL) will return
 industrial growth opportunities for all regions.}
 
-\item{product}{character. Show only regions with an opportunitiy in a given product. The default (NULL) will return
+\item{product}{character. Show only regions with an opportunity in a given product. The default (NULL) will return
 industrial growth opportunities for all products}
 
 \item{.export_value_limit}{(optional) numeric. The minimum state export value for a product required to be considered
@@ -39,8 +39,45 @@ all products which are made in industries in which the region does not have a hi
 \item{...}{(optional). Additional arguments passed to \code{ica()}}
 }
 \value{
-
+a data frame of industrial growth opportunities.
 }
 \description{
-Industrial Growth Opportunities
+\code{igo()} creates a data frame of the industrial growth opportunities across Statistical Area Level 2 regions for 2011 and 2016.
+}
+\details{
+The industrial growth opportunities are derived from the industrial comparative advantage data (see \code{ica()}), and a State based
+model of economic complexity, developed by the Australian Industrial Transformation Institute at Flinders University,
+in collaboration with the Government of South Australia.
+
+Industrial growth opportunities capture, at the product level, what industrial development would be:
+\itemize{
+\item most beneficial for a region, and
+\item most suitable for a region based on its industrial strengths.
+}
+}
+\examples{
+igo(2016)
+
+# Industrial growth opportunities for a specific region
+igo(2016, region = "Adelaide")
+
+# Specifying a product may help to identify a region best suited to develop a new industry
+igo(2016, product = "Artificial graphite")
+
+# Override defaults.
+# Increasing the export value limit (from 0) focuses the opportunities
+# on those with a stronger existing industrial base.
+
+# Increasing the COG limit (from 0) focuses the opportunities
+# on those which would bring a higher benefit to the region.
+
+# Decreasing the RCA limit (from 1) focuses the opportunities
+# on those which are less developed in the State.
+
+# Increasing the ICA limit (from 1) focuses the opportunities
+# on industries in which a region has a significant comparative advantage.
+
+igo(2016, .export_value_limit = 1000, .cog_limit = 0.5, .rca_limit = 0.5, .ica_limit = 0.5)
+
+
 }

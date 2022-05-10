@@ -16,16 +16,19 @@ a data frame of trademarks by geography for a given year.
 }
 \description{
 \code{create_trademarks()} creates a data frame with the number of trademarks filed in a geographic area for a given year.
-Only trademarks filed in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
 }
 \details{
-IPGOD 201 Trade Marks Summary
-IPGOD 202 Trade Marks Applicant Information
+Only trademarks filed in Australia are included. This data is derived from the
+Intellectual Property Government Open Data, and includes:
+\itemize{
+\item{IPGOD 201 Trade Marks Summary}
+\item{IPGOD 202 Trade Marks Applicant Information}
+}
 
-More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
+More information about the IPGOD data is available through the
+\href{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}{IPGOD Data Dictionary.}
 }
 \examples{
-\dontrun{
 create_trademarks(2016, "SA2")
-}
+
 }

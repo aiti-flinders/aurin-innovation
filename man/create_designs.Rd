@@ -15,17 +15,20 @@ create_designs(year, geography = "sa2")
 A data frame of designs by geography for a given year.
 }
 \description{
-\code{create_designs()} creates a data frame with the number of designs filed in a geographic are for a given year. Only designs applied
-for in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
+\code{create_designs()} creates a data frame with the number of designs filed in a geographic are for a given year.
 }
 \details{
-IPGOD 301 Designs Summary
-IPGOD 302 Designs Applicant Information
+Only designs applied for in Australia are included. This data is derived from the
+Intellectual Property Government Open Data, and includes:
+\itemize{
+\item{IPGOD 301 Designs Summary}
+\item{IPGOD 302 Designs Applicant Information}
+}
 
-More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
+More information about the IPGOD data is available through the
+\href{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}{IPGOD Data Dictionary.}
 }
 \examples{
-\dontrun{
 create_designs(2016, "SA2")
-}
+
 }
