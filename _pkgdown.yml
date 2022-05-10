@@ -19,6 +19,8 @@ reference:
   - create_qualification
   - create_stem
   - create_owner_managers
+  - create_kibs
+  - create_skill
 
 - title: "Derived Data"
   desc: >
