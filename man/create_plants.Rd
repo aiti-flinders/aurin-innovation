@@ -2,9 +2,9 @@
 % Please edit documentation in R/plants.R
 \name{create_plants}
 \alias{create_plants}
-\title{Plant Breeder Rights data}
+\title{Create Plant Breeder Rights IP data.}
 \usage{
-create_plants(year, geography = NULL)
+create_plants(year, geography = "sa2")
 }
 \arguments{
 \item{year}{numeric. The year the plant breeder right application was submitted.}
@@ -12,10 +12,18 @@ create_plants(year, geography = NULL)
 \item{geography}{string. The geographic region of interest. Defaults to SA2}
 }
 \value{
-A dataframe of plant breeder rights by geography for a given year.
+A data frame of plant breeder rights by geography for a given year.
 }
 \description{
-Creates a datafrmae with the number of plant breeder rights applied for in a geographic area for a given year.
+\code{create_plants()} creates a data frame with the number of plant breeder rights applied for in a
+geographic area for a given year. Only Plant Breeder Rights lodged in Australia are included. This data
+is derived from the Intellectual Property Government Open Data, and includes:
+}
+\details{
+IPGOD 401 Plant Breeder's Rights Summary and
+IPGOD 402 Plant Breeder's Rights Applicant Information
+
+More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 }
 \examples{
 \dontrun{

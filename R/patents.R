@@ -1,16 +1,23 @@
-#' Patents data
+#' Create Patents IP data.
 #'
-#' Creates a dataframe with the number of patents filed in a geographic area for a given year, and
-#' the average number of backwards citations that a patent application included.
+#' `create_patents()` creates a data frame with the number of patents filed in a geographic area for a given year, and
+#' the average number of backwards citations that a patent application included. Only patents applied for in Australia are
+#' included. This data is derived from the Intellectual Property Government Open Data, and includes:
+#'
+#' IPGOD 101 Patents Summary
+#' IPGOD 102 Patents Applicant Information
+#' IPGOD 110 Patents Citation Information
+#'
+#' More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 #'
 #' @param year numeric. The year the patents were filed.
 #' @param geography string. The geographic region of interest. Defaults to SA2.
 #'
-#' @return a dataframe of patents by geography for a given year.
+#' @return A data frame of patents by geography for a given year.
 #' @export
 #'
 #' @examples \dontrun{
-#' create_patents(2016, "sa2")
+#' create_patents(2016, "SA2")
 #' }
 create_patents <- function(year, geography = "sa2") {
 
@@ -30,61 +37,9 @@ create_patents <- function(year, geography = "sa2") {
 
   geography <- paste0(tolower(geography), "_name")
 
-  if (!file.exists("data-raw/ipgod102.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/846990df-db42-4ad7-bbd6-567fd37a2797/download/ipgod102.csv",
-                  destfile = "data-raw/ipgod102.csv")
-
-    patents <- readr::read_csv("data-raw/ipgod102.csv",
-                               show_col_types = FALSE) %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-
-  }  else {
-
-    patents <- readr::read_csv("data-raw/ipgod102.csv",
-                               show_col_types = FALSE) %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-  }
-
-  if (!file.exists("data-raw/ipgod101.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/e5cbeafc-5fb3-4dfd-bd22-afe81b6ab1e1/download/ipgod101.csv",
-                  destfile = "data-raw/ipgod101.csv")
-
-    patents_info <- readr::read_csv("data-raw/ipgod101.csv",
-                                    show_col_types = FALSE) %>%
-      dplyr::rename(year = application_year)
-
-  } else {
-
-    patents_info <- readr::read_csv("data-raw/ipgod101.csv",
-                                    show_col_types = FALSE) %>%
-      dplyr::rename(year = application_year)
-  }
-
-  if (!file.exists("data-raw/ipgod110.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/12d28b0f-b16e-487d-b6ca-b44ea7b97d8c/download/ipgod110.csv",
-                  destfile = "data-raw/ipgod110.csv")
-
-    patents_citations <- readr::read_csv("data-raw/ipgod110.csv",
-                                         col_types = c("nccccccc"),
-                                         show_col_types = FALSE)
-
-  } else {
-
-    patents_citations <- readr::read_csv("data-raw/ipgod110.csv",
-                                         col_types = c("nccccccc"),
-                                         show_col_types = FALSE)
-
-  }
-
   p <- patents %>%
-    dplyr::left_join(patents_info, by = c("australian_appl_no", "australian", "entity")) %>%
-    dplyr::left_join(patents_citations, by = "australian_appl_no") %>%
     dplyr::mutate(ipc = stringr::str_sub(primary_ipc_mark_value, 0, 1)) %>%
-    dplyr::filter(year == {{year}},
-                  !is.na(sa2_name)) %>%
+    dplyr::filter(year == {{year}}) %>%
     dplyr::group_by(australian_appl_no) %>%
     dplyr::mutate(backwards_citations = dplyr::n()) %>%
     dplyr::ungroup() %>%

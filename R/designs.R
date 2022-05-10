@@ -1,11 +1,17 @@
-#' Designs data
+#' Create Designs IP data.
 #'
-#' Creates a dataframe with the number of designs files in a geographic are for a given year.
+#' `create_designs()` creates a data frame with the number of designs filed in a geographic are for a given year. Only designs applied
+#' for in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
+#'
+#' IPGOD 301 Designs Summary
+#' IPGOD 302 Designs Applicant Information
+#'
+#' More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 #'
 #' @param year numeric. The year the designs were filed.
 #' @param geography string. The geographic region of interest. Defaults to SA2
 #'
-#' @return A dataframe of designs by geography for a given year.
+#' @return A data frame of designs by geography for a given year.
 #' @export
 #'
 #' @examples \dontrun{
@@ -31,43 +37,8 @@ create_designs <- function(year, geography = "sa2") {
   geography <- paste0(tolower(geography), "_name")
 
 
-  if (!file.exists("data-raw/ipgod302.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/4b802e80-c667-4b84-8f50-72c2624c59c1/download/ipgod302.csv",
-                  destfile = "data-raw/ipgod302.csv")
-
-    designs <- readr::read_csv("data-raw/ipgod302.csv",
-                               show_col_types = FALSE) %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-
-  }  else {
-
-    designs <- readr::read_csv("data-raw/ipgod302.csv",
-                               show_col_types = FALSE) %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-  }
-
-  if (!file.exists("data-raw/ipgod301.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/71770a53-8727-4f00-a423-db4878f910f6/download/ipgod301.csv",
-                  destfile = "data-raw/ipgod301.csv")
-
-    designs_info <- readr::read_csv("data-raw/ipgod301.csv",
-                                    show_col_types = FALSE) %>%
-      dplyr::rename(year = filing_year)
-
-  } else {
-
-    designs_info <- readr::read_csv("data-raw/ipgod301.csv",
-                                    show_col_types = FALSE) %>%
-      dplyr::rename(year = filing_year)
-  }
-
-
   d <- designs %>%
-    dplyr::left_join(designs_info, "application_id", "australian", "entity") %>%
-    dplyr::filter(year == {{year}},
-                  !is.na(sa2_name)) %>%
+    dplyr::filter(year == {{year}}) %>%
     dplyr::group_by(sa2_name, year) %>%
     dplyr::summarise(designs = dplyr::n(), .groups = "drop") %>%
     dplyr::ungroup()

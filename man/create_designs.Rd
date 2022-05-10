@@ -2,7 +2,7 @@
 % Please edit documentation in R/designs.R
 \name{create_designs}
 \alias{create_designs}
-\title{Designs data}
+\title{Create Designs IP data.}
 \usage{
 create_designs(year, geography = "sa2")
 }
@@ -12,10 +12,17 @@ create_designs(year, geography = "sa2")
 \item{geography}{string. The geographic region of interest. Defaults to SA2}
 }
 \value{
-A dataframe of designs by geography for a given year.
+A data frame of designs by geography for a given year.
 }
 \description{
-Creates a dataframe with the number of designs files in a geographic are for a given year.
+\code{create_designs()} creates a data frame with the number of designs filed in a geographic are for a given year. Only designs applied
+for in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
+}
+\details{
+IPGOD 301 Designs Summary
+IPGOD 302 Designs Applicant Information
+
+More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 }
 \examples{
 \dontrun{

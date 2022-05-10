@@ -2,7 +2,7 @@
 % Please edit documentation in R/patents.R
 \name{create_patents}
 \alias{create_patents}
-\title{Patents data}
+\title{Create Patents IP data.}
 \usage{
 create_patents(year, geography = "sa2")
 }
@@ -12,14 +12,22 @@ create_patents(year, geography = "sa2")
 \item{geography}{string. The geographic region of interest. Defaults to SA2.}
 }
 \value{
-a dataframe of patents by geography for a given year.
+A data frame of patents by geography for a given year.
 }
 \description{
-Creates a dataframe with the number of patents filed in a geographic area for a given year, and
-the average number of backwards citations that a patent application included.
+\code{create_patents()} creates a data frame with the number of patents filed in a geographic area for a given year, and
+the average number of backwards citations that a patent application included. Only patents applied for in Australia are
+included. This data is derived from the Intellectual Property Government Open Data, and includes:
+}
+\details{
+IPGOD 101 Patents Summary
+IPGOD 102 Patents Applicant Information
+IPGOD 110 Patents Citation Information
+
+More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 }
 \examples{
 \dontrun{
-create_patents(2016, "sa2")
+create_patents(2016, "SA2")
 }
 }

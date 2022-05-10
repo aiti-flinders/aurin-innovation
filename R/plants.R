@@ -1,21 +1,29 @@
-#' Plant Breeder Rights data
+#' Create Plant Breeder Rights IP data.
 #'
-#' Creates a datafrmae with the number of plant breeder rights applied for in a geographic area for a given year.
+#' `create_plants()` creates a data frame with the number of plant breeder rights applied for in a
+#' geographic area for a given year. Only Plant Breeder Rights lodged in Australia are included. This data
+#' is derived from the Intellectual Property Government Open Data, and includes:
+#'
+#' IPGOD 401 Plant Breeder's Rights Summary and
+#' IPGOD 402 Plant Breeder's Rights Applicant Information
+#'
+#' More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
+#'
 #' @param year numeric. The year the plant breeder right application was submitted.
 #' @param geography string. The geographic region of interest. Defaults to SA2
 #'
-#' @return A dataframe of plant breeder rights by geography for a given year.
+#' @return A data frame of plant breeder rights by geography for a given year.
 #' @export
 #'
 #' @examples \dontrun{
 #' create_plants(2016, "SA2")
 #' }
-create_plants <- function(year, geography = NULL) {
+create_plants <- function(year, geography = "sa2") {
 
   if (!year %in% c(2011, 2016, 2021)) {
     warning("A non-census year was specified.
             Other indicators of innovation are only available for the census years 2011, 2016, and 2021.
-            Proceed with caution. ")
+            Proceed with caution.")
   }
 
   if (year == 2011) {
@@ -28,38 +36,8 @@ create_plants <- function(year, geography = NULL) {
 
   geography <- paste0(tolower(geography), "_name")
 
-  if (!file.exists("data-raw/ipgod402.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/24a216fc-97e6-41b3-b13b-77c972922003/resource/43d22a58-b182-4e24-97b4-7a68dd0f9add/download/ipgod402-update.csv",
-                  destfile = "data-raw/ipgod402.csv")
-
-    plants <- readr::read_csv("data-raw/ipgod402.csv") %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-
-  }  else {
-
-    plants <- readr::read_csv("data-raw/ipgod402.csv") %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-  }
-
-  if (!file.exists("data-raw/ipgod401.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/24a216fc-97e6-41b3-b13b-77c972922003/resource/8968df95-6268-4c3c-8007-23cb3de1066a/download/ipgod401.csv",
-                  destfile = "data-raw/ipgod401.csv")
-
-    plants_info <- readr::read_csv("data-raw/ipgod401.csv") %>%
-      dplyr::rename(application_year = appl_received_year)
-
-  } else {
-
-    plants_info <- readr::read_csv("data-raw/ipgod401.csv") %>%
-      dplyr::rename(application_year = appl_received_year)
-  }
-
   p <- plants %>%
-    dplyr::left_join(plants_info) %>%
-    dplyr::filter(year == {{year}},
-                  !is.na(sa2_name)) %>%
+    dplyr::filter(year == {{year}}) %>%
     dplyr::group_by(sa2_name, year) %>%
     dplyr::summarise(plants = dplyr::n(), .groups = "drop") %>%
     dplyr::ungroup()

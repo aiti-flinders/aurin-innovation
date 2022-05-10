@@ -1,16 +1,21 @@
-#' Trademarks data
+#' Create Trademarks IP data.
 #'
-#' Creates a dataframe with the number of trademarks filed in a geographic area for a given year.
+#' `create_trademarks()` creates a data frame with the number of trademarks filed in a geographic area for a given year.
+#' Only trademarks filed in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
 #'
+#' IPGOD 201 Trade Marks Summary
+#' IPGOD 202 Trade Marks Applicant Information
+#'
+#' More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 #'
 #' @param year numeric. The year the trademarks were filed.
 #' @param geography string. The geographic region of interest. Defaults to SA2.
 #'
-#' @return dataframe of trademarks by geography for a given year.
+#' @return a data frame of trademarks by geography for a given year.
 #' @export
 #'
 #' @examples \dontrun{
-#' create_trademarks(2016, "sa2")
+#' create_trademarks(2016, "SA2")
 #' }
 create_trademarks <- function(year, geography = "sa2") {
 
@@ -32,42 +37,9 @@ create_trademarks <- function(year, geography = "sa2") {
 
   geography <- paste0(tolower(geography), "_name")
 
-  if (!file.exists("data-raw/ipgod202.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/aae1c14d-f8c0-4540-b5d3-1ed21500271e/download/ipgod202.csv",
-                  destfile = "data-raw/ipgod202.csv")
-
-    trademarks <- readr::read_csv("data-raw/ipgod202.csv",
-                                  show_col_types = FALSE) %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-
-  }  else {
-
-    trademarks <- readr::read_csv("data-raw/ipgod202.csv",
-                                  show_col_types = FALSE) %>%
-      dplyr::mutate(sa2_code = as.character(sa2_code))
-  }
-
-  if (!file.exists("data-raw/ipgod201.csv")) {
-
-    download.file("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/3066e8bc-ccfa-4285-bee2-492086886663/download/ipgod201.csv",
-                  destfile = "data-raw/ipgod201.csv")
-
-    trademarks_info <- readr::read_csv("data-raw/ipgod201.csv",
-                                       show_col_types = FALSE) %>%
-      dplyr::rename(year = filing_year)
-
-  } else {
-
-    trademarks_info <- readr::read_csv("data-raw/ipgod201.csv",
-                                       show_col_types = FALSE) %>%
-      dplyr::rename(year = filing_year)
-  }
 
   tms <- trademarks %>%
-    dplyr::left_join(trademarks_info, by = c("tm_number", "australian", "entity")) %>%
-    dplyr::filter(year == {{year}},
-                  !is.na(sa2_name)) %>%
+    dplyr::filter(year == {{year}}) %>%
     dplyr::group_by(sa2_name, year) %>%
     dplyr::summarise(trademarks = dplyr::n(), .groups = "drop") %>%
     dplyr::ungroup()

@@ -2,7 +2,7 @@
 % Please edit documentation in R/trademarks.R
 \name{create_trademarks}
 \alias{create_trademarks}
-\title{Trademarks data}
+\title{Create Trademarks IP data.}
 \usage{
 create_trademarks(year, geography = "sa2")
 }
@@ -12,13 +12,20 @@ create_trademarks(year, geography = "sa2")
 \item{geography}{string. The geographic region of interest. Defaults to SA2.}
 }
 \value{
-dataframe of trademarks by geography for a given year.
+a data frame of trademarks by geography for a given year.
 }
 \description{
-Creates a dataframe with the number of trademarks filed in a geographic area for a given year.
+\code{create_trademarks()} creates a data frame with the number of trademarks filed in a geographic area for a given year.
+Only trademarks filed in Australia are included. This data is derived from the Intellectual Property Government Open Data, and includes:
+}
+\details{
+IPGOD 201 Trade Marks Summary
+IPGOD 202 Trade Marks Applicant Information
+
+More information about the IPGOD data is available through the [IPGOD Data Dictionary]{https://data.gov.au/data/dataset/intellectual-property-government-open-data-2019/resource/8d2855ce-8e39-4bc0-9d6d-e19a4d9e2183}
 }
 \examples{
 \dontrun{
-create_trademarks(2016, "sa2")
+create_trademarks(2016, "SA2")
 }
 }
