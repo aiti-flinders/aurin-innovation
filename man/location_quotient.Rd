@@ -16,18 +16,15 @@ location_quotient(
 \arguments{
 \item{data}{a data frame or data frame like object.}
 
-\item{min_value}{(numeric). The minimum value of \code{total_var} for inclusion in the location quotient calculation.}
+\item{min_value}{numeric. The minimum value of \code{total_var} for inclusion in the location quotient calculation.}
 
-\item{total_var}{(string). The name of the variable whose values must be greater than the \code{min_value}.}
+\item{total_var}{string. The name of the variable whose values must be greater than the \code{min_value}.}
 
-\item{geography}{(string). The region to calculate the location quotient.}
+\item{geography}{string. The region to calculate the location quotient.}
 
-\item{y_var}{(string). The name of the non geography variable in the data. Defaults to 'industry'.}
+\item{y_var}{strin). The name of the non geography variable in the data. Defaults to 'industry'.}
 
-\item{value_var}{(string).  The name of the variable which contains the values for the geography and \code{y_var} pairs. Defaults to employment.}
-}
-\value{
-
+\item{value_var}{string.  The name of the variable which contains the values for the geography and \code{y_var} pairs. Defaults to employment.}
 }
 \description{
 \verb{location quotient()} calculates the location quotient for any data for geography based data, such as
@@ -35,9 +32,5 @@ revealed comparative advantage (RCA) from country-product-export data, or indust
 region-industry-employment data.
 }
 \details{
-By default, assumes the input data contains region-industry-employment data.
-}
-\examples{
-location_quotient(sa2_indp_2011)
-
+This function can not be called explicitly. Assumes the input data contains region-industry-employment data.
 }
