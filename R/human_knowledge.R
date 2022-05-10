@@ -26,6 +26,7 @@
 #' @export
 #'
 #' @examples
+#' create_qualification(2016)
 create_qualification <- function(year = 2016, geography = "sa2") {
 
   stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))

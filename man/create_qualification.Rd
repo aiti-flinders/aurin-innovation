@@ -35,3 +35,6 @@ A region is scored based on the proportion of workers within each qualification 
 the Graduate Diploma and Graduate Certificate Level is combined with the Bachelor Degree Level. As such,
 each region receives a score between 1 and 4, where higher scores indicate a higher average level of education.
 }
+\examples{
+create_qualification(2016)
+}

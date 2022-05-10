@@ -18,3 +18,14 @@ reference:
   contents:
   - create_qualification
   - create_stem
+  - create_owner_managers
+
+- title: "Derived Data"
+  desc: >
+    Functions for generating data derived from other
+    data included in this package
+  contents:
+  - ica
+  - igo
+  - location_quotient
+  -regional_innovation
