@@ -58,7 +58,6 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
 
   stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
 
-  geography <- paste0(tolower(geography), "_name")
 
   if (year == 2011) {
 
