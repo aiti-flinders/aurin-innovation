@@ -30,7 +30,8 @@ Imports:
     reticulate,
     sf,
     DT,
-    strayr (>= 0.1.6)
+    strayr (>= 0.1.6),
+    janitor
 Depends: 
     R (>= 2.10)
 Remotes: 

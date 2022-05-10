@@ -2,3 +2,19 @@ url: https://aiti-flinders.github.io/aurin-innovation/
 template:
   bootstrap: 5
 
+reference:
+- title: "Intellectual Property Data"
+  desc: >
+    Functions for generating Intellectual Property data
+  contents:
+  - create_plants
+  - create_designs
+  - create_trademarks
+  - create_patents
+
+- title: "ABS Census Data"
+  desc: >
+    Functions for generating ABS Census data
+  contents:
+  - create_qualification
+  - create_stem
