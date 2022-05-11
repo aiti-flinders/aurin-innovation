@@ -20,8 +20,7 @@ A data frame of regional innovation data with an indicator for innovation.
 \code{regional_innovation()} fits a confirmatory factor analysis model to derive an indicator for innovation for a given year and
 geographic area.
 }
-\section{Factor analysis}{
-
+\details{
 A two factor model, with a secondary factor, is confirmed.
 
 The first factor measures the skill level of the workers of a geographic region. It is measured by
@@ -33,7 +32,6 @@ backward patent citations per 1000 employees in a region.
 
 Further, it is imposed that the level of education qualification in a region is correlated with the skill level of the occupations.
 }
-
 \examples{
 regional_innovation(2011)
 }

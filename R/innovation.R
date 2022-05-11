@@ -3,7 +3,6 @@
 #' `regional_innovation()` fits a confirmatory factor analysis model to derive an indicator for innovation for a given year and
 #' geographic area.
 #'
-#' @section Factor analysis:
 #' A two factor model, with a secondary factor, is confirmed.
 #'
 #' The first factor measures the skill level of the workers of a geographic region. It is measured by
@@ -14,10 +13,6 @@
 #' backward patent citations per 1000 employees in a region.
 #'
 #' Further, it is imposed that the level of education qualification in a region is correlated with the skill level of the occupations.
-#'
-#'
-#'
-#'
 #'
 #' @param year numeric. The year to calculate the regional innovation level. Must be a Census year (2011, 2016).
 #' @param geography string. The geographic area to calculate regional innovation. Defaults to SA2
