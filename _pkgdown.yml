@@ -22,6 +22,12 @@ reference:
   - create_kibs
   - create_skill
 
+- title: "Other Data"
+  desc: >
+    Functions for generating other data
+  contents:
+- create_infrastructure
+
 - title: "Derived Data"
   desc: >
     Functions for generating data derived from other
