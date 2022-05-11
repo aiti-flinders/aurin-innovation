@@ -2,16 +2,38 @@
 % Please edit documentation in R/innovation.R
 \name{regional_innovation}
 \alias{regional_innovation}
-\title{Title}
+\title{Create Regional Innovation}
 \usage{
-regional_innovation(year, geography, ...)
+regional_innovation(year, geography = "sa2", ...)
 }
 \arguments{
+\item{year}{numeric. The year to calculate the regional innovation level. Must be a Census year (2011, 2016).}
+
+\item{geography}{string. The geographic area to calculate regional innovation. Defaults to SA2}
+
 \item{...}{}
 }
 \value{
-
+A data frame of regional innovation data with an indicator for innovation.
 }
 \description{
-Title
+\code{regional_innovation()} fits a confirmatory factor analysis model to derive an indicator for innovation for a given year and
+geographic area.
+}
+\section{Factor analysis}{
+
+A two factor model, with a secondary factor, is confirmed.
+
+The first factor measures the skill level of the workers of a geographic region. It is measured by
+the average skill level of the region, the average education qualification of the region, and the proportion of employees working
+in knowledge intensive business services.
+
+The second factor measures the innovation activity happening in a region. It is measured by the number of patents, trademarks, and
+backward patent citations per 1000 employees in a region.
+
+Further, it is imposed that the level of education qualification in a region is correlated with the skill level of the occupations.
+}
+
+\examples{
+regional_innovation(2011)
 }
