@@ -49,7 +49,7 @@ create_qualification <- function(year = 2016, geography = "sa2") {
 
 
   data %>%
-    dplyr::left_join(geog) %>%
+    dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], education_level) %>%
     dplyr::summarise(employment = sum(employment), .groups = "drop") %>%
     tidyr::pivot_wider(names_from = education_level,
@@ -115,7 +115,7 @@ create_stem <- function(year = 2016, geography = "sa2") {
 
 
   data %>%
-    dplyr::left_join(geog) %>%
+    dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(stem = qualification %in% c("Natural and Physical Sciences",
                                          "Information Technology",
                                          "Engineering and Related Technologies",
@@ -130,6 +130,9 @@ create_stem <- function(year = 2016, geography = "sa2") {
 }
 
 create_human_knowledge <- function(year, geography) {
-  dplyr::full_join(create_graduates(year, geography),
-                   create_stem(year, geography))
+
+  join_by <- paste0(tolower(geography), "_name")
+
+  dplyr::full_join(create_qualification(year, geography),
+                   create_stem(year, geography), join_by)
 }
