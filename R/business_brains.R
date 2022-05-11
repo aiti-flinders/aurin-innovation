@@ -1,4 +1,4 @@
-create_business_brains <- function(year, geography, adjust) {
+create_business_brains <- function(year, geography = "sa2", adjust = FALSE) {
 
   join_by <- c(paste0(tolower(geography),"_name"), "year")
 

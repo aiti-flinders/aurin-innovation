@@ -129,7 +129,7 @@ create_stem <- function(year = 2016, geography = "sa2") {
 
 }
 
-create_human_knowledge <- function(year, geography) {
+create_human_knowledge <- function(year, geography = "sa2") {
 
   join_by <- paste0(tolower(geography), "_name")
 

@@ -12,8 +12,10 @@ pow <- function(year, geography) {
 
   }
 
+  geography <- paste0(tolower(geography), "_name")
+
   data %>%
-    dplyr::left_join(geog) %>%
+    dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]]) %>%
     dplyr::summarise(employment = sum(employment))
 
