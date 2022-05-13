@@ -14,6 +14,8 @@
 #' @param value_var string.  The name of the variable which contains the values for the geography and `y_var` pairs. Defaults to employment.
 #' @param geography string. The region to calculate the location quotient.
 #'
+#' @keywords Internal
+#'
 #' @importFrom rlang .data
 #' @importFrom dplyr %>%
 #'
