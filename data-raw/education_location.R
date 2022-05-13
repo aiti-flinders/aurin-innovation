@@ -22,26 +22,35 @@ tafes <- read_aurin("data-raw/tafes.geoJSON") %>%
   st_transform(4326)
 
 
-unis_in_sa2 <- st_join(unis, sa2_2016) %>%
-  group_by(sa2_name) %>%
-  tally(name = "unis") %>%
-  st_drop_geometry()
+infrastructure_in_geography <- function(data, map, geography, name, year) {
 
-tafes_in_sa2 <- st_join(tafes, sa2_2016) %>%
-  group_by(sa2_name) %>%
-  tally(name = "tafes") %>%
-  st_drop_geometry()
+  st_join(data, map) %>%
+    group_by(.data[[geography]]) %>%
+    tally(name = name) %>%
+    st_drop_geometry()
 
-education_location <- left_join(sa2_2016, unis_in_sa2) %>%
-  left_join(tafes_in_sa2) %>%
-  st_drop_geometry() %>%
-  as_tibble() %>%
-  select(sa2_name, unis, tafes) %>%
-  replace_na(list(unis = 0, tafes = 0, infrastructure = 0)) %>%
-  mutate(infrastructure = unis + tafes) %>%
-  check_sa2(geography = "sa2_name", other = "unis")
+}
 
 
-usethis::use_data(education_location, compress = "xz", overwrite = TRUE)
+education_location_2011 <- full_join(infrastructure_in_geography(unis, sa2_2011, "sa2_name", "unis", 2011),
+                                     infrastructure_in_geography(tafes, sa2_2011, "sa2_name", "tafes", 2011),
+                                     by = c("sa2_name")) %>%
+  replace_na(list(unis = 0,
+                  tafes = 0)) %>%
+  mutate(year = 2011)
+
+
+
+education_location_2016 <- full_join(infrastructure_in_geography(unis, sa2_2016, "sa2_name", "unis", 2016),
+                                     infrastructure_in_geography(tafes, sa2_2016, "sa2_name", "tafes", 2016),
+                                     by = c("sa2_name")) %>%
+  replace_na(list(unis = 0,
+                  tafes = 0)) %>%
+  mutate(year = 2016)
+
+
+usethis::use_data(education_location_2011, compress = "xz", overwrite = TRUE)
+usethis::use_data(education_location_2016, compress = "xz", overwrite = TRUE)
+
 
 }
