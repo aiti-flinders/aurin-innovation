@@ -21,8 +21,9 @@
 #' @return A data frame of regional innovation data with an indicator for innovation.
 #' @export
 #'
-#' @examples
+#' @examples\dontrun{
 #' regional_innovation(2011)
+#' }
 regional_innovation <- function(year, geography = "sa2", ...) {
 
   stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
