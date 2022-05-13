@@ -34,3 +34,4 @@ region-industry-employment data.
 \details{
 This function can not be called explicitly. Assumes the input data contains region-industry-employment data.
 }
+\keyword{Internal}

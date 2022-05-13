@@ -33,5 +33,7 @@ backward patent citations per 1000 employees in a region.
 Further, it is imposed that the level of education qualification in a region is correlated with the skill level of the occupations.
 }
 \examples{
+\dontrun{
 regional_innovation(2011)
+}
 }
