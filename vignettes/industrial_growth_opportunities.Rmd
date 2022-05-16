@@ -43,7 +43,7 @@ The products included in the economic complexity data can be searched below.
 
 ``` {r ec-products, echo = FALSE}
 
-state_economic_complexity %>%
+aurininnovation:::state_economic_complexity %>%
   aurininnovation:::add_product_names(digits = 4) %>%
   distinct(hs_product_code, hs_product_name_short_en) %>%
   datatable(rownames = FALSE,
@@ -84,12 +84,7 @@ knitr::kable(tab, col.names = c("From", "To"))
 
 ```
 
-More recent state export data uses a combination of different versions of the Harmonised System. The conversion algorithm first uses the oldest available version of the Harmonised System (HS0), to match the 6-digit AHECC. Where conversion between the AHECC and HS is unsuccessful (i.e., where the state export data uses a HS code more recent than those in the correspondence), all matches are kept, and the next version of the correspondence is used to find matches for the unsuccessful product codes. This is repeated until all AHECC codes are matched to HS 1992 codes. The state level economic complexity data from 2011 onwards is included in this package.
-
-```{r state-ec, echo = TRUE}
-state_economic_complexity
-```
-
+More recent state export data uses a combination of different versions of the Harmonised System. The conversion algorithm first uses the oldest available version of the Harmonised System (HS0), to match the 6-digit AHECC. Where conversion between the AHECC and HS is unsuccessful (i.e., where the state export data uses a HS code more recent than those in the correspondence), all matches are kept, and the next version of the correspondence is used to find matches for the unsuccessful product codes. This is repeated until all AHECC codes are matched to HS 1992 codes. 
 
 ## Industrial Comparative Advantage
 
@@ -98,21 +93,7 @@ Employment by industry data is used to determine industrial comparative advantag
 $$ICA_{ri} = \frac{E_{ri}}{\sum_{r}E_{ri}}/\frac{\sum_{i}E_{ri}}{\sum_{ri}E_{ri}}$$
 where $ICA_{ri}$ is the industrial comparative advantage for region $r$ in industry $i$ and $E_{ri}$ is the level of employment in region $r$ in industry $i$. Employment by industry data is sourced from the ABS Census TableBuilder, Counting Employed Persons, Place of Work (POW) [@abs16empind]. 
 
-This data is included with the `aurininnovation` package `sa2_indp2_2011` and `sa2_indp2_2016`. 
-
 ## Calculating Industrial Comparative Advantage
-
-Industrial comparative advantage can be calculated using the in built `ica()` function. This function requires a dataset with at least three columns containing the following data:
-
-* A variable specifying the geographical region to be investigated. 
-* A variable specifying the industry. 
-* A variable specifying the value of the employment in an industry in a geographical region. 
-
-The included `sa2_indp2_2011` and `sa2_indp2_2016` meet this specification. 
-
-``` {r pow_data, echo = FALSE}
-sa2_indp2_2016
-```
 
 The industrial comparative advantage can be calculated through the `ica()` function. By default, `ica()` calculates the industrial comparative advantage for all years - currently 2011 and 2016. Individual years can be calcualted by specifying the year. It also removes regions with total employment less than 150, to account for perturbations applied by the ABS to small cell values in the TableBuilder. 
 
