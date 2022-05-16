@@ -50,10 +50,11 @@ regional_innovation <- function(year, geography = "sa2", ...) {
     dplyr::mutate(dplyr::across(c(patents, designs, trademarks, plants), ~.x / (1000 * employment)),
                   dplyr::across(c(-year, -paste0(tolower(geography), "_name")), ~scale(.x)))
 
+
   if (!"model" %in% list(...)) {
 
   model <- "F1 =~ skill + qualification + kibs
-  F2 =~ backwards_citations + patents  + trademarks
+  F2 =~ backwards_citations + patents
   F3 =~ 1*F1  + 1*F2
   F3 ~~ F3
   qualification ~~ skill"
@@ -62,10 +63,8 @@ regional_innovation <- function(year, geography = "sa2", ...) {
 
   fit <- lavaan::cfa(model, sem_model, std.lv = TRUE)
 
-  return(fit)
-
-  # sem_model %>%
-  #   dplyr::mutate(as.data.frame(lavaan::predict(fit)))
+  sem_model %>%
+    dplyr::mutate(as.data.frame(lavaan::predict(fit)))
 
 
 
