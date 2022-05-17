@@ -1,6 +1,6 @@
 #' Create Regional Innovation
 #'
-#' `regional_innovation()` fits a confirmatory factor analysis model to derive an indicator for innovation for a given year and
+#' `create_regional_innovation()` fits a confirmatory factor analysis model to derive an indicator for innovation for a given year and
 #' geographic area.
 #'
 #' A two factor model, with a secondary factor, is confirmed.
@@ -16,15 +16,16 @@
 #'
 #' @param year numeric. The year to calculate the regional innovation level. Must be a Census year (2011, 2016).
 #' @param geography string. The geographic area to calculate regional innovation. Defaults to SA2
-#' @param ...
+#' @param adjust logical. TRUE to remove industries and occupations classified as not further defined.
+#' @param model string. Specify a factor analysis model.
 #'
 #' @return A data frame of regional innovation data with an indicator for innovation.
 #' @export
 #'
 #' @examples\dontrun{
-#' regional_innovation(2011)
+#' create_regional_innovation(2011)
 #' }
-regional_innovation <- function(year, geography = "sa2", ...) {
+create_regional_innovation <- function(year, geography = "sa2", adjust = FALSE, model = NULL) {
 
   stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
@@ -40,7 +41,7 @@ regional_innovation <- function(year, geography = "sa2", ...) {
     (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
   }
 
-  data <- sem_data(year, geography = geography, ...)
+  data <- sem_data(year, geography = geography, adjust)
 
 
   sem_model <- data %>%
@@ -51,12 +52,12 @@ regional_innovation <- function(year, geography = "sa2", ...) {
                   dplyr::across(c(-year, -paste0(tolower(geography), "_name")), ~scale(.x)))
 
 
-  if (!"model" %in% list(...)) {
+  if (is.null(model)) {
 
-  model <- "F1 =~ skill + qualification + kibs
-  F2 =~ backwards_citations + patents
-  F3 =~ 1*F1  + 1*F2
-  F3 ~~ F3
+  model <- "human_knowledge =~ skill + qualification + kibs
+  patent_output =~ backwards_citations + patents
+  innovation =~ 1*human_knowledge  + 1*patent_output
+  innovation ~~ innovation
   qualification ~~ skill"
 
   }
