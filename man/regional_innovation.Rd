@@ -6,13 +6,13 @@
 \title{Innovation metrics of SA2 regions for 2011 and 2016.}
 \format{
 A data frame with 4325 and 19 variables:
-\descibe{
+\describe{
 \item{sa2_name}
 \item{year}
 \item{patents}{number of patents per 1000 workers, z score}
 \item{backwards_citations}{average number of backward citations, z score}
 \item{designs}{number of designs per 1000 workers, z score}
-\item{trademarks{number of trademarks per 1000 workers, z score}
+\item{trademarks}{number of trademarks per 1000 workers, z score}
 \item{plants}{number of plant breeder rights applications per 1000 workers, z score}
 \item{kibs}{proportion of workers in knowledge intensive business services, z score}
 \item{skill}{average skill level of occupation, z score}
@@ -26,6 +26,7 @@ A data frame with 4325 and 19 variables:
 \item{human_knowledge}{factor derived from kibs, skill, and qualification}
 \item{patent_output}{factor derived from patents and backwards citations}
 \item{innovation}{second-order factor derived from human_knowledge and patent_output}
+}
 }
 \usage{
 regional_innovation
