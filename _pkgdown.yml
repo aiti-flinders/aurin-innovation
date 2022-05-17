@@ -36,4 +36,9 @@ reference:
   - ica
   - igo
   - location_quotient
+  - create_regional_innovation
+- title: "Included Data"
+  desc: >
+    Data included in this package
+  contents:
   - regional_innovation
