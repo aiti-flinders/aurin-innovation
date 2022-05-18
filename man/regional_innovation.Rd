@@ -7,8 +7,8 @@
 \format{
 A data frame with 4325 and 19 variables:
 \describe{
-\item{sa2_name}
-\item{year}
+\item{sa2_name}{}
+\item{year}{}
 \item{patents}{number of patents per 1000 workers, z score}
 \item{backwards_citations}{average number of backward citations, z score}
 \item{designs}{number of designs per 1000 workers, z score}
