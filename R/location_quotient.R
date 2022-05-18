@@ -66,8 +66,9 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, geography =
     unique()
 
   data <- data %>%
-    tidyr::pivot_wider(names_from = y_var,
-                       values_from = value_var)
+    tidyr::pivot_wider(id_cols = {{geography}},
+                       names_from = {{y_var}},
+                       values_from = {{value_var}})
 
   data_array <- as.matrix(data[2:length(data)])
 
@@ -77,9 +78,6 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, geography =
 
 
   lq <- t(t(data_array/rowSums(data_array)) / (colSums(data_array)/sum(data_array)))
-
-  # debug_x <- data_array/rowSums(data_array)
-  # debug_y <- (colSums(data_array)/sum(data_array))
 
   lq <- lq %>%
     tibble::as_tibble() %>%
