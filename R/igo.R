@@ -71,7 +71,7 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
 
   ica_with_state <- ica(year = year, ...) %>%
     dplyr::left_join(map_data, by = "sa2_name") %>%
-    dplyr::select(sa2_name, sa2_code, industry, ica, year, state_name)
+    dplyr::select(sa2_name, industry, ica, year, state_name)
 
   industrial_growth_opportunities <- state_economic_complexity %>%
     dplyr::filter(export_value > {{.export_value_limit}},
@@ -83,8 +83,7 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
                                             "year")) %>%
     dplyr::filter(ica >= {{.ica_limit}}) %>%
     dplyr::distinct() %>%
-    add_product_names(digits = 4) %>%
-    dplyr::arrange(sa2_name, sa2_code)
+    add_product_names(digits = 4)
 
   if (!is.null(region)) {
 
@@ -109,7 +108,6 @@ igo_names <- function(data) {
 
   data %>%
     dplyr::select(Year = year,
-                  "Statistical Area 2 Code" = sa2_code,
                   "Statistical Area 2 Name" = sa2_name,
                   "Product Opportunity" = hs_product_name_short_en,
                   "Product Code" = hs_product_code,

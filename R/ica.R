@@ -45,12 +45,16 @@ ica <- function(year, geography = "sa2", adjust = FALSE, ...) {
   if (year == 2011) {
 
     data <- sa2_indp2_2011
-    geog <- sa2_2011
+    geog <- sa2_2011 %>%
+      sf::st_drop_geometry() %>%
+      dplyr::select(sa2_name, sa3_name, sa4_name, gcc_name, state_name)
 
   } else if (year == 2016) {
 
     data <- sa2_indp2_2016
-    geog <- sa2_2016
+    geog <- sa2_2016 %>%
+      sf::st_drop_geometry() %>%
+      dplyr::select(sa2_name, sa3_name, sa4_name, gcc_name, state_name)
   }
 
   ellipse_arg <- list(...)
@@ -90,11 +94,16 @@ ica <- function(year, geography = "sa2", adjust = FALSE, ...) {
     ellipse_arg$value_var = "employment"
   }
 
+  if (geography != "sa2_name") {
   data <- data %>%
     dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]], industry) %>%
-    dplyr::summarise(dplyr::across(.data[[ellipse_arg$value_var]], sum),.groups = "drop") %>%
+    dplyr::summarise(dplyr::across(.data[[ellipse_arg$value_var]], sum), .groups = "drop") %>%
     dplyr::ungroup()
+
+  } else {
+    data <- data
+  }
 
 
   location_quotient(data, geography = {{geography}}, value_var = value_var) %>%

@@ -55,17 +55,31 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, geography =
 #   }
 
 
-  data_array <- reshape2::acast(data, list(geography, y_var), value.var = value_var)
+  # data_array <- reshape2::acast(data, list(geography, y_var), value.var = value_var)
+
+  row_names <- data %>%
+    dplyr::pull(geography) %>%
+    unique()
+
+  col_names <- data %>%
+    dplyr::pull(y_var) %>%
+    unique()
+
+  data <- data %>%
+    tidyr::pivot_wider(names_from = y_var,
+                       values_from = value_var)
+
+  data_array <- as.matrix(data[2:length(data)])
 
   #Strip the column containing the sa2_names ...
-  row_names <- rownames(data_array)
-  col_names <- colnames(data_array)
+  # row_names <- rownames(data_array)
+  # col_names <- colnames(data_array)
 
 
   lq <- t(t(data_array/rowSums(data_array)) / (colSums(data_array)/sum(data_array)))
 
-  debug_x <- data_array/rowSums(data_array)
-  debug_y <- (colSums(data_array)/sum(data_array))
+  # debug_x <- data_array/rowSums(data_array)
+  # debug_y <- (colSums(data_array)/sum(data_array))
 
   lq <- lq %>%
     tibble::as_tibble() %>%
