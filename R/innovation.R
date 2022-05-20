@@ -41,13 +41,13 @@ create_regional_innovation <- function(year, geography = "sa2", adjust = FALSE, 
     (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
   }
 
-  data <- sem_data(year, geography = geography, adjust)
+  data <- sem_data(year, geography = geography, adjust) %>%
+    dplyr::left_join(pow({{year}}, {{geography}}), by = paste0(tolower(geography), "_name")) %>%
+    dplyr::filter(employment >= 150) %>%
+    dplyr::mutate(infrastructure = unis + tafes)
 
 
   sem_model <- data %>%
-    dplyr::left_join(pow({{year}}, {{geography}}), by = paste0(tolower(geography), "_name")) %>%
-    dplyr::filter(employment >= 150) %>%
-    dplyr::mutate(infrastructure = unis + tafes) %>%
     dplyr::mutate(dplyr::across(c(patents, designs, trademarks, plants), ~.x / (1000 * employment)),
                   dplyr::across(c(-year, -paste0(tolower(geography), "_name")), ~scale(.x)))
 
@@ -64,7 +64,7 @@ create_regional_innovation <- function(year, geography = "sa2", adjust = FALSE, 
 
   fit <- lavaan::cfa(model, sem_model, std.lv = TRUE)
 
-  sem_model %>%
+  data %>%
     dplyr::mutate(as.data.frame(lavaan::predict(fit)))
 
 
