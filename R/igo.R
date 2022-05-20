@@ -106,15 +106,16 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
 
 igo_names <- function(data) {
 
-  data %>%
-    dplyr::select(Year = year,
-                  "Statistical Area 2 Name" = sa2_name,
-                  "Product Opportunity" = hs_product_name_short_en,
-                  "Product Code" = hs_product_code,
-                  "Product Development Benefit" = cog,
-                  "Product Industry" = anzsic_subdivision,
-                  "Region Industry Comparative Advantage" = ica,
-                  State = location_code,
-                  "State Export Value" = export_value,
-                  "State Export Comparative Advantage" = rca)
+  data
+  # %>%
+  #   dplyr::select(Year = year,
+  #                 "Statistical Area 2 Name" = sa2_name,
+  #                 "Product Opportunity" = hs_product_name_short_en,
+  #                 "Product Code" = hs_product_code,
+  #                 "Product Development Benefit" = cog,
+  #                 "Product Industry" = anzsic_subdivision,
+  #                 "Region Industry Comparative Advantage" = ica,
+  #                 State = location_code,
+  #                 "State Export Value" = export_value,
+  #                 "State Export Comparative Advantage" = rca)
 }
