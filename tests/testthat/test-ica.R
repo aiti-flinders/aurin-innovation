@@ -1,0 +1,13 @@
+test_that("ica works", {
+  expect_type(ica(year = 2011, geography = "sa2", adjust = FALSE), "list")
+  expect_type(ica(year = 2016, geography = "sa2", adjust = FALSE), "list")
+  expect_type(ica(year = 2011, geography = "sa3", adjust = FALSE), "list")
+  expect_type(ica(year = 2016, geography = "sa3", adjust = FALSE), "list")
+  expect_type(ica(year = 2011, geography = "sa4", adjust = FALSE), "list")
+  expect_type(ica(year = 2016, geography = "sa4", adjust = FALSE), "list")
+  expect_type(ica(year = 2011, geography = "gcc", adjust = FALSE), "list")
+  expect_type(ica(year = 2016, geography = "gcc", adjust = FALSE), "list")
+  expect_type(ica(year = 2011, geography = "state", adjust = FALSE), "list")
+  expect_type(ica(year = 2016, geography = "state", adjust = FALSE), "list")
+  expect_gt(nrow(ica(2016, "sa2")), nrow(ica(2016, "sa2", min_value = 100, total_var = "sa2_employment")))
+  })
