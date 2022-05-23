@@ -38,7 +38,7 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, geography =
   if (!all(geography %in% colnames(data),
            y_var %in% colnames(data),
            value_var %in% colnames(data))) {
-    stop("A nice stop message about conforming names in supplied data")
+    stop("One or more of the variables specified (geography, y_var, or value_var) were not found in the data.")
   }
 
   if (!is.null(min_value) & !is.null(total_var)) {
@@ -48,14 +48,6 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, geography =
 
   }
 
-
-#
-#   if (any(data[[options$total]] == 0) & options$min_value == 0) {
-#     warning("Some of the values you specified are zero for a geographic unit. Output is unreliable")
-#   }
-
-
-  # data_array <- reshape2::acast(data, list(geography, y_var), value.var = value_var)
 
   row_names <- data %>%
     dplyr::pull(geography) %>%
@@ -72,9 +64,6 @@ location_quotient <- function(data, min_value = 0, total_var = NULL, geography =
 
   data_array <- as.matrix(data[2:length(data)])
 
-  #Strip the column containing the sa2_names ...
-  # row_names <- rownames(data_array)
-  # col_names <- colnames(data_array)
 
 
   lq <- t(t(data_array/rowSums(data_array)) / (colSums(data_array)/sum(data_array)))
