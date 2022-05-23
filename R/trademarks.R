@@ -47,7 +47,7 @@ create_trademarks <- function(year, geography = "sa2") {
 
   tms <- trademarks %>%
     dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(sa2_name, year) %>%
+    dplyr::group_by(.data$sa2_name, year) %>%
     dplyr::summarise(trademarks = dplyr::n(), .groups = "drop") %>%
     dplyr::ungroup()
 

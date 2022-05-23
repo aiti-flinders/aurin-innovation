@@ -71,12 +71,16 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
 
   ica_with_state <- ica(year = year, ...) %>%
     dplyr::left_join(map_data, by = "sa2_name") %>%
-    dplyr::select(sa2_name, industry, ica, year, state_name)
+    dplyr::select(.data$sa2_name,
+                  .data$industry,
+                  .data$ica,
+                  .data$year,
+                  .data$state_name)
 
   industrial_growth_opportunities <- state_economic_complexity %>%
-    dplyr::filter(export_value > {{.export_value_limit}},
-                  cog >= {{.cog_limit}},
-                  rca < {{.rca_limit}}) %>%
+    dplyr::filter(.data$export_value > {{.export_value_limit}},
+                  .data$cog >= {{.cog_limit}},
+                  .data$rca < {{.rca_limit}}) %>%
     dplyr::left_join(anzsic_hs, by = "hs_product_code") %>%
     dplyr::left_join(ica_with_state, by = c("location_code" = "state_name",
                                             "anzsic_subdivision" = "industry",
@@ -88,13 +92,13 @@ igo <- function(year, region = NULL, product = NULL, .export_value_limit = 0, .c
   if (!is.null(region)) {
 
     industrial_growth_opportunities %>%
-      dplyr::filter(sa2_name %in% region) %>%
+      dplyr::filter(.data$sa2_name %in% region) %>%
       igo_names()
 
   } else if (!is.null(product)) {
 
     industrial_growth_opportunities %>%
-      dplyr::filter(hs_product_name_short_en %in% product) %>%
+      dplyr::filter(.data$hs_product_name_short_en %in% product) %>%
       igo_names()
 
   } else {

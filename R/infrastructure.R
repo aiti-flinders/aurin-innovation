@@ -40,7 +40,7 @@ create_infrastructure <- function(year, geography = "sa2") {
   data %>%
     dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], year) %>%
-    dplyr::summarise(dplyr::across(c(unis, tafes), ~sum(.x, na.rm = TRUE)), .groups = "drop") %>%
+    dplyr::summarise(dplyr::across(c(.data$unis, .data$tafes), ~sum(.x, na.rm = TRUE)), .groups = "drop") %>%
     dplyr::ungroup()
 
 

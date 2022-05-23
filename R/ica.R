@@ -47,14 +47,22 @@ ica <- function(year, geography = "sa2", adjust = FALSE, ...) {
     data <- sa2_indp2_2011
     geog <- sa2_2011 %>%
       sf::st_drop_geometry() %>%
-      dplyr::select(sa2_name, sa3_name, sa4_name, gcc_name, state_name)
+      dplyr::select(.data$sa2_name,
+                    .data$sa3_name,
+                    .data$sa4_name,
+                    .data$gcc_name,
+                    .data$state_name)
 
   } else if (year == 2016) {
 
     data <- sa2_indp2_2016
     geog <- sa2_2016 %>%
       sf::st_drop_geometry() %>%
-      dplyr::select(sa2_name, sa3_name, sa4_name, gcc_name, state_name)
+      dplyr::select(.data$sa2_name,
+                    .data$sa3_name,
+                    .data$sa4_name,
+                    .data$gcc_name,
+                    .data$state_name)
   }
 
   ellipse_arg <- list(...)
@@ -75,16 +83,16 @@ ica <- function(year, geography = "sa2", adjust = FALSE, ...) {
   if ("industry_employment" %in% ellipse_arg$total_var) {
 
     data <- data %>%
-      dplyr::group_by(industry) %>%
-      dplyr::mutate(industry_employment = sum(employment)) %>%
+      dplyr::group_by(.data$industry) %>%
+      dplyr::mutate(industry_employment = sum(.data$employment)) %>%
       dplyr::ungroup()
   }
 
   if ("sa2_employment" %in% ellipse_arg$total_var) {
 
     data <- data %>%
-      dplyr::group_by(sa2_name) %>%
-      dplyr::mutate(sa2_employment = sum(employment)) %>%
+      dplyr::group_by(.data$sa2_name) %>%
+      dplyr::mutate(sa2_employment = sum(.data$employment)) %>%
       dplyr::ungroup()
   }
 
@@ -97,7 +105,7 @@ ica <- function(year, geography = "sa2", adjust = FALSE, ...) {
   if (geography != "sa2_name") {
   data <- data %>%
     dplyr::left_join(geog, by = "sa2_name") %>%
-    dplyr::group_by(.data[[geography]], industry) %>%
+    dplyr::group_by(.data[[geography]], .data$industry) %>%
     dplyr::summarise(dplyr::across(.data[[ellipse_arg$value_var]], sum), .groups = "drop") %>%
     dplyr::ungroup()
 
@@ -106,9 +114,9 @@ ica <- function(year, geography = "sa2", adjust = FALSE, ...) {
   }
 
 
-  location_quotient(data, geography = {{geography}}, value_var = value_var) %>%
+  location_quotient(data, geography = {{geography}}, value_var = value_var, ...) %>%
     dplyr::mutate(year = {{year}}) %>%
-    dplyr::rename(ica = lq) %>%
+    dplyr::rename(ica = .data$lq) %>%
     dplyr::filter(!is.nan(ica))
 
 

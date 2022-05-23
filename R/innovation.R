@@ -38,13 +38,13 @@ create_regional_innovation <- function(year, geography = "sa2", adjust = FALSE, 
 
 
   scale <- function(x) {
-    (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+    (x - mean(x, na.rm = TRUE)) / stats::sd(x, na.rm = TRUE)
   }
 
   data <- sem_data(year, geography = geography, adjust) %>%
     dplyr::left_join(pow({{year}}, {{geography}}), by = paste0(tolower(geography), "_name")) %>%
-    dplyr::filter(employment >= 150) %>%
-    dplyr::mutate(infrastructure = unis + tafes)
+    dplyr::filter(.data$employment >= 150) %>%
+    dplyr::mutate(infrastructure = .data$unis + .data$tafes)
 
 
   sem_model <- data %>%

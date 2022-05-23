@@ -46,9 +46,9 @@ create_owner_managers <- function(year = 2016, geography = "sa2") {
   }
 
   data %>%
-    tidyr::pivot_wider(names_from = employment_status,
-                       values_from = employment) %>%
-    dplyr::mutate(total = rowSums(dplyr::across(c(-sa2_name, -year))),
+    tidyr::pivot_wider(names_from = .data$employment_status,
+                       values_from = .data$employment) %>%
+    dplyr::mutate(total = rowSums(dplyr::across(c(-.data$sa2_name, -.data$year))),
                   owners = rowSums(dplyr::across(dplyr::contains("Owner manager")))) %>%
     dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]]) %>%
@@ -60,11 +60,11 @@ create_owner_managers <- function(year = 2016, geography = "sa2") {
                                      "owners"),
                                    ~sum(.x)),
                      .groups = "drop") %>%
-    dplyr::mutate(owner_managers = owners/total,
+    dplyr::mutate(owner_managers = .data$owners/.data$total,
                   year = {{year}}) %>%
     dplyr::select(geography,
-                  owner_managers,
-                  year)
+                  .data$owner_managers,
+                  .data$year)
 
 
 

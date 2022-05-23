@@ -41,7 +41,9 @@ create_kibs <- function(year, geography = "sa2", adjust = FALSE) {
       adjust_nfd(nfd_col = "anzsic_class",
                  nfd_level = "anzsic_class",
                  anz = "anzsic") %>%
-      dplyr::select(sa2_name, anzsic_class, employment = employment_adj)
+      dplyr::select(.data$sa2_name,
+                    .data$anzsic_class,
+                    employment = .data$employment_adj)
 
   } else {
 
@@ -51,13 +53,15 @@ create_kibs <- function(year, geography = "sa2", adjust = FALSE) {
 
   employment_kibs <- data %>%
     dplyr::left_join(geog, by = geography) %>%
-    dplyr::group_by(kibs = anzsic_class %in% kibs(),
+    dplyr::group_by(kibs = .data$anzsic_class %in% kibs(),
                     .data[[geography]]) %>%
-    dplyr::summarise(kibs_employment = sum(employment), .groups = "drop") %>%
-    tidyr::pivot_wider(names_from = kibs, names_prefix = "kibs", values_from = kibs_employment) %>%
-    dplyr::mutate(kibs = kibsTRUE / (kibsFALSE + kibsTRUE),
+    dplyr::summarise(kibs_employment = sum(.data$employment), .groups = "drop") %>%
+    tidyr::pivot_wider(names_from = .data$kibs, names_prefix = "kibs", values_from = .data$kibs_employment) %>%
+    dplyr::mutate(kibs = .data$kibsTRUE / (.data$kibsFALSE + .data$kibsTRUE),
                   year = {{year}}) %>%
-    dplyr::select(geography, kibs, year)
+    dplyr::select(geography,
+                  .data$kibs,
+                  .data$year)
 
 
 

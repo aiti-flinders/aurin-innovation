@@ -45,7 +45,7 @@ create_designs <- function(year, geography = "sa2") {
 
   d <- designs %>%
     dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(sa2_name, year) %>%
+    dplyr::group_by(.data$sa2_name, year) %>%
     dplyr::summarise(designs = dplyr::n(), .groups = "drop") %>%
     dplyr::ungroup()
 

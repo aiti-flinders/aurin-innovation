@@ -50,18 +50,18 @@ create_qualification <- function(year = 2016, geography = "sa2") {
 
   data %>%
     dplyr::left_join(geog, by = geography) %>%
-    dplyr::group_by(.data[[geography]], education_level) %>%
-    dplyr::summarise(employment = sum(employment), .groups = "drop") %>%
-    tidyr::pivot_wider(names_from = education_level,
-                       values_from = employment) %>%
+    dplyr::group_by(.data[[geography]], .data$education_level) %>%
+    dplyr::summarise(employment = sum(.data$employment), .groups = "drop") %>%
+    tidyr::pivot_wider(names_from = .data$education_level,
+                       values_from = .data$employment) %>%
     janitor::clean_names() %>%
-    dplyr::mutate(dip = advanced_diploma_and_diploma_level,
-                  cert = certificate_level,
-                  grad = bachelor_degree_level + graduate_diploma_and_graduate_certificate_level,
-                  postgrad = postgraduate_degree_level,
-                  qualification = (4 * postgrad + 3 * grad + 2 * dip + 1 * cert) / (postgrad + grad + dip + cert)) %>%
+    dplyr::mutate(dip = .data$advanced_diploma_and_diploma_level,
+                  cert = .data$certificate_level,
+                  grad = .data$bachelor_degree_level + .data$graduate_diploma_and_graduate_certificate_level,
+                  postgrad = .data$postgraduate_degree_level,
+                  qualification = (4 * .data$postgrad + 3 * .data$grad + 2 * .data$dip + 1 * .data$cert) / (.data$postgrad + .data$grad + .data$dip + .data$cert)) %>%
     dplyr::select(.data[[geography]],
-                  qualification)
+                  .data$qualification)
 
 
 
@@ -116,16 +116,18 @@ create_stem <- function(year = 2016, geography = "sa2") {
 
   data %>%
     dplyr::left_join(geog, by = geography) %>%
-    dplyr::group_by(stem = qualification %in% c("Natural and Physical Sciences",
+    dplyr::group_by(stem = .data$qualification %in% c("Natural and Physical Sciences",
                                          "Information Technology",
                                          "Engineering and Related Technologies",
                                          "Agriculture, Environmental and Related Studies"),
                     .data[[geography]]) %>%
-    dplyr::summarise(stem_employees = sum(employment), .groups = "drop")  %>%
-    tidyr::pivot_wider(names_from = stem, values_from = stem_employees, names_prefix = "stem") %>%
-    dplyr::mutate(stem = stemTRUE/(stemFALSE + stemTRUE),
+    dplyr::summarise(stem_employees = sum(.data$employment), .groups = "drop")  %>%
+    tidyr::pivot_wider(names_from = .data$stem, values_from = .data$stem_employees, names_prefix = "stem") %>%
+    dplyr::mutate(stem = .data$stemTRUE/(.data$stemFALSE + .data$stemTRUE),
                   year = {{year}}) %>%
-    dplyr::select(geography, stem, year)
+    dplyr::select(geography,
+                  .data$stem,
+                  .data$year)
 
 }
 

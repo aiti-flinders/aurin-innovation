@@ -44,7 +44,7 @@ create_plants <- function(year, geography = "sa2") {
 
   p <- plants %>%
     dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(sa2_name, year) %>%
+    dplyr::group_by(.data$sa2_name, year) %>%
     dplyr::summarise(plants = dplyr::n(), .groups = "drop") %>%
     dplyr::ungroup()
 
@@ -56,7 +56,7 @@ create_plants <- function(year, geography = "sa2") {
   p %>%
     dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], year) %>%
-    dplyr::summarise(plants = sum(plants)) %>%
+    dplyr::summarise(plants = sum(.data$plants)) %>%
     dplyr::ungroup()
 
 }

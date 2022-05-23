@@ -41,14 +41,14 @@ create_patents <- function(year, geography = "sa2") {
   geography <- paste0(tolower(geography), "_name")
 
   p <- patents %>%
-    dplyr::mutate(ipc = stringr::str_sub(primary_ipc_mark_value, 0, 1)) %>%
+    dplyr::mutate(ipc = stringr::str_sub(.data$primary_ipc_mark_value, 0, 1)) %>%
     dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(australian_appl_no) %>%
+    dplyr::group_by(.data$australian_appl_no) %>%
     dplyr::mutate(backwards_citations = dplyr::n()) %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(sa2_name, year) %>%
+    dplyr::group_by(.data$sa2_name, .data$year) %>%
     dplyr::summarise(patents = dplyr::n(),
-                     backwards_citations = sum(backwards_citations),
+                     backwards_citations = sum(.data$backwards_citations),
                      .groups = "drop") %>%
     dplyr::ungroup()
 
@@ -60,6 +60,6 @@ create_patents <- function(year, geography = "sa2") {
     dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]], year) %>%
     dplyr::summarise(patents = sum(patents),
-                     backwards_citations = mean(backwards_citations)) %>%
+                     backwards_citations = mean(.data$backwards_citations)) %>%
     dplyr::ungroup()
 }

@@ -49,15 +49,15 @@ create_skill <- function(year, geography = "sa2", adjust = FALSE) {
   }
 
   occp_skill <- strayr::asc_core_competencies %>%
-    dplyr::group_by(anzsco_name) %>%
-    dplyr::summarise(score = mean(score))
+    dplyr::group_by(.data$anzsco_name) %>%
+    dplyr::summarise(score = mean(.data$score))
 
   skill_level <- data %>%
     dplyr::left_join(occp_skill, by = "anzsco_name") %>%
     dplyr::left_join(geog, by = geography) %>%
     dplyr::group_by(.data[[geography]]) %>%
     dplyr::mutate(employment_share = .data[[emp]] / sum(.data[[emp]])) %>%
-    dplyr::summarise(skill = weighted.mean(x = score, w = employment_share, na.rm = T)) %>%
+    dplyr::summarise(skill = weighted.mean(x = .data$score, w = .data$employment_share, na.rm = T)) %>%
     dplyr::mutate(year = {{year}})
 
 
