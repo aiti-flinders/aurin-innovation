@@ -5,7 +5,7 @@
 \alias{knowledge_capability_data}
 \title{Knowledge capability metrics of SA2 regions between 2011 and 2016.}
 \format{
-A data frame with 13989 rows and 9 variables:
+A data frame with 14122 rows and 9 variables:
 \describe{
 \item{sa2_name}{name of SA2 region. For years before 2016, uses the 2011 Australian Statistical Geography Standard (ASGS).  For years following and including 2016, uses the 2016 ASGS. More information about the ASGS can be read on the Australian Bureau of Statistics (ABS) website \href{https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026}{here}.}
 \item{sa2_code}{8 digit code representing the SA2 region.}
