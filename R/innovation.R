@@ -6,10 +6,10 @@
 #' A two factor model, with a secondary factor, is confirmed.
 #'
 #' The first factor measures the skill level of the workers of a geographic region. It is measured by
-#' the average skill level of the region, the average education qualification of the region, and the proportion of employees working
+#' the average skill level of the region, the average level of education of the region, and the proportion of employees working
 #' in knowledge intensive business services.
 #'
-#' The second factor measures the innovation activity happening in a region. It is measured by the number of patents, trademarks, and
+#' The second factor measures the patent activity happening in a region. It is measured by the number of patents, and
 #' backward patent citations per 1000 employees in a region.
 #'
 #' Further, it is imposed that the level of education qualification in a region is correlated with the skill level of the occupations.
