@@ -5,9 +5,11 @@
 \alias{regional_innovation}
 \title{Innovation metrics of SA2 regions for 2011 and 2016.}
 \format{
-A data frame with 4325 rows and 19 variables:
+A data frame with 4325 rows and 20 variables:
 \describe{
-\item{sa2_name}{}
+\item{sa2_name}{name of the sa2 region. For 2011, uses the 2011 Australian Statistical Geography Standard.
+For 2016, uses the 2016 Australian Statistical Geography Standard}
+\item{sa2_code}{8-digit code assigned to the sa2 name}
 \item{year}{}
 \item{patents}{number of patents per 1000 workers}
 \item{backwards_citations}{number of backward citations}
