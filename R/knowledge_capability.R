@@ -1,5 +1,6 @@
 create_knowledge_capability <- function(year, geography) {
 
+  # Specify only to supress message.
   join_by <- c(paste0(tolower(geography), "_name"), "year")
 
   knowledge_capability <- dplyr::full_join(create_patents(year, geography),
