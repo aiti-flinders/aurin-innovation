@@ -5,12 +5,14 @@ on:
     paths:
       - 'R/innovation.R' # Function which generates regional_innovation data. Also depends on functions below:
       - 'R/sem_input.R'
+      - 'data-raw/regional_innovation.R'
       - 'R/knowledge_capability.R'#Function which generates knowledge capability data. Also depends on functions below:
       - 'R/designs.R'
       - 'R/patents.R'
       - 'R/plants.R'
       - 'R/pow.R'
       - 'R/utils.R'
+      - 'data-raw/knowledge_capability_data.R'
 
 jobs:
   update-data:
