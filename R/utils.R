@@ -4,17 +4,17 @@ check_sa2 <- function(.data, geography, other) {
 
   .data %>%
     dplyr::filter(!stringr::str_detect(.data[[geography]], "Migratory - Offshore - Shipping"),
-                  !stringr::str_detect(.data[[geography]], "POW No Fixed Address"),
-                  !stringr::str_detect(.data[[geography]], "POW not applicable"),
-                  !stringr::str_detect(.data[[geography]], "POW not stated"),
-                  !stringr::str_detect(.data[[geography]], "No usual address"),
-                  !stringr::str_detect(.data[[geography]], "POW State/Territory undefined"),
-                  !stringr::str_detect(.data[[geography]], "POW Capital city undefined"),
-                  .data[[geography]] != "Total",
-                  !.data[[other]] %in% c("Inadequately described",
-                                "Not stated",
-                                "Not applicable",
-                                "Total"))
+      !stringr::str_detect(.data[[geography]], "POW No Fixed Address"),
+      !stringr::str_detect(.data[[geography]], "POW not applicable"),
+      !stringr::str_detect(.data[[geography]], "POW not stated"),
+      !stringr::str_detect(.data[[geography]], "No usual address"),
+      !stringr::str_detect(.data[[geography]], "POW State/Territory undefined"),
+      !stringr::str_detect(.data[[geography]], "POW Capital city undefined"),
+      .data[[geography]] != "Total",
+      !.data[[other]] %in% c("Inadequately described",
+        "Not stated",
+        "Not applicable",
+        "Total"))
 }
 
 
@@ -88,16 +88,16 @@ adjust_nfd <- function(data, nfd_col, nfd_level, anz = c("anzsic", "anzsco")) {
     tidyr::fill(.data[[fill_var]], .direction = "updown") %>%
     dplyr::group_by(.data$sa2_name, .data[[fill_var]]) %>%
     dplyr::mutate(employment_share = .data$employment / sum(.data$employment),
-                  nfd = ifelse(stringr::str_detect(.data[[nfd_col]], "nfd"), .data$employment, NA)) %>%
+      nfd = ifelse(stringr::str_detect(.data[[nfd_col]], "nfd"), .data$employment, NA)) %>%
     tidyr::fill(.data$nfd, .direction = "down") %>%
     dplyr::mutate(employment_adj = round(.data$employment + (.data$employment_share * .data$nfd), digits = 0),
-                  employment_adj = ifelse(is.nan(.data$employment_adj), 0, .data$employment_adj)) %>%
+      employment_adj = ifelse(is.nan(.data$employment_adj), 0, .data$employment_adj)) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(employment_adj = ifelse(stringr::str_detect(.data[[nfd_col]], "nfd"), 0, .data$employment_adj)) %>%
     dplyr::select(.data$sa2_name,
-                  {{nfd_col}},
-                  .data$employment,
-                  .data$employment_adj)
+      {{nfd_col}},
+      .data$employment,
+      .data$employment_adj)
 }
 
 
@@ -115,9 +115,25 @@ add_product_names <- function(data, digits) {
   prod_data <- product_data %>%
     dplyr::filter(.data$level == digits) %>%
     dplyr::select(.data$hs_product_name_short_en,
-                  .data$hs_product_code)
+      .data$hs_product_code)
 
   data %>%
     dplyr::left_join(prod_data, by = "hs_product_code")
+}
+
+add_sa2_codes <- function(data) {
+
+  data_2011 <- data %>%
+    dplyr::filter(year < 2016) %>%
+    dplyr::left_join(sa2_2011, by = "sa2_name")
+
+  data_2016 <- data %>%
+    dplyr::filter(year >= 2016) %>%
+    dplyr::left_join(sa2_2016, by = "sa2_name")
+
+  dplyr::bind_rows(data_2011, data_2016) %>%
+    dplyr::select(-c(geometry, cent_lat, cent_long, areasqkm, state_name, state_code, gcc_name, gcc_code,
+      sa4_name, sa4_code, sa3_name, sa3_code, sa2_5dig))
+
 }
 
