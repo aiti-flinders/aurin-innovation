@@ -3,14 +3,14 @@ name: update-data
 on:
   push:
     paths:
-      - 'innovation.R' # Function which generates regional_innovation data. Also depends on functions below:
-      - 'sem_input.R'
-      - 'knowledge_capability.R'#Function which generates knowledge capability data. Also depends on functions below:
-      - 'designs.R'
-      - 'patents.R'
-      - 'plants.R'
-      - 'pow.R'
-      - 'utils.R'
+      - 'R/innovation.R' # Function which generates regional_innovation data. Also depends on functions below:
+      - 'R/sem_input.R'
+      - 'R/knowledge_capability.R'#Function which generates knowledge capability data. Also depends on functions below:
+      - 'R/designs.R'
+      - 'R/patents.R'
+      - 'R/plants.R'
+      - 'R/pow.R'
+      - 'R/utils.R'
 
 jobs:
   update-data:
