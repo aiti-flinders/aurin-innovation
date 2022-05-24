@@ -1,7 +1,7 @@
 #' Create Patents IP data.
 #'
 #' `create_patents()` creates a data frame with the number of patents filed in a geographic area for a given year, and
-#' the average number of backwards citations that a patent application included.
+#' the total number of backwards citations referenced across all patent applications within a geographic area.
 #'
 #' Only patents applied for in Australia are included. This data is derived from the
 #' Intellectual Property Government Open Data, and includes:
@@ -51,6 +51,9 @@ create_patents <- function(year, geography = "sa2") {
                      backwards_citations = sum(.data$backwards_citations),
                      .groups = "drop") %>%
     dplyr::ungroup()
+
+  # IPGOD uses 2016 boundaries for all years - convert back to 2011 boundaries to match
+  # other census data.
 
   if (year < 2016) {
     p <- p %>% sa2_16_to_sa2_11(var = c("patents", "backwards_citations"))

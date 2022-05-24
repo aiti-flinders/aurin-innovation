@@ -5,12 +5,12 @@
 \alias{regional_innovation}
 \title{Innovation metrics of SA2 regions for 2011 and 2016.}
 \format{
-A data frame with 4325 and 19 variables:
+A data frame with 4325 rows and 19 variables:
 \describe{
 \item{sa2_name}{}
 \item{year}{}
 \item{patents}{number of patents per 1000 workers}
-\item{backwards_citations}{average number of backward citations}
+\item{backwards_citations}{number of backward citations}
 \item{designs}{number of designs per 1000 workers}
 \item{trademarks}{number of trademarks per 1000 workers}
 \item{plants}{number of plant breeder rights applications per 1000 workers}

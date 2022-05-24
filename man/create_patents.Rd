@@ -16,7 +16,7 @@ A data frame of patents by geography for a given year.
 }
 \description{
 \code{create_patents()} creates a data frame with the number of patents filed in a geographic area for a given year, and
-the average number of backwards citations that a patent application included.
+the total number of backwards citations referenced across all patent applications within a geographic area.
 }
 \details{
 Only patents applied for in Australia are included. This data is derived from the
