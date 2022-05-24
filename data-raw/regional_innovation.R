@@ -1,5 +1,5 @@
 ## code to prepare `regional_innovation` dataset goes here
-devtools::load_all()
+library(aurininnovation)
 library(purrr)
 library(scales)
 library(dplyr)

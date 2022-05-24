@@ -1,5 +1,4 @@
 ## code to prepare `knowledge_capability_data` dataset goes here
-library(magrittr)
 library(purrr)
 library(dplyr)
 library(tidyr)
