@@ -25,7 +25,7 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          Rscript -e "install.packages(c('remotes', 'dplyr', 'tidyr', 'purrr', 'scales', 'sf'), type = 'binary')"
+          Rscript -e "install.packages(c('usethis', 'remotes', 'dplyr', 'tidyr', 'purrr', 'scales', 'sf'), type = 'binary')"
           Rscript -e "remotes::install_github('aiti-flinders/aurin-innovation')"
 
       - name: Create data
