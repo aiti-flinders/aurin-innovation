@@ -57,7 +57,7 @@ metrics for SA2 regions.</p>
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>A data frame with 4325 rows and 20 variables:</p><dl><dt>sa2_name</dt>
-<dd><p>name of the sa2 region. For 2011, uses the 2011 Australian Statistical Geography Standard.
+<dd><p>Name of the SA2 region. For 2011, uses the 2011 Australian Statistical Geography Standard.
 For 2016, uses the 2016 Australian Statistical Geography Standard</p></dd>
 
 <dt>sa2_code</dt>
@@ -67,55 +67,74 @@ For 2016, uses the 2016 Australian Statistical Geography Standard</p></dd>
 <dd></dd>
 
 <dt>patents</dt>
-<dd><p>number of patents per 1000 workers</p></dd>
+<dd><p>Number of patents per 1000 workers. Patent data is derived from the 2019
+Intellectual Property Government Open Data (IPGOD) tables 101 and 102.
+All patent applications from a valid SA2 are included.</p></dd>
 
 <dt>backwards_citations</dt>
-<dd><p>number of backward citations</p></dd>
+<dd><p>Number of backward citations. Patent data is derived from the 2019
+IPGOD tables 110.</p></dd>
 
 <dt>designs</dt>
-<dd><p>number of designs per 1000 workers</p></dd>
+<dd><p>Number of designs per 1000 workers. Designs data is derived from the 2019 IPGOD
+tables 301 and 302. Only designs whose application originated from a valid SA2 in Australia are included.</p></dd>
 
 <dt>trademarks</dt>
-<dd><p>number of trademarks per 1000 workers</p></dd>
+<dd><p>Number of trademarks per 1000 workers. Trademarks data is derived from the 2019 IPGOD
+tables 201 and 201. Only trademarks whose application originated from a valid SA2 in Australia are included.</p></dd>
 
 <dt>plants</dt>
-<dd><p>number of plant breeder rights applications per 1000 workers</p></dd>
+<dd><p>Number of plant breeder rights applications per 1000 workers. Plant Breeder Rights data
+is derived from the 2019 IPGOD tables 401 and 402. Only plant breeder rights lodged from a valid SA2 in Australia are
+included.</p></dd>
 
 <dt>kibs</dt>
-<dd><p>proportion of workers in knowledge intensive business services</p></dd>
+<dd><p>Proportion of workers in knowledge intensive business services. See <code><a href="kibs_industry_class.html">?kibs_industry_class</a></code>.</p></dd>
 
 <dt>skill</dt>
-<dd><p>average skill level of region occupations</p></dd>
+<dd><p>Average skill level of region occupations. Occupation skill levels are derived from the
+Australian Skills Commission Core Competencies of occupations as defined by the 2006 ANZSCO at the unit level. Each
+occupation is scored across 10 competencies, receiving a score between 1 and 10 where 10 is the most skilled. The
+skill level of a region is the weighted average of an occupations skill level, and the share of employment in that
+occupation in an SA2.  Skill ranges from 1 to 10 where 10 is the most skilled.</p></dd>
 
 <dt>owner_managers</dt>
-<dd><p>proportion of owner-managers</p></dd>
+<dd><p>Proportion of workers who are owner managers of incorporated and unincorporated enterprises.
+Data is derived from the ABS Census of Population and Housing SIEMP for 2016 and EMTP for 2011.</p></dd>
 
 <dt>unis</dt>
-<dd><p>number of universities</p></dd>
+<dd><p>Number of universities located within SA2 boundaries. University point data is sourced from the
+<a href="https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-universities-2018-na" class="external-link">AURIN Portal.</a></p></dd>
 
 <dt>tafes</dt>
-<dd><p>number of tafes</p></dd>
+<dd><p>Number of TAFEs located within SA2 boundaries. TAFE point data is sourced from the
+<a href="https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-tafes-2018-na" class="external-link">AURIN Portal.</a></p></dd>
 
 <dt>qualification</dt>
-<dd><p>average education level of workers</p></dd>
+<dd><p>Average education level of those employed in the region. Data is sourced from the ABS
+Census of Population and Housing QALLP for 2011 and 2016. A region is scored based on the proportion of workers within
+each education qualification level, where Certificate level qualifications are worth 1 and Postgraduate Degree level qualifications
+are worth 4. The Graduate Diploma and Graduate Certificate level is combined with the Bachelor Degree level. As such,
+each region receives a score between 1 and 4, where a higher score indicates a higher average level of education.</p></dd>
 
 <dt>stem</dt>
-<dd><p>proportion of workers with a stem qualification</p></dd>
+<dd><p>Proportion of workers with a qualification in a stem field. STEM qualifications refer to any non-school qualifications
+in Natural and Physical Sciences, Information Technology, Engineering and Related Technologies, and Agriculture, Environmental and Related Studies</p></dd>
 
 <dt>employment</dt>
-<dd><p>total employment</p></dd>
+<dd><p>Total employment, measured by the ABS 2011 and 2016 Census, Counting Place of Work.</p></dd>
 
 <dt>infrastructure</dt>
-<dd><p>number of universities and tafes</p></dd>
+<dd><p>Number of universities and tafes</p></dd>
 
 <dt>human_knowledge</dt>
-<dd><p>factor derived from kibs, skill, and qualification</p></dd>
+<dd><p>Factor derived from kibs, skill, and qualification</p></dd>
 
 <dt>patent_output</dt>
-<dd><p>factor derived from patents and backwards citations</p></dd>
+<dd><p>Factor derived from patents and backwards citations</p></dd>
 
 <dt>innovation</dt>
-<dd><p>second-order factor derived from human_knowledge and patent_output</p></dd>
+<dd><p>Second-order factor derived from human_knowledge and patent_output</p></dd>
 
 
 </dl></div>
