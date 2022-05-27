@@ -315,12 +315,14 @@ patents_info <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-84
 
 patents_citations <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/12d28b0f-b16e-487d-b6ca-b44ea7b97d8c/download/ipgod110.csv",
                               show_col_types = FALSE,
-                              col_types = c("nccccccc"))
+                              col_types = c("nccccccc")) %>%
+  group_by(australian_appl_no) %>%
+  tally(name = "backwards_citations")
 
 patents <- patents %>%
   left_join(patents_info, by = c("australian_appl_no", "australian", "entity")) %>%
   left_join(patents_citations, by = "australian_appl_no") %>%
-  select(australian_appl_no, sa2_name, year, primary_ipc_mark_value) %>%
+  select(australian_appl_no, sa2_name, year, primary_ipc_mark_value, backwards_citations) %>%
   filter(!is.na(sa2_name))
 
 
