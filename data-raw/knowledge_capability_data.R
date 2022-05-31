@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 library(aurininnovation)
 
-kc <- map_df(.x = c(2011:2017), ~create_knowledge_capability(.x, "sa2")) %>%
+kc <- map_df(.x = c(2011:2017), ~aurininnovation:::create_knowledge_capability(.x, "sa2")) %>%
   filter(!is.na(sa2_name)) %>%
   replace_na(list(designs = 0,
     patents = 0,
