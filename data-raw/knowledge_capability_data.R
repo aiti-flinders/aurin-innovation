@@ -13,7 +13,7 @@ kc <- map_df(.x = c(2011:2017), ~aurininnovation:::create_knowledge_capability(.
     trademarks = 0,
     plants = 0))
 
-pow <- map_df(.x = c(2011, 2016), ~pow(.x, "sa2") %>% dplyr::mutate(year = .x)) %>%
+pow <- map_df(.x = c(2011, 2016), ~aurininnovation:::pow(.x, "sa2") %>% dplyr::mutate(year = .x)) %>%
   pivot_wider(names_from = year,
     values_from = employment,
     names_prefix = "y") %>%
@@ -31,6 +31,6 @@ pow <- map_df(.x = c(2011, 2016), ~pow(.x, "sa2") %>% dplyr::mutate(year = .x)) 
 
 knowledge_capability_data <- kc %>%
   left_join(pow, by = c("sa2_name", "year")) %>%
-  add_sa2_codes()
+  aurininnovation:::add_sa2_codes()
 
 usethis::use_data(knowledge_capability_data, compress = "xz", overwrite = TRUE)
