@@ -1,6 +1,7 @@
 ## code to prepare `knowledge_capability_data` dataset goes here
 library(purrr)
 library(dplyr)
+library(sf)
 library(tidyr)
 library(aurininnovation)
 
