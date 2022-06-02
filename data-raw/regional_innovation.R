@@ -7,7 +7,9 @@ library(dplyr)
 
 regional_innovation <- map_dfr(.x = c(2011, 2016),
                                .f = ~create_regional_innovation(year = .x, geography = "sa2", adjust = FALSE)) %>%
-  mutate(across(c(innovation, human_knowledge, patent_output), ~rescale(.x, to = c(0, 100)))) %>%
+  group_by(year) %>%
+  mutate(across(c(innovation, human_knowledge, patent_output), ~rescale(.x, to = c(0, 100)), .names = "{.col}_score")) %>%
+  ungroup() %>%
   aurininnovation:::add_sa2_codes() %>%
   relocate(sa2_code, .after = sa2_name)
 
