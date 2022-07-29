@@ -5,7 +5,7 @@ description: >
   Summary of how the regional innovation dataset has been 
   compiled and calculated. 
 vignette: >
-  %\VignetteIndexEntry{regional_innovation}
+  %\VignetteIndexEntry{Regional Innovation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
