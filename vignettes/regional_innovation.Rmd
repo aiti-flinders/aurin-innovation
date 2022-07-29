@@ -61,7 +61,7 @@ A region is scored between 1 (least educated) and 4 (most educated) based on the
 
 3.  Knowledge Intensive Business Services (KIBS)
 
-*Proportion of workers in **knowledge intensive business services***.
+*Proportion of workers in **knowledge intensive business services***
 
 Knowledge intensive business services are defined at the ANZSIC class level from the [Knowledge Intensive Services Report](https://www.mbie.govt.nz/assets/bd287dd4f2/Knowledge-intensive-services-report.pdf){.uri} prepared by the New Zealand Government in 2014. 68 industries are classified as knowledge intensive.
 
