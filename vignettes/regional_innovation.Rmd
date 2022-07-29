@@ -1,0 +1,137 @@
+---
+title: "Regional Innovation"
+output: bookdown::html_vignette2
+description: >
+  Summary of how the regional innovation dataset has been 
+  compiled and calculated. 
+vignette: >
+  %\VignetteIndexEntry{regional_innovation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(aurininnovation)
+library(strayr)
+library(dplyr)
+library(knitr)
+```
+
+The regional innovation dataset contains a measure of innovation, inputs to innovation, and other innovation metrics for SA2 regions, for 2011 and 2016. The measure of innovation is derived from a factor analysis model which identifies two factors.
+
+# Human Knowledge
+
+Human knowledge is a measure of the level of knowledge present in a given SA2. It is calculated from the factor analysis model, and is measured by three variables:
+
+1.  Skill
+
+*Average **skill level** of region occupations*
+
+The Australian Skills Commission provides data on the core competencies of occupations as deined by the 2006 ANZSCO at the unit level. Each occupation has a skill level between 1 (least skilled) and 10 (most skilled). The core competencies for an Economist are shown below in Table \@ref(tab:skillcalc).
+
+```{r skillcalc, echo = F}
+asc_core_competencies %>%
+  filter(anzsco_name == "Economists") %>%
+  select(anzsco_name, core_competencies, score) %>%
+  knitr::kable(col.names = c("ANZSCO Occupation", "Core Competencies", "Score"),
+               caption = "Australian Skills Commission core competencies: Economists")
+
+
+```
+
+The skill level of a region is the average of the occupations score, weighted by the employment share of that occupation, in that region.
+
+2.  Qualification
+
+*Average **education level** of those employed in the region*
+
+Data is sourced from the ABS Census of Population and Housing - QALLP. The education levels are:
+
+-   Postgraduate Degree
+-   Graduate Diploma, Graduate Certificate and Bachelor Degree
+-   Advanced Diploma and Diploma
+-   Certificate
+
+A region is scored between 1 (least educated) and 4 (most educated) based on the proportion of workers within each qualification level.
+
+3.  Knowledge Intensive Business Services (KIBS)
+
+*Proportion of workers in **knowledge intensive business services***.
+
+Knowledge intensive business services are defined at the ANZSIC class level from the [Knowledge Intensive Services Report](https://www.mbie.govt.nz/assets/bd287dd4f2/Knowledge-intensive-services-report.pdf){.uri} prepared by the New Zealand Government in 2014. 68 industries are classified as knowledge intensive.
+
+# Patent Output
+
+The patent output factor is a measure of patent activity in a region, and is based on two variables:
+
+1.  Patent applications
+
+*Number of **patents** per 1000 workers.*
+
+Patent data is derived from the 2019 Intellectual Property Government Open Data (IPGOD) tables 101 and 102[^1].
+
+[^1]: This data has since been superseded by the 2020, 2021, and 2022 releases of IPGOD. However, the 2019 release was the last to include geocoding of patent (and other IP) data at the SA2 level, with more recent releases using postcode instead. Subsequent releases of IPGOD are intended to re-incorporate approximate geocoding.
+
+2.  Backward citations
+
+*Average number of **backward citations** per patent*
+
+Patent citation data derived from the 2019 IPGOD table 110. 
+
+# Other Innovation Indicators
+
+The regional innovation dataset contains other variables which may be of interest to innovation researchers. These were collected during the exploratory factor analysis, but were not included in the confirmatory factor analysis. 
+
+## Designs
+
+*Number of **designs** per 1000 workers.*
+
+Designs data is derived from the 2019 IPGOD tables 301 and 302. All designs whose application originated from a valid SA2 in Australia are counted. 
+
+## Trademarks
+
+*Number of **trademarks** per 1000 workers*
+
+Trademarks data is derived from the 2019 IPGOD tables 201 and 202. All trademarks whose application originated from a valid SA2 in Australia are counted. 
+
+## Plants
+
+*Number of **plant breeder rights** per 1000 workers*
+
+Plant Breeder Rights data is derived from the 2019 IPGOD tables 401 and 402. Only plant breeder rights lodged from a valid SA2 in Australia are included. 
+
+## Owner Managers
+
+*Proportion of workers who are **owner managers** of incorporated and unincorporated enterprises*
+
+Data is derived from the ABS Census of Population and Housing SIEMP for 2016 and EMTP for 2011. 
+
+## Unis
+
+*Number of **universities***.
+
+University point data is sourced from [the Aurin Portal](https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-tafes-2018-na) and is converted to a count of universities within SA2 boundaries. This data is only available for 2018. 
+
+## Tafes
+
+*Number of **TAFEs***
+TAFE point data is sourced from [the Aurin Portal](https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-tafes-2018-na) and is converted to a count of TAFE campuses within SA2 boundaries. This data is only available for 2018. 
+
+## STEM
+
+*Proportion of workers with a qualification in a **stem field***
+
+STEM qualifications refere to any non-school qualifications in Natural and Physical Sciences, Information Technology, Engineering and Related Technologies, and Agriculture, Environmental and Related Studies. 
+
+## Employment
+
+*Count of **workers** in a region*.
+
+Data is measured by the ABS 2011 and 2016 Census, Counting Place of Work. 
+
+
