@@ -1,6 +1,6 @@
 ---
 title: "Regional Innovation"
-output: bookdown::html_vignette2
+output: rmarkdown::html_vignette 
 description: >
   Summary of how the regional innovation dataset has been 
   compiled and calculated. 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
 library(aurininnovation)
 library(strayr)
 library(dplyr)

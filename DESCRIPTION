@@ -32,8 +32,7 @@ Imports:
     DT,
     strayr (>= 0.1.6),
     janitor,
-    stringr,
-    bookdown
+    stringr
 Depends: 
     R (>= 2.10)
 Remotes: 
