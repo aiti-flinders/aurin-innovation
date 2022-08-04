@@ -21,8 +21,11 @@ library(strayr)
 library(dplyr)
 library(knitr)
 ```
+This data was created as part of the AURIN High Impact Project: Quantifying Regional Innovation. The source code for this project is available on GitHub [aiti-flinders/aurin-innovation](https://github.com/aiti-flinders/aurin-innovation){.uri}.
 
-The regional innovation dataset contains a measure of innovation, inputs to innovation, and other innovation metrics for SA2 regions, for 2011 and 2016. The measure of innovation is derived from a factor analysis model which identifies two factors.
+If there are any issues with this app please file an issue on the GitHub repository  [aiti-flinders/aurin-innovation-app](https://github.com/aiti-flinders/aurin-innovation-app/issues){.uri}.
+
+The regional innovation dataset contains a measure of innovation, inputs to innovation, and other innovation metrics for SA2 regions, for 2011 and 2016. The measure of innovation is derived from a factor analysis model which identifies two factors. 
 
 # Human Knowledge
 
