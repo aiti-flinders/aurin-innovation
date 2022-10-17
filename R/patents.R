@@ -32,34 +32,40 @@ create_patents <- function(year, geography = "sa2") {
 
  if (year == 2011) {
     geog <- sa2_2011
-  } else {
+  } else if (year == 2016) {
     geog <- sa2_2016
+  } else if (year == 2021) {
+    geog <- sa2_2021
   }
 
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 
-  p <- patents %>%
-    dplyr::mutate(ipc = stringr::str_sub(.data$primary_ipc_mark_value, 0, 1)) %>%
-    dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(.data$sa2_name, .data$year) %>%
-    dplyr::summarise(patents = dplyr::n(),
-                     backwards_citations = sum(.data$backwards_citations, na.rm = TRUE),
-                     .groups = "drop") %>%
+  p <- patents_sa2 %>%
+    dplyr::filter(year %in% ({{year}} - 2):({{year}})) %>%
+    dplyr::rename(patents = n) %>%
+    dplyr::group_by(.data[[geography]]) %>%
+    dplyr::summarise(patents = mean(.data$patents),
+                     backwards_citations = mean(.data$backwards_citations)) %>%
+    dplyr::mutate(year = {{year}}) %>%
     dplyr::ungroup()
 
-  # IPGOD uses 2016 boundaries for all years - convert back to 2011 boundaries to match
+  # IPGOD uses 2021 boundaries for all years - convert back to 2016 or 2011 boundaries to match
   # other census data.
 
-  if (year < 2016) {
+  if (year == 2011) {
     p <- p %>% sa2_16_to_sa2_11(var = c("patents", "backwards_citations"))
+  } else if (year == 2016) { #I'm not sure if this is necessary??
+    p <- p %>% sa2_21_to_sa2_16(var = c("patents", "backwards_citations"))
   }
 
   p %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]], year) %>%
     dplyr::summarise(patents = sum(patents),
-                     backwards_citations = mean(.data$backwards_citations)) %>%
+                     backwards_citations = sum(.data$backwards_citations),
+                     .groups = "drop") %>%
+                     # backwards_citations = backwards_citations/patents) %>%
     dplyr::ungroup()
 }
