@@ -26,7 +26,7 @@ create_skill <- function(year, geography = "sa2", adjust = FALSE) {
 
   if (year == 2021) {
     geog <- sa2_2021
-    data <- sa2_occp4_2016
+    data <- sa2_occp4_2021
   }
 
   else if (year == 2016) {
