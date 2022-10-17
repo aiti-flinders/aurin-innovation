@@ -93,7 +93,7 @@ create_qualification <- function(year, geography = "sa2") {
 #'
 #' @examples
 #' create_stem(2016, "SA2")
-create_stem <- function(year = 2016, geography = "sa2") {
+create_stem <- function(year, geography = "sa2") {
 
   stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
