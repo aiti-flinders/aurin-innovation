@@ -194,7 +194,7 @@ sa2_pow_qalfp <- function(path, skip, n_max, year) {
 
 }
 
-sa2_qalfp2_2021 <- sa2_pow_qalfp("data-raw/sa2_pow_qalfp_2011.csv",
+sa2_qalfp2_2021 <- sa2_pow_qalfp("data-raw/sa2_pow_qalfp_2021.csv",
                                  skip = 9,
                                  n_max = 39584,
                                  year = 2021)
@@ -288,6 +288,9 @@ state_economic_complexity <- get_data(c("NSW", "VIC", "QLD", "SA", "WA", "TAS", 
 
 #ANZSIC to HS
 
+# Misc. -------------------------------------------------------------------
+
+
 url <- 'https://www.abs.gov.au/AUSSTATS/subscriber.nsf/log?openagent&5489.0_2018.xlsx&5489.0&Data%20Cubes&E6F604B67A13BA6CCA2586640012E3DD&0&2018&30.06.2021&Latest'
 
 download.file(url,
@@ -310,6 +313,8 @@ sa2_2021 <- read_absmap("sa22021", remove_year_suffix = TRUE)
 sa2_2016 <- read_absmap("sa22016", remove_year_suffix = TRUE)
 
 sa2_2011 <- read_absmap("sa22011", remove_year_suffix = TRUE)
+
+sa2_2021_to_sa2_2011 <- get_correspondence_absmaps("sa2", 2021, "sa2", 2016)
 
 sa2_2016_to_sa2_2011 <- get_correspondence_absmaps("sa2", 2016, "sa2", 2011) %>%
   select(sa2_name_2016 = SA2_NAME_2016,
