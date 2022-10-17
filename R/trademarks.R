@@ -35,8 +35,11 @@ create_trademarks <- function(year, geography = "sa2") {
   if (year == 2011) {
     geog <- sa2_2011 %>%
       sf::st_drop_geometry()
-  } else {
+  } else if (year == 2016) {
     geog <- sa2_2016 %>%
+      sf::st_drop_geometry()
+  } else if (year == 2021) {
+    geog <- sa2_2021 %>%
       sf::st_drop_geometry()
   }
 
@@ -45,22 +48,24 @@ create_trademarks <- function(year, geography = "sa2") {
   geography <- paste0(tolower(geography), "_name")
 
 
-  tms <- trademarks %>%
-    dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(.data$sa2_name, year) %>%
-    dplyr::summarise(trademarks = dplyr::n(), .groups = "drop") %>%
+  tms <- trademarks_sa2 %>%
+    dplyr::filter(year %in% ({{year}} - 2):({{year}})) %>%
+    dplyr::rename(trademarks = n) %>%
+    dplyr::group_by(.data[[geography]]) %>%
+    dplyr::summarise(trademarks = mean(.data$trademarks)) %>%
+    dplyr::mutate(year = {{year}}) %>%
     dplyr::ungroup()
 
-  if (year < 2016) {
-
+  if (year == 2011) {
     tms <- tms %>% sa2_16_to_sa2_11(var = "trademarks")
-
+  } else if (year == 2016) {
+    tms <- tms %>% sa2_21_to_sa2_16(var = "trademarks")
   }
 
   tms %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]], year) %>%
-    dplyr::summarise(trademarks = sum(trademarks)) %>%
+    dplyr::summarise(trademarks = sum(trademarks, na.rm = TRUE), .groups = "drop") %>%
     dplyr::ungroup()
 
 }
