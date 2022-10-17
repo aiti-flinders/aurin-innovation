@@ -362,6 +362,13 @@ education_location_2016 <- full_join(infrastructure_in_geography(unis, sa2_2016,
                   tafes = 0)) %>%
   mutate(year = 2016)
 
+education_location_2021 <- full_join(infrastructure_in_geography(unis, sa2_2021, "sa2_name", "unis", 2021),
+                                     infrastructure_in_geography(tafes, sa2_2021, "sa2_name", "tafes", 2021),
+                                     by = c("sa2_name"))  %>%
+  replace_na(list(unis = 0,
+                  tafes = 0)) %>%
+  mutate(year = 2021)
+
 
 # IP Data -----------------------------------------------------------------
 
@@ -515,6 +522,7 @@ usethis::use_data(sa2_siemp_2011,
                   sa2_2016_to_sa2_2011,
                   education_location_2011,
                   education_location_2016,
+                  education_location_2021,
                   state_economic_complexity,
                   product_data,
                   anzsic_hs,
