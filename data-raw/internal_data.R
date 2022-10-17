@@ -314,12 +314,7 @@ sa2_2016 <- read_absmap("sa22016", remove_year_suffix = TRUE)
 
 sa2_2011 <- read_absmap("sa22011", remove_year_suffix = TRUE)
 
-sa2_2021_to_sa2_2011 <- get_correspondence_absmaps("sa2", 2021, "sa2", 2016)
 
-sa2_2016_to_sa2_2011 <- get_correspondence_absmaps("sa2", 2016, "sa2", 2011) %>%
-  select(sa2_name_2016 = SA2_NAME_2016,
-         sa2_name_2011 = SA2_NAME_2011,
-         ratio)
 
 if (any(!file.exists(c("data-raw/unis.geoJSON", "data-raw/tafes.geoJSON")))) {
 
