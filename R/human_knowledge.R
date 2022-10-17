@@ -27,29 +27,28 @@
 #'
 #' @examples
 #' create_qualification(2016)
-create_qualification <- function(year = 2016, geography = "sa2") {
+create_qualification <- function(year, geography = "sa2") {
 
-  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+  stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 
-  if (year == 2016) {
 
+  if (year == 2021) {
+    geog <- sa2_2021
+    data <- sa2_qallp1_2021
+  } else if (year == 2016) {
     geog <- sa2_2016
-
     data <- sa2_qallp1_2016
-
-  } else {
-
+  } else if (year == 2011) {
     geog <- sa2_2011
-
     data <- sa2_qallp1_2011
   }
 
 
   data %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]], .data$education_level) %>%
     dplyr::summarise(employment = sum(.data$employment), .groups = "drop") %>%
     tidyr::pivot_wider(names_from = .data$education_level,
@@ -96,18 +95,22 @@ create_qualification <- function(year = 2016, geography = "sa2") {
 #' create_stem(2016, "SA2")
 create_stem <- function(year = 2016, geography = "sa2") {
 
-  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+  stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 
+  if (year == 2021) {
+    geog <- sa2_2021
+    data <- sa2_qalfp2_2021
+  }
+
   if (year == 2016) {
 
     geog <- sa2_2016
-
     data <- sa2_qalfp2_2016
 
-  } else {
+  } else if (year == 2011) {
 
     geog <- sa2_2011
     data <- sa2_qalfp2_2011
@@ -115,19 +118,31 @@ create_stem <- function(year = 2016, geography = "sa2") {
 
 
   data %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(stem = .data$qualification %in% c("Natural and Physical Sciences",
-                                         "Information Technology",
-                                         "Engineering and Related Technologies",
-                                         "Agriculture, Environmental and Related Studies"),
+                                                      "Information Technology",
+                                                      "Engineering and Related Technologies",
+                                                      "Agriculture, Environmental and Related Studies"),
                     .data[[geography]]) %>%
     dplyr::summarise(stem_employees = sum(.data$employment), .groups = "drop")  %>%
     tidyr::pivot_wider(names_from = .data$stem, values_from = .data$stem_employees, names_prefix = "stem") %>%
-    dplyr::mutate(stem = .data$stemTRUE/(.data$stemFALSE + .data$stemTRUE),
+    dplyr::mutate(stem = .data$stemTRUE, #/(.data$stemFALSE + .data$stemTRUE),
                   year = {{year}}) %>%
     dplyr::select(geography,
                   .data$stem,
                   .data$year)
+
+  # data %>%
+  #   dplyr::left_join(geog, by = "sa2_name") %>%
+  #   dplyr::mutate(stem = .data$qualification %in% c("Natural and Physical Sciences",
+  #                                            "Information Technology",
+  #                                            "Engineering and Related Technologies",
+  #                                            "Agriculture, Environmental and Related Studies")) %>%
+  #   dplyr::group_by(.data[[geography]], .data$qualification) %>%
+  #   dplyr::summarise(employment = sum(.data$employment), .groups = "drop") %>%
+  #   tidyr::pivot_wider(names_from = .data$qualification, values_from = .data$employment) %>%
+  #   dplyr::mutate(year = {{year}},
+  #                 stem = `Natural and Physical Sciences` + `Information Technology` + `Engineering and Related Technologies` + `Agriculture, Environmental and Related Studies`)
 
 }
 
