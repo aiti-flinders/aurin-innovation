@@ -27,7 +27,7 @@
 #' }
 create_regional_innovation <- function(year, geography = "sa2", adjust = FALSE, model = NULL) {
 
-  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+  stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   if (geography != "sa2") {
@@ -43,30 +43,35 @@ create_regional_innovation <- function(year, geography = "sa2", adjust = FALSE, 
 
   data <- sem_data(year, geography = geography, adjust) %>%
     dplyr::left_join(pow({{year}}, {{geography}}), by = paste0(tolower(geography), "_name")) %>%
-    dplyr::filter(.data$employment >= 150) %>%
+    dplyr::filter(.data$employment >= 50) %>%
     dplyr::mutate(infrastructure = .data$unis + .data$tafes)
 
 
   sem_model <- data %>%
-    dplyr::mutate(dplyr::across(c(patents, designs, trademarks, plants), ~.x / (1000 * employment)),
-                  dplyr::across(c(-year, -paste0(tolower(geography), "_name")), ~scale(.x)))
-
+    dplyr::mutate(dplyr::across(c(patents, designs, trademarks, plants, backwards_citations), ~ 1000 * .x / employment),
+                  dplyr::across(c(kibs, owner_managers, stem), ~ .x / employment))
 
   if (is.null(model)) {
 
-  model <- "human_knowledge =~ skill + qualification + kibs
-  patent_output =~ backwards_citations + patents
-  innovation =~ 1*human_knowledge  + 1*patent_output
-  innovation ~~ innovation
-  qualification ~~ skill"
+    out <- data
 
+    model <- "human_knowledge =~ skill + qualification + kibs
+    patent_output =~ backwards_citations + patents
+    innovation =~ 1*human_knowledge + 1*patent_output
+    innovation ~~innovation"
+
+    fit <- lavaan::cfa(model, sem_model, std.lv = TRUE, estimator = "MLR")
+
+    #summary(fit, fit.measures = TRUE, standardized = T)
+
+    out <- data %>%
+      dplyr::mutate(as.data.frame(lavaan::predict(fit)))
   }
 
-  fit <- lavaan::cfa(model, sem_model, std.lv = TRUE)
-
-  data %>%
-    dplyr::mutate(as.data.frame(lavaan::predict(fit)))
 
 
+  r <- list("fit" = fit, "raw.data" = data,  "cfa.output" = out, "cfa.input" = sem_model)
+
+  return(r)
 
 }
