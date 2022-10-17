@@ -58,7 +58,7 @@ sa2_pow_qallp <- function(path, skip, n_max, year) {
 
 sa2_qallp1_2021 <- sa2_pow_qallp("data-raw/sa2_pow_qallp_2021.csv",
                                  skip = 9,
-                                 n_max = 22276,
+                                 n_max = 22266,
                                  year = 2021)
 
 sa2_qallp1_2016 <- sa2_pow_qallp("data-raw/sa2_pow_qallp_2016.csv",
