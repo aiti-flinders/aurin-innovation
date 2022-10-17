@@ -13,9 +13,33 @@ library(aurintools)
 
 # ABS Table Builder -------------------------------------------------------
 
+# SA2 POW OCCP1 (2016, 2011)
+
+# sa2_pow_occp <- function(path, skip, n_max, year) {
+#
+#   read_csv(file = path,
+#            skip = {{skip}},
+#            n_max = {{n_max}},
+#            col_select = c(sa2_name = 3,
+#                           occupation = 2,
+#                           employment = 4),
+#            show_col_types = FALSE) %>%
+#     check_sa2(geography = "sa2_name",
+#               other = "occupation") %>%
+#     mutate(year = {{year}}) %>%
+#     pivot_wider(names_from = occupation,
+#                 values_from = employment)
+#
+# }
+#
+# sa2_occp1_2016 <- sa2_pow_occp("data-raw/sa2_pow_occp1_2016.csv",
+#                                skip = 9,
+#                                n_max = 27744,
+#                                year = 2016)
 
 
-# SA2 POW QALLP1 (2016, 2011)
+# SA2 POW QALLP1 (2021, 2016, 2011) ---------------------------------------
+
 
 sa2_pow_qallp <- function(path, skip, n_max, year) {
 
@@ -32,6 +56,11 @@ sa2_pow_qallp <- function(path, skip, n_max, year) {
 
 }
 
+sa2_qallp1_2021 <- sa2_pow_qallp("data-raw/sa2_pow_qallp_2021.csv",
+                                 skip = 9,
+                                 n_max = 22276,
+                                 year = 2021)
+
 sa2_qallp1_2016 <- sa2_pow_qallp("data-raw/sa2_pow_qallp_2016.csv",
                                skip = 9,
                                n_max = 20808,
@@ -45,7 +74,11 @@ sa2_qallp1_2011 <- sa2_pow_qallp("data-raw/sa2_pow_qallp_2011.csv",
 
 
 
-# SA2 POW OCCP4 (2016, 2011)
+
+
+
+# SA2 POW OCCP4 (2021, 2016, 2011) ----------------------------------------
+
 
 sa2_pow_occp <- function(path, skip, n_max, year) {
 
@@ -60,6 +93,11 @@ sa2_pow_occp <- function(path, skip, n_max, year) {
 
 }
 
+sa2_occp4_2021 <- sa2_pow_occp("data-raw/sa2_pow_occp4_2021.csv",
+                               skip = 9,
+                               n_max = 1182572,
+                               year = 2021)
+
 sa2_occp4_2016 <- sa2_pow_occp("data-raw/sa2_pow_occp4_2016.csv",
                                 skip = 10,
                                 n_max = 1105136,
@@ -70,9 +108,10 @@ sa2_occp4_2011 <- sa2_pow_occp("data-raw/sa2_pow_occp4_2011.csv",
                                n_max = 1068330,
                                year = 2011)
 
-# SA2 POW INDP4 (2016, 2011)
+# SA2 POW INDP4 (2021, 2016, 2011) ----------------------------------------
 
-## code to prepare `sa2_indp4_2016` dataset goes here
+
+
 sa2_pow_ind4 <- function(path, skip, n_max, year) {
 
   read_csv(path, skip = {{skip}}, n_max = {{n_max}},  show_col_types = F,
@@ -85,6 +124,11 @@ sa2_pow_ind4 <- function(path, skip, n_max, year) {
 
 }
 
+sa2_indp4_2021 <- sa2_pow_ind4("data-raw/sa2_pow_indp4_2021.csv",
+                                skip = 9,
+                                n_max = 1783754,
+                                year = 2021)
+
 sa2_indp4_2016 <- sa2_pow_ind4("data-raw/sa2_pow_indp4_2016.csv",
                                skip = 9,
                                n_max = 1666952,
@@ -96,7 +140,9 @@ sa2_indp4_2011 <- sa2_pow_ind4("data-raw/sa2_pow_indp4_2011.csv",
                                year = 2011)
 
 
-# SA2 POW INDP2 (2016, 2011)
+
+# SA2 POW INDP2 (2021, 2016, 2011) ----------------------------------------
+
 sa2_pow_ind <- function(path, skip, n_max, year) {
 
 
@@ -113,6 +159,11 @@ sa2_pow_ind <- function(path, skip, n_max, year) {
 
 }
 
+sa2_indp2_2021 <- sa2_pow_ind("data-raw/sa2_pow_indp2_2021.csv",
+                              skip = 9,
+                              n_max = 2474,
+                              year = 2021)
+
 sa2_indp2_2016 <- sa2_pow_ind("data-raw/sa2_pow_indp2_2016.csv",
                               skip = 9,
                               n_max = 2313,
@@ -127,7 +178,9 @@ sa2_indp2_2011 <- sa2_pow_ind("data-raw/sa2_pow_indp2_2011.csv",
 
 
 
-# SA2 POW QALFP2 (2016, 2011)
+
+# SA2 POW QALFP2 (2021, 2016, 2011) ---------------------------------------
+
 
 sa2_pow_qalfp <- function(path, skip, n_max, year) {
 
@@ -141,6 +194,11 @@ sa2_pow_qalfp <- function(path, skip, n_max, year) {
 
 }
 
+sa2_qalfp2_2021 <- sa2_pow_qalfp("data-raw/sa2_pow_qalfp_2011.csv",
+                                 skip = 9,
+                                 n_max = 39584,
+                                 year = 2021)
+
 sa2_qalfp2_2016 <- sa2_pow_qalfp("data-raw/sa2_pow_qalfp_2016.csv",
                                  skip = 9,
                                  n_max = 36992,
@@ -152,7 +210,9 @@ sa2_qalfp2_2011 <- sa2_pow_qalfp("data-raw/sa2_pow_qalfp_2011.csv",
                                  year = 2011)
 
 
-# SA2 POW SIEMP (2016, 2011)
+
+# SA2 POW SIEMP1 (2021, 2016, 2011) ---------------------------------------------
+
 
 sa2_pow_siemp <- function(path, skip, n_max, year) {
 
@@ -166,6 +226,24 @@ sa2_pow_siemp <- function(path, skip, n_max, year) {
 }
 
 #SIEMP was introduced in 2016 to replace 2011 - back cast to ensure they're equal.
+
+sa2_siemp_2021 <- sa2_pow_siemp("data-raw/sa2_pow_siemp_2021.csv",
+                                skip = 9,
+                                n_max = 27214,
+                                year = 2021) %>%
+  pivot_wider(names_from = employment_status,
+              values_from = employment) %>%
+  mutate("Owner managers of incorporated enterprises" = `Owner manager of incorporated enterprise with employees` + `Owner manager of incorporated enterprise without employees` + `Owner manager of incorporated enterprise - employees not stated`,
+         "Owner managers of unincorporated enterprises" = `Owner manager of unincorporated enterprise with employees` + `Owner manager of unincorporated enterprise without employees` + `Owner manager of unincorporated enterprise - employees not stated`) %>%
+  select(sa2_name,
+         `Employee not owning business` = Employee,
+         `Owner managers of incorporated enterprises`,
+         `Owner managers of unincorporated enterprises`,
+         `Contributing family workers` = `Contributing family worker`,
+         year) %>%
+  pivot_longer(cols = c(-sa2_name, -year),
+               names_to = "employment_status",
+               values_to = "employment")
 
 sa2_siemp_2016 <- sa2_pow_siemp("data-raw/sa2_pow_siemp_2016.csv",
                                 skip = 9,
@@ -227,6 +305,7 @@ anzsic_hs <- read_excel("data-raw/merchandise_trade_appendices_2018.xlsx",
   distinct(hs_product_code, anzsic_subdivision)
 
 # Maps --------------------------------------------------------------------
+sa2_2021 <- read_absmap("sa22021", remove_year_suffix = TRUE)
 
 sa2_2016 <- read_absmap("sa22016", remove_year_suffix = TRUE)
 
@@ -284,105 +363,165 @@ education_location_2016 <- full_join(infrastructure_in_geography(unis, sa2_2016,
   mutate(year = 2016)
 
 
+# IP Data -----------------------------------------------------------------
+
+# As of 2020 IPGOD release, geocoding is only at the postcode level. Use a population weighted concordance to convert data to SA2
+
+postal_areas <- read_excel("data-raw/POA_2021_AUST.xlsx")
+mesh_aus <- read_excel("data-raw/MB_2021_AUST.xlsx")
+
+population_sa2 <- pow(2021, "sa2")
+
+postcode_to_sa2 <- function(data) {
+
+  left_join(postal_areas, mesh_aus, by = c("MB_CODE_2021", "AUS_CODE_2021", "AUS_NAME_2021", "AREA_ALBERS_SQKM", "ASGS_LOCI_URI_2021")) %>%
+    left_join(data, by = c("POA_CODE_2021" = "post_code")) %>%
+    left_join(population_sa2, by = c("SA2_NAME_2021" = "sa2_name")) %>%
+    group_by(year, POA_CODE_2021) %>%
+    mutate(share = employment / sum(employment, na.rm = TRUE)) %>%
+    ungroup() %>%
+    mutate(n = n * share) %>%
+    group_by(year, SA2_NAME_2021) %>%
+    summarise(n = ceiling(sum(n, na.rm = T)), .groups = "drop") %>%
+    rename(sa2_name = SA2_NAME_2021)
+
+}
+
+
 # Plant Breeder Rights ------------------------------------------------------------------
 
 
-plants <- read_csv("https://data.gov.au/data/dataset/24a216fc-97e6-41b3-b13b-77c972922003/resource/43d22a58-b182-4e24-97b4-7a68dd0f9add/download/ipgod402-update.csv",
+plants <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/385d1ca3-fb91-4c58-acd6-f076744a9122/download/pbr-party-activity.csv",
                    show_col_types = FALSE) %>%
-  mutate(sa2_code = as.character(sa2_code))
+  mutate(post_code = as.character(post_code))
 
-plants_info <- read_csv("https://data.gov.au/data/dataset/24a216fc-97e6-41b3-b13b-77c972922003/resource/8968df95-6268-4c3c-8007-23cb3de1066a/download/ipgod401.csv",
+plants_info <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/952d7cf9-8412-4205-80de-405a725a2017/download/pbr-application.csv",
                         show_col_types = FALSE) %>%
-  rename(year = appl_received_year)
+  mutate(year = as.double(format(earliest_filed_date, "%Y")))
 
-plants <- plants %>%
-  left_join(plants_info, by = c("appl_number", "country", "entity")) %>%
-  select(appl_number, sa2_name, year) %>%
-  filter(!is.na(sa2_name))
+plants_sa2 <- plants %>%
+  left_join(plants_info, by = c("application_number", "ip_right_type")) %>%
+  filter(country_code == "au") %>%
+  select(application_number, post_code, year) %>%
+  group_by(year, post_code) %>%
+  tally() %>%
+  ungroup() %>%
+  postcode_to_sa2()
 
 
 
 
 # Patent Applications -----------------------------------------------------
 
-patents <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/846990df-db42-4ad7-bbd6-567fd37a2797/download/ipgod102.csv",
+patents <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/7d8c5138-60d9-4993-b7c9-ecbec25bd57f/download/patent-party-activity.csv",
                     show_col_types = FALSE) %>%
-  mutate(sa2_code = as.character(sa2_code))
+  mutate(post_code = as.character(post_code))
 
-patents_info <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/e5cbeafc-5fb3-4dfd-bd22-afe81b6ab1e1/download/ipgod101.csv",
+patents_info <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/e0f36eb0-7c83-4bff-a66b-2ba128f07d56/download/patent-application.csv",
                          show_col_types = FALSE) %>%
-  rename(year = application_year)
+  mutate(year = as.double(format(earliest_filed_date, "%Y")))
 
-patents_citations <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/12d28b0f-b16e-487d-b6ca-b44ea7b97d8c/download/ipgod110.csv",
-                              show_col_types = FALSE,
-                              col_types = c("nccccccc")) %>%
-  group_by(australian_appl_no) %>%
+patents_citations <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/2958b4d0-de04-4884-8aaa-0d9121219eba/download/patent-application-links.csv",
+                              show_col_types = FALSE) %>%
+  group_by(application_number) %>%
   tally(name = "backwards_citations")
 
-patents <- patents %>%
-  left_join(patents_info, by = c("australian_appl_no", "australian", "entity")) %>%
-  left_join(patents_citations, by = "australian_appl_no") %>%
-  select(australian_appl_no, sa2_name, year, primary_ipc_mark_value, backwards_citations) %>%
-  filter(!is.na(sa2_name))
+patents_citations_sa2 <- patents %>%
+  left_join(patents_info, by = c("ip_right_type", "application_number")) %>%
+  left_join(patents_citations, by = "application_number") %>%
+  filter(country_code == "au") %>%
+  group_by(year, post_code) %>%
+  summarise(n = sum(backwards_citations, na.rm = T), .groups = "drop") %>%
+  ungroup() %>%
+  postcode_to_sa2() %>%
+  rename(backwards_citations = n)
+
+patents_sa2 <- patents %>%
+  left_join(patents_info, by = c("application_number", "ip_right_type")) %>%
+  filter(country_code == "au")  %>%
+  select(application_number, post_code, year) %>%
+  group_by(year, post_code) %>%
+  tally() %>%
+  ungroup() %>%
+  postcode_to_sa2()
+
+patents_sa2 <- left_join(patents_sa2, patents_citations_sa2, by = c("year", "sa2_name"))
 
 
 
 # Trademarks --------------------------------------------------------------
 
-trademarks <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/aae1c14d-f8c0-4540-b5d3-1ed21500271e/download/ipgod202.csv",
+trademarks <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/9197f81e-8c43-4146-a6b4-e0d380f9dc1d/download/trade-mark-party-activity.csv",
                        show_col_types = FALSE) %>%
-  mutate(sa2_code = as.character(sa2_code))
+  mutate(post_code = as.character(post_code))
 
-trademarks_info <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/3066e8bc-ccfa-4285-bee2-492086886663/download/ipgod201.csv",
+trademarks_info <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/71f3c2ba-c390-44bb-8713-1fe4c42dd238/download/trade-mark-application.csv",
                             show_col_types = FALSE) %>%
-  rename(year = filing_year)
+  mutate(year = as.double(format(earliest_filed_date, "%Y")))
 
-trademarks <- trademarks %>%
-  left_join(trademarks_info, by = c("tm_number", "australian", "entity")) %>%
-  select(tm_number, sa2_name, year) %>%
-  filter(!is.na(sa2_name))
+trademarks_sa2 <- trademarks %>%
+  left_join(trademarks_info, by = c("application_number", "ip_right_type")) %>%
+  filter(country_code == "au") %>%
+  select(application_number, post_code, year) %>%
+  group_by(year, post_code) %>%
+  tally() %>%
+  ungroup() %>%
+  postcode_to_sa2()
 
 
 
 # Designs -----------------------------------------------------------------
 
-designs <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/4b802e80-c667-4b84-8f50-72c2624c59c1/download/ipgod302.csv",
+designs <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/89dacae9-4649-4612-aeb8-489af3aec379/download/design-party-activity.csv",
                     show_col_types = FALSE) %>%
-  mutate(sa2_code = as.character(sa2_code))
+  mutate(post_code = as.character(post_code))
 
-designs_info <- read_csv("https://data.gov.au/data/dataset/a4210de2-9cbb-4d43-848d-46138fefd271/resource/71770a53-8727-4f00-a423-db4878f910f6/download/ipgod301.csv",
+designs_info <- read_csv("https://data.gov.au/data/dataset/49017fd0-e7be-4fc0-88c8-046fc366d980/resource/db4da728-d954-4539-adb3-33ac50c50070/download/design-application.csv",
                          show_col_types = FALSE) %>%
-  rename(year = filing_year)
+  mutate(year = as.double(format(earliest_filed_date, "%Y")))
 
-designs <- designs %>%
-  left_join(designs_info, by = c("application_id", "australian", "entity")) %>%
-  select(application_id, sa2_name, year) %>%
-  filter(!is.na(sa2_name))
+designs_sa2 <- designs %>%
+  left_join(designs_info, by = c("application_number", "ip_right_type")) %>%
+  filter(country_code == "au") %>%
+  select(application_number, post_code, year) %>%
+  group_by(year, post_code) %>%
+  tally() %>%
+  ungroup() %>%
+  postcode_to_sa2()
+
 
 usethis::use_data(sa2_siemp_2011,
                   sa2_siemp_2016,
-                  sa2_qalfp2_2016,
+                  sa2_siemp_2021,
                   sa2_qalfp2_2011,
+                  sa2_qalfp2_2016,
+                  sa2_qalfp2_2021,
                   sa2_indp2_2011,
                   sa2_indp2_2016,
-                  sa2_indp4_2016,
+                  sa2_indp2_2021,
                   sa2_indp4_2011,
-                  sa2_occp4_2016,
+                  sa2_indp4_2016,
+                  sa2_indp4_2021,
+                  sa2_occp1_2016,
                   sa2_occp4_2011,
+                  sa2_occp4_2016,
+                  sa2_occp4_2021,
                   sa2_qallp1_2011,
                   sa2_qallp1_2016,
+                  sa2_qallp1_2021,
                   sa2_2011,
                   sa2_2016,
+                  sa2_2021,
                   sa2_2016_to_sa2_2011,
                   education_location_2011,
                   education_location_2016,
                   state_economic_complexity,
                   product_data,
                   anzsic_hs,
-                  designs,
-                  trademarks,
-                  plants,
-                  patents,
+                  designs_sa2,
+                  trademarks_sa2,
+                  plants_sa2,
+                  patents_sa2,
                   compress = "xz",
                   internal = TRUE,
                   overwrite = TRUE)
