@@ -33,8 +33,11 @@ create_plants <- function(year, geography = "sa2") {
   if (year == 2011) {
     geog <- sa2_2011 %>%
       sf::st_drop_geometry()
-  } else {
+  } else if (year == 2016) {
     geog <- sa2_2016 %>%
+      sf::st_drop_geometry()
+  } else if (year == 2021) {
+    geog <- sa2_2021 %>%
       sf::st_drop_geometry()
   }
 
@@ -42,21 +45,24 @@ create_plants <- function(year, geography = "sa2") {
 
   geography <- paste0(tolower(geography), "_name")
 
-  p <- plants %>%
-    dplyr::filter(year == {{year}}) %>%
-    dplyr::group_by(.data$sa2_name, year) %>%
-    dplyr::summarise(plants = dplyr::n(), .groups = "drop") %>%
+  p <- plants_sa2 %>%
+    dplyr::filter(year %in% ({{year}}-3):{{year}}) %>%
+    dplyr::rename(plants = n) %>%
+    dplyr::group_by(.data[[geography]]) %>%
+    dplyr::summarise(plants = mean(.data$plants)) %>%
+    dplyr::mutate(year = {{year}}) %>%
     dplyr::ungroup()
 
-  if (year < 2016) {
-
+  if (year == 2011) {
     p <- p %>% sa2_16_to_sa2_11(var = "plants")
+  } else if (year == 2016) {
+    p <- p %>% sa2_21_to_sa2_16(vars = "plants")
   }
 
   p %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]], year) %>%
-    dplyr::summarise(plants = sum(.data$plants)) %>%
+    dplyr::summarise(plants = sum(.data$plants, na.rm = TRUE), .groups = "drop") %>%
     dplyr::ungroup()
 
 }
