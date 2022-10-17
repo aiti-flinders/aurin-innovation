@@ -26,11 +26,15 @@
 #' create_owner_managers(2016)
 create_owner_managers <- function(year = 2016, geography = "sa2") {
 
-  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+  stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 
+  if (year == 2021) {
+    geog <- sa2_2021
+    data <- sa2_siemp_2021
+  }
   if (year == 2016) {
 
     geog <- sa2_2016
@@ -60,7 +64,7 @@ create_owner_managers <- function(year = 2016, geography = "sa2") {
                                      "owners"),
                                    ~sum(.x)),
                      .groups = "drop") %>%
-    dplyr::mutate(owner_managers = .data$owners/.data$total,
+    dplyr::mutate(owner_managers = .data$owners,#/.data$total,
                   year = {{year}}) %>%
     dplyr::select(geography,
                   .data$owner_managers,

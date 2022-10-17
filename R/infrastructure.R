@@ -21,24 +21,24 @@ create_infrastructure <- function(year, geography = "sa2") {
 
   geography <- paste0(tolower(geography), "_name")
 
-  if (year == 2011) {
-
-    geog <- sa2_2011 %>%
+  if (year == 2021) {
+    geog <- sa2_2021 %>%
       sf::st_drop_geometry()
-    data <- education_location_2011
-
+    data <- education_location_2021
   } else if (year == 2016) {
-
     geog <- sa2_2016 %>%
       sf::st_drop_geometry()
     data <- education_location_2016
-
+  } else if (year == 2011) {
+    geog <- sa2_2011 %>%
+      sf::st_drop_geometry()
+    data <- education_location_2011
   }
 
 
 
   data %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]], year) %>%
     dplyr::summarise(dplyr::across(c(.data$unis, .data$tafes), ~sum(.x, na.rm = TRUE)), .groups = "drop") %>%
     dplyr::ungroup()

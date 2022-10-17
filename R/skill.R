@@ -19,18 +19,22 @@
 #' @examples create_skill(2016)
 create_skill <- function(year, geography = "sa2", adjust = FALSE) {
 
-  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+  stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 
+  if (year == 2021) {
+    geog <- sa2_2021
+    data <- sa2_occp4_2016
+  }
 
-  if (year == 2016) {
+  else if (year == 2016) {
 
     geog <- sa2_2016
     data <- sa2_occp4_2016
 
-  } else  {
+  } else   {
     geog <- sa2_2011
     data <- sa2_occp4_2011
   }
@@ -54,7 +58,7 @@ create_skill <- function(year, geography = "sa2", adjust = FALSE) {
 
   skill_level <- data %>%
     dplyr::left_join(occp_skill, by = "anzsco_name") %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(.data[[geography]]) %>%
     dplyr::mutate(employment_share = .data[[emp]] / sum(.data[[emp]])) %>%
     dplyr::summarise(skill = weighted.mean(x = .data$score, w = .data$employment_share, na.rm = T)) %>%

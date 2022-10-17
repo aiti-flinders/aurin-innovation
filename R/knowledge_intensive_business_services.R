@@ -17,12 +17,18 @@
 #' create_kibs(2016)
 create_kibs <- function(year, geography = "sa2", adjust = FALSE) {
 
-  stopifnot("Year must be one of 2011, 2016" = year %in% c(2011, 2016))
+  stopifnot("Year must be one of 2011, 2016, or 2021" = year %in% c(2011, 2016, 2021))
   stopifnot("Geography must be one of sa2, sa3, sa4, gcc, state" = tolower(geography) %in% c("sa2", "sa3", "sa4", "gcc", "state"))
 
   geography <- paste0(tolower(geography), "_name")
 
-  if (year == 2016) {
+  if (year == 2021) {
+    geog <- sa2_2021 %>%
+      sf::st_drop_geometry()
+    data <- sa2_indp4_2021
+  }
+
+  else if (year == 2016) {
 
     geog <- sa2_2016 %>%
       sf::st_drop_geometry()
@@ -52,12 +58,12 @@ create_kibs <- function(year, geography = "sa2", adjust = FALSE) {
   }
 
   employment_kibs <- data %>%
-    dplyr::left_join(geog, by = geography) %>%
+    dplyr::left_join(geog, by = "sa2_name") %>%
     dplyr::group_by(kibs = .data$anzsic_class %in% kibs(),
                     .data[[geography]]) %>%
     dplyr::summarise(kibs_employment = sum(.data$employment), .groups = "drop") %>%
     tidyr::pivot_wider(names_from = .data$kibs, names_prefix = "kibs", values_from = .data$kibs_employment) %>%
-    dplyr::mutate(kibs = .data$kibsTRUE / (.data$kibsFALSE + .data$kibsTRUE),
+    dplyr::mutate(kibs = .data$kibsTRUE, #/ (.data$kibsFALSE + .data$kibsTRUE),
                   year = {{year}}) %>%
     dplyr::select(geography,
                   .data$kibs,
