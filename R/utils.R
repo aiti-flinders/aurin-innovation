@@ -27,6 +27,15 @@ sa2_16_to_sa2_11 <- function(data, var) {
     dplyr::rename(sa2_name = .data$sa2_name_2011)
 }
 
+sa2_21_to_sa2_16 <- function(data, var) {
+  data %>%
+    dplyr::left_join(sa2_2021_to_sa2_2016, by = c("sa2_name" = "sa2_name_2021")) %>%
+    dplyr::group_by(.data$sa2_name_2016, .data$year) %>%
+    dplyr::summarise(dplyr::across(var, ~ round(sum(ratio * .x)))) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(sa2_name = .data$sa2_name_2016)
+}
+
 kibs <- function() {
   k <- c(
     "Petroleum Exploration",

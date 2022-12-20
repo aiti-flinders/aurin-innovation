@@ -5,8 +5,8 @@ library(sf)
 library(scales)
 library(dplyr)
 
-regional_innovation <- map_dfr(.x = c(2011, 2016),
-                               .f = ~create_regional_innovation(year = .x, geography = "sa2", adjust = FALSE)) %>%
+regional_innovation <- map_dfr(.x = c(2011, 2016, 2021),
+                               .f = ~create_regional_innovation(year = .x, geography = "sa2", adjust = FALSE)$cfa.output) %>%
   group_by(year) %>%
   mutate(across(c(innovation, human_knowledge, patent_output), ~rescale(.x, to = c(0, 100)), .names = "{.col}_score")) %>%
   ungroup() %>%
