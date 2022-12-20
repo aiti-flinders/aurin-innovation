@@ -56,7 +56,7 @@ create_plants <- function(year, geography = "sa2") {
   if (year == 2011) {
     p <- p %>% sa2_16_to_sa2_11(var = "plants")
   } else if (year == 2016) {
-    p <- p %>% sa2_21_to_sa2_16(vars = "plants")
+    p <- p %>% sa2_21_to_sa2_16(var = "plants")
   }
 
   p %>%
