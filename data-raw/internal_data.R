@@ -314,6 +314,15 @@ sa2_2016 <- read_absmap("sa22016", remove_year_suffix = TRUE)
 
 sa2_2011 <- read_absmap("sa22011", remove_year_suffix = TRUE)
 
+sa2_2016_to_sa2_2011 <- get_correspondence_absmaps("sa2", 2016, "sa2", 2011) %>%
+  select(sa2_name_2016 = SA2_NAME_2016,
+         sa2_name_2011 = SA2_NAME_2011,
+         ratio)
+
+sa2_2021_to_sa2_2016 <- read_csv("data-raw/CG_SA2_2021_SA2_2016_GRID21_All.csv") %>%
+  select(sa2_name_2021 = SA2_NAME_2021,
+         sa2_name_2016 = SA2_NAME_2016,
+         ratio = RATIO_FROM_TO)
 
 
 if (any(!file.exists(c("data-raw/unis.geoJSON", "data-raw/tafes.geoJSON")))) {
@@ -520,6 +529,7 @@ usethis::use_data(sa2_siemp_2011,
                   sa2_2016,
                   sa2_2021,
                   sa2_2016_to_sa2_2011,
+                  sa2_2021_to_sa2_2016,
                   education_location_2011,
                   education_location_2016,
                   education_location_2021,
