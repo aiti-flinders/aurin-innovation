@@ -3,6 +3,7 @@ name: update-data
 on:
   push:
     paths:
+      - '.github/workflows/update-data.yaml'
       - 'R/innovation.R' # Function which generates regional_innovation data. Also depends on functions below:
       - 'R/sem_input.R'
       - 'data-raw/regional_innovation.R'
